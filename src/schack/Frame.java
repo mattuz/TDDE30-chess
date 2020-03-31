@@ -1,4 +1,4 @@
-package Schack;
+package schack;
 
 public class Frame
 {
