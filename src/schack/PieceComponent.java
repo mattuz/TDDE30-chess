@@ -36,7 +36,8 @@ public class PieceComponent extends JComponent implements BoardListener
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
 
-	piece.put(PieceType.EMPTY, "");
+
+	piece.put(PieceType.EMPTY, " ");
 	piece.put(PieceType.PAWN, "P");
 	piece.put(PieceType.BISHOP, "B");
 	piece.put(PieceType.KING, "K");
@@ -47,17 +48,20 @@ public class PieceComponent extends JComponent implements BoardListener
 
 	for (int x = 0; x < board.getWidth(); x++) {
 	    for (int y = 0; y < board.getHeight(); y++) {
+		int positionX = x * BOARDCONSTANT;
+		int positionY = y * BOARDCONSTANT;
+
 	        if ((x%2 != 0 && y%2 == 0) || (x%2 == 0 && y%2 != 0) ) {
 	            g2d.setColor(gray);
 		} else {
 		    g2d.setColor(white);
 		}
-		g2d.fillRect(x * BOARDCONSTANT, y * BOARDCONSTANT,
-			     y * BOARDCONSTANT + BOARDCONSTANT, x * BOARDCONSTANT + BOARDCONSTANT);
+		g2d.fillRect(positionX, positionY,
+			     positionY + BOARDCONSTANT, positionX + BOARDCONSTANT);
 		g2d.setColor(BLACK);
-		g2d.drawRect(x * BOARDCONSTANT, y * BOARDCONSTANT, BOARDCONSTANT,
+		g2d.drawRect(positionX, positionY, BOARDCONSTANT,
 			     BOARDCONSTANT);
-		g2d.drawString(piece.get(board.getPieceAt(x,y)), CENTERTEXT + x * BOARDCONSTANT, CENTERTEXT + y * BOARDCONSTANT);
+		g2d.drawString(piece.get(board.getPieceAt(x,y)), CENTERTEXT + positionX, CENTERTEXT + positionY);
 	    }
 	}
     }
