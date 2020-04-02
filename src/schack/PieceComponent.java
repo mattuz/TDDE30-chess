@@ -10,6 +10,7 @@ import static java.awt.Color.BLACK;
 public class PieceComponent extends JComponent implements BoardListener
 {
     public static final int BOARDCONSTANT = 100;
+    public static final int CENTERTEXT = 49;
     private Board board;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
@@ -45,12 +46,14 @@ public class PieceComponent extends JComponent implements BoardListener
 
 	for (int i = 0; i < board.getWidth(); i++) {
 	    for (int j = 0; j < board.getHeight(); j++) {
-		g2d.setColor(white);            //(piece.get(board.getPieceAt(i,j)));
+		g2d.setColor(white);
 		g2d.fillRect(i * BOARDCONSTANT, j * BOARDCONSTANT,
 			     j * BOARDCONSTANT + BOARDCONSTANT, i * BOARDCONSTANT + BOARDCONSTANT);
 		g2d.setColor(BLACK);
-		g2d.drawRect(i * BOARDCONSTANT, j * BOARDCONSTANT, BOARDCONSTANT, BOARDCONSTANT);
-		g2d.drawString(piece.get(board.getPieceAt(i,j)), i *BOARDCONSTANT, j*BOARDCONSTANT);
+		g2d.drawRect(i * BOARDCONSTANT, j * BOARDCONSTANT, BOARDCONSTANT,
+			     BOARDCONSTANT);
+		g2d.drawString(piece.get(board.getPieceAt(i,j)), CENTERTEXT + i * BOARDCONSTANT, CENTERTEXT + j * BOARDCONSTANT);
+
 	    }
 	}
     }
