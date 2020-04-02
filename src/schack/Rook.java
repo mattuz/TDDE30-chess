@@ -8,6 +8,10 @@ public class Rook extends Pieces
 	this.type = PieceType.ROOK;
     }
 
+    public static String getPath() {
+	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\rook.png";
+    }
+
     public PieceType getType() {
 	return type;
     }

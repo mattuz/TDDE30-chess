@@ -54,19 +54,36 @@ public class PieceComponent extends JComponent implements BoardListener
 
     public String pieceSelector(PieceType piece) {
         switch (piece) {
-	    case PAWN:
-	         picturepath = "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn";
+            case PAWN:
+	         picturepath = Pawn.getPath();
 	         break;
-	     case
+	    case KING:
+	        picturepath = King.getPath();
+	        break;
+	    case ROOK:
+	        picturepath = Rook.getPath();
+	        break;
+	    case QUEEN:
+	        picturepath = Queen.getPath();
+	        break;
+	    case BISHOP:
+	        picturepath = Bishop.getPath();
+	        break;
+	    case KNIGHT:
+	        picturepath = Knight.getPath();
+	        break;
+	    default:
+	        break;
 	}
+	return picturepath;
     }
 
-    public BufferedImage bufferedImageMaker() { //"Skapar" en bild, tar den från Pics :)
+    public BufferedImage bufferedImageMaker(PieceType piece) { //"Skapar" en bild, tar den från Pics :)
         //Path path = FileSystems.getDefault().getPath("C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\"); //Detta gick inte så bra :(
         //String pathstring = path.toString();
 	BufferedImage myPicture = null;
 	try {
-	    myPicture = ImageIO.read(new File("C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\gnome child.png"));
+	    myPicture = ImageIO.read(new File(pieceSelector(piece)));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
@@ -112,16 +129,17 @@ public class PieceComponent extends JComponent implements BoardListener
 		g2d.fillRect(positionX, positionY,
 			     positionY + BOARDCONSTANT,
 			     positionX + BOARDCONSTANT);
-		g2d.setColor(BLACK);
+		//g2d.setColor(BLACK);
 		g2d.drawRect(positionX, positionY, BOARDCONSTANT,
 			     BOARDCONSTANT);
 		g2d.drawString(piece.get(board.getPieceAt(x,y)), CENTERTEXT + positionX, CENTERTEXT + positionY);
 
-		if (board.getPieceAt(x,y) == PieceType.PAWN) {
-		    g2d.drawImage((scale(bufferedImageMaker(), BOARDCONSTANT, BOARDCONSTANT)), positionX, positionY,
-				  this);
+		if (board.getPieceAt(x, y) != PieceType.EMPTY) {
+		    g2d.drawImage((scale(bufferedImageMaker(board.getPieceAt(x, y)), BOARDCONSTANT, BOARDCONSTANT)), positionX,
+				  positionY, this);
+		}
 		}
 	    }
 	}
     }
-}
+

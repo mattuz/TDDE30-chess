@@ -9,6 +9,10 @@ public class Knight extends Pieces
 	this.type = PieceType.KNIGHT;
     }
 
+    public static String getPath() {
+	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight.png";
+    }
+
     public PieceType getType() {
 	return type;
     }

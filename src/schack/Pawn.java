@@ -15,6 +15,10 @@ public class Pawn extends Pieces
         return firstStep;
     }
 
+    public static String getPath() {
+        return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn.png";
+    }
+
     public PieceType getType() {
         return type;
     }

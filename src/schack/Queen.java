@@ -8,6 +8,10 @@ public class Queen extends Pieces
 	this.type = PieceType.QUEEN;
     }
 
+    public static String getPath() {
+	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen.png";
+    }
+
     public PieceType getType() {
 	return type;
     }
