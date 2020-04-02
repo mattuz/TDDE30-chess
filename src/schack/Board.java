@@ -43,7 +43,7 @@ public class Board
     public void pieceSwitcher(int x, int y) {
         switch (x) {
 	    case 0:
-	    case 5:
+	    case 7:
 		square[x][y] = PieceType.ROOK;
 	        break;
 	    case 1:
@@ -51,7 +51,7 @@ public class Board
 		square[x][y] = PieceType.KNIGHT;
 	        break;
 	    case 2:
-	    case 7:
+	    case 5:
 		square[x][y] = PieceType.BISHOP;
 	        break;
 	    case 3:
