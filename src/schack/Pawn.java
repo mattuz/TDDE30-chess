@@ -16,11 +16,18 @@ public class Pawn extends Pieces
     }
 
     public static String getPath() {
-        return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn.png";
-        //return "C:\\Users\\lisac\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn.png";
+        //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn.png";
+        return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn.png";
     }
 
     public PieceType getType() {
         return type;
+    }
+
+    private boolean step(int x, int y){
+        if (firstStep);
+        return
+
+        return 1;
     }
 }
