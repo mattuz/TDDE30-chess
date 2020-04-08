@@ -18,4 +18,13 @@ public class Bishop extends Pieces
     public PieceType getType() {
 	return type;
     }
+
+    public boolean legalMove(int x, int y){
+        if (Math.abs(getPieceX() - x) == Math.abs(getPieceY() - y)){
+            return true;
+	}
+        else {
+            return false;
+	}
+    }
 }

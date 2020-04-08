@@ -24,52 +24,30 @@ public class Pawn extends Pieces
         return type;
     }
 
-    public boolean leagalMove(int x, int y){
+    public boolean leagalMove(int x, int y) {
         if (getColor() == "black") {
             if (getPieceX() == x) {
                 if (firstStep && getPieceY() == y - 1 || getPieceY() == y - 2) {
                     return true;
+                } else {
+                    return (!firstStep && getPieceY() == y - 1);
                 }
-                else if (!firstStep && getPieceY() == y - 1) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+            } else {
+                return Math.abs(getPieceX() - x) == 1 && getPieceY() == y - 1;
             }
-            else if (getPieceX() == x + 1 || getPieceX() == x - 1) {
-                if (getPieceY() == y - 1){
-                    return true;}
-                else {
-                    return false;
-                }
-            }
-            else {
-                return false;}
-        }
-        else if (getColor() == "white") {
+        } else if (getColor() == "white") {
             if (getPieceX() == x) {
                 if (firstStep && getPieceY() == y + 1 || getPieceY() == y + 2) {
                     return true;
+                } else {
+                    return (!firstStep && getPieceY() == y + 1);
                 }
-                else if (!firstStep && getPieceY() == y + 1) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+            } else {
+                return Math.abs(getPieceX() - x) == 1 && getPieceY() == y + 1;
             }
-            else if (getPieceX() == x + 1 || getPieceX() == x - 1) {
-                if (getPieceY() == y + 1){
-                    return true;}
-                else {
-                    return false;
-                }
-            }
-            else {
-                return false;}
         }
-        else {
-            return false;}
+        else{
+            return false;
+        }
     }
 }

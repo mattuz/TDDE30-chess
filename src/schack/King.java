@@ -17,4 +17,19 @@ public class King extends Pieces
     public PieceType getType() {
 	return type;
     }
+
+    public boolean legalMove(int x, int y){
+        if (getPieceX() == x && Math.abs(getPieceY() - y) == 1){
+            return true;
+	}
+        else if (getPieceY() == y && Math.abs(getPieceX() - x) == 1){
+            return true;
+	}
+        else if (Math.abs(getPieceX() - x) == 1 && Math.abs(getPieceY() - y) == 1){
+            return true;
+	}
+	else {
+	    return false;}
+    }
 }
+

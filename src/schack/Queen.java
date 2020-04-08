@@ -16,4 +16,16 @@ public class Queen extends Pieces
     public PieceType getType() {
 	return type;
     }
+
+    public boolean leagalMove(int x, int y){
+	if (getPieceX() == x || getPieceY() == y){
+	    return true;
+	}
+	if (Math.abs(getPieceX() - x) == Math.abs(getPieceY() - y)){
+	    return true;
+	}
+	else {
+	    return false;
+	}
+    }
 }

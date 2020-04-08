@@ -16,4 +16,11 @@ public class Rook extends Pieces
     public PieceType getType() {
 	return type;
     }
+
+    public boolean legalMove(int x, int y){
+        if (getPieceX() == x || getPieceY() == y){
+            return true;
+	}
+        else {return false;}
+    }
 }
