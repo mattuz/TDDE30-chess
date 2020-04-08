@@ -129,15 +129,15 @@ public class PieceComponent extends JComponent implements BoardListener
 		g2d.fillRect(positionX, positionY,
 			     positionY + BOARDCONSTANT,
 			     positionX + BOARDCONSTANT);
-		//g2d.setColor(BLACK);
+		g2d.setColor(BLACK);
 		g2d.drawRect(positionX, positionY, BOARDCONSTANT,
 			     BOARDCONSTANT);
 		g2d.drawString(piece.get(board.getPieceAt(x,y)), CENTERTEXT + positionX, CENTERTEXT + positionY);
 
-		if (board.getPieceAt(x, y) != PieceType.EMPTY) {
+		/*if (board.getPieceAt(x, y) != PieceType.EMPTY) {
 		    g2d.drawImage((scale(bufferedImageMaker(board.getPieceAt(x, y)), BOARDCONSTANT, BOARDCONSTANT)), positionX,
 				  positionY, this);
-		}
+		}*/
 		}
 	    }
 	}
