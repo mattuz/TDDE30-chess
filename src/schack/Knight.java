@@ -11,6 +11,7 @@ public class Knight extends Pieces
 
     public static String getPath() {
 	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight.png";
+	//return "C:\\Users\\lisac\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight.png";
     }
 
     public PieceType getType() {
