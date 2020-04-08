@@ -9,8 +9,8 @@ public class Queen extends Pieces
     }
 
     public static String getPath() {
-	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen.png";
-	//return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen.png";
+	//return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen.png";
+	return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen.png";
     }
 
     public PieceType getType() {

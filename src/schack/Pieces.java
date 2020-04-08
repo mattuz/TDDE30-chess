@@ -14,7 +14,11 @@ public abstract class Pieces
 	return color;
     }
 
+    public int getPieceX() {
+        return pieceX;
+    }
 
-
-
+    public int getPieceY() {
+        return pieceY;
+    }
 }
