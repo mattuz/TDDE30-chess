@@ -14,7 +14,7 @@ public class BoardTest
 	f1.show();
 
 	System.out.println(BoardToText.convertToTextBoard(b1));
-	System.out.println(b1.getPieceAt(0,2));
+	System.out.println(b1.getPieceAt(0,0));
 
     }
 

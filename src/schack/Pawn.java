@@ -50,4 +50,12 @@ public class Pawn extends Pieces
             return false;
         }
     }
+
+    public boolean rookUpgrade() { //TODO Lägg till riktiga färger här sen. :)
+        if (this.color == "white" && pieceY == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
+            return true;
+        }
+        else return this.color == "black" && pieceY == 7;
+    }
+
 }
