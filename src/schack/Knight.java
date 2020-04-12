@@ -19,11 +19,7 @@ public class Knight extends Pieces
     }
 
     public boolean LegalMove(int x, int y){
-        if ((Math.abs(getPieceX() - x) == 1 && Math.abs(getPieceY() - y) == 2) ||
-	    (Math.abs(getPieceX() - x) == 2 && Math.abs(getPieceY() - y) == 2)){
-            return true;
-	}
-        else {return false;
-        }
+	return (Math.abs(getPieceX() - x) == 1 && Math.abs(getPieceY() - y) == 2) ||
+	       (Math.abs(getPieceX() - x) == 2 && Math.abs(getPieceY() - y) == 2);
     }
 }

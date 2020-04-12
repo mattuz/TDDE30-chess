@@ -24,7 +24,7 @@ public class Pawn extends Pieces
         return type;
     }
 
-    public boolean leagalMove(int x, int y) {
+    public boolean legalMove(int x, int y) {
         if (getColor() == "black") {
             if (getPieceX() == x) {
                 if (firstStep && getPieceY() == y - 1 || getPieceY() == y - 2) {
