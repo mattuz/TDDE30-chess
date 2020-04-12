@@ -21,11 +21,6 @@ public class Queen extends Pieces
 	if (getPieceX() == x || getPieceY() == y){
 	    return true;
 	}
-	if (Math.abs(getPieceX() - x) == Math.abs(getPieceY() - y)){
-	    return true;
-	}
-	else {
-	    return false;
-	}
+	return Math.abs(getPieceX() - x) == Math.abs(getPieceY() - y);
     }
 }
