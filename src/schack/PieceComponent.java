@@ -6,10 +6,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.EnumMap;
 
 import static java.awt.Color.*;
@@ -23,6 +19,7 @@ public class PieceComponent extends JComponent implements BoardListener
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
     final private ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("gnome child.png"));
     private String picturepath = null;
+    private PiecePainter picture = null;
 
 
 

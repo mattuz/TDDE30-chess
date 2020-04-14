@@ -11,8 +11,11 @@ public class BoardTest
 
 	}*/
 	Frame f1 = new Frame(b1);
+	b1.addBoardListener(f1.getGraphics());
 	f1.show();
 
+
+	System.out.println(b1.getDeadpieces()); //Visar alla "döda" pjäser.
 	System.out.println(BoardToText.convertToTextBoard(b1));
 	System.out.println(b1.getPieceAt(0,0));
 

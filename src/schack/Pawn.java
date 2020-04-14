@@ -4,9 +4,13 @@ public class Pawn extends Pieces
 {
     private boolean firstStep;
     private final PieceType type;
+    private int posX;
+    private int posY;
 
-    public Pawn(final String color) {
+    public Pawn(final String color, int x, int y) {
         super(color);
+        this.posX = x;
+        this.posY = y;
         this.type = PieceType.PAWN;
         this.firstStep = true;
     }
@@ -16,8 +20,8 @@ public class Pawn extends Pieces
     }
 
     public static String getPath() {
-        //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn.png";
-        return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn.png";
+        return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn.png";
+        //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn.png";
     }
 
     public PieceType getType() {

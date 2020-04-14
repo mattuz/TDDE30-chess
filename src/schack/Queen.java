@@ -3,14 +3,19 @@ package schack;
 public class Queen extends Pieces
 {
     private final PieceType type;
-    public Queen(final String color) {
+    private int posX;
+    private int posY;
+
+    public Queen(final String color, int x, int y) {
 	super(color);
+	this.posX = x;
+	this.posY = y;
 	this.type = PieceType.QUEEN;
     }
 
     public static String getPath() {
-	//return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen.png";
-	return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen.png";
+	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen.png";
+	//return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen.png";
     }
 
     public PieceType getType() {

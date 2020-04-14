@@ -3,15 +3,19 @@ package schack;
 public class Bishop extends Pieces
 {
     private final PieceType type;
+    private int posX;
+    private int posY;
 
-    public Bishop(final String color) {
+    public Bishop(final String color, int x, int y) {
 	super(color);
+	this.posX = x;
+	this.posY = y;
 	this.type = PieceType.BISHOP;
     }
 
     public static String getPath() {
-	//return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\bishop.png";
-	return "C:\\Users\\lisac\\IdeaProjects\\Pics\\bishop.png";
+	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\bishop.png";
+	//return "C:\\Users\\lisac\\IdeaProjects\\Pics\\bishop.png";
 
     }
 
