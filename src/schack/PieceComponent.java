@@ -32,7 +32,7 @@ public class PieceComponent extends JComponent implements BoardListener
 	    								//Behöver kika lite på denna kod, tog ganska mycket hjälp :p
     {
 	BufferedImage img =
-		new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	int x, y;
 	int originalW = src.getWidth();
 	int originalH = src.getHeight();
@@ -131,10 +131,10 @@ public class PieceComponent extends JComponent implements BoardListener
 			     BOARDCONSTANT);
 		g2d.drawString(piece.get(board.getPieceAt(x,y)), CENTERTEXT + positionX, CENTERTEXT + positionY);
 
-		/*if (board.getPieceAt(x, y) != PieceType.EMPTY) {
+		if (board.getPieceAt(x, y) != PieceType.EMPTY) {
 		    g2d.drawImage((scale(bufferedImageMaker(board.getPieceAt(x, y)), BOARDCONSTANT, BOARDCONSTANT)), positionX,
 				  positionY, this);
-		}*/
+		}
 		}
 	    }
 	}
