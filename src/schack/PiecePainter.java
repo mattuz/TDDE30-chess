@@ -8,7 +8,7 @@ import java.util.EnumMap;
 
 public class PiecePainter //TODO se till att denna fungerar som planerat. Jag vill att den ersätter det vi skrivit i PieceComponent för att snygga till lite.
 {
-    private String picturepath = null;
+    private static String picturepath = null;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
 
@@ -17,7 +17,7 @@ public class PiecePainter //TODO se till att denna fungerar som planerat. Jag vi
     //Behöver kika lite på denna kod, tog ganska mycket hjälp :p
     {
 	BufferedImage img =
-		new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	int x, y;
 	int originalW = src.getWidth();
 	int originalH = src.getHeight();
@@ -34,7 +34,7 @@ public class PiecePainter //TODO se till att denna fungerar som planerat. Jag vi
 	return img;
     }
 
-    public String pieceSelector(PieceType piece) {
+    public static String pieceSelector(PieceType piece) {
 	switch (piece) {
 	    case PAWN:
 		picturepath = Pawn.getPath();
@@ -60,7 +60,7 @@ public class PiecePainter //TODO se till att denna fungerar som planerat. Jag vi
 	return picturepath;
     }
 
-    public BufferedImage bufferedImageMaker(PieceType piece) { //"Skapar" en bild, tar den från Pics :)
+    public static BufferedImage bufferedImageMaker(PieceType piece) { //"Skapar" en bild, tar den från Pics :)
 	//Path path = FileSystems.getDefault().getPath("C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\"); //Detta gick inte så bra :(
 	//String pathstring = path.toString();
 	BufferedImage myPicture = null;

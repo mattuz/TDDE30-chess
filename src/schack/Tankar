@@ -14,3 +14,5 @@ in actionmaps så att man kan flytta på pjäserna.
 3. Kan man på något sätt använda "superklassen" Pieces för att välja en Piece? Eller måste man skriva "Pawn" hela tiden istället
 för att ha någon form av Piece.getPiece => Pawn/King/Rook osv? Hade varit ganska najs då man isåfall slipper repetera kod som
 "if Rook..., if Pawn.....".
+
+Kanske besvaras av Hugo!!!
