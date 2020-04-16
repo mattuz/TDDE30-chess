@@ -14,7 +14,7 @@ public class Bishop extends Pieces
     }
 
     public static String getPath() {
-	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\bishop.png";
+	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\bishop_b.png";
 	//return "C:\\Users\\lisac\\IdeaProjects\\Pics\\bishop.png";
 
     }
