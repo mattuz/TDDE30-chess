@@ -6,18 +6,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
 
-public class PiecePainter //TODO se till att denna fungerar som planerat. Jag vill att den ersätter det vi skrivit i PieceComponent för att snygga till lite.
+public class PiecePainter
 {
     private static String picturepath = null;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
 
-
     public static BufferedImage scale(BufferedImage src, int w, int h) //Används för att skala om bilden, så att den har rätt dimensioner.
     //Behöver kika lite på denna kod, tog ganska mycket hjälp :p
     {
-	BufferedImage img =
-		new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	int x, y;
 	int originalW = src.getWidth();
 	int originalH = src.getHeight();

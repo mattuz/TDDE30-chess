@@ -2,15 +2,19 @@ package schack;
 
 public abstract class Pieces
 {
-    protected String color;
+    protected static String color = null;
     protected int pieceX;
     protected int pieceY;
+    protected final PieceType type;
 
-    protected Pieces(final String color){
+    protected Pieces(int x, int y, PieceType type, String color){
         this.color = color;
+        this.pieceX = x;
+        this.pieceY = y;
+        this.type = type;
     }
 
-    public String getColor() {
+    public static String getColor() {
 	return color;
     }
 

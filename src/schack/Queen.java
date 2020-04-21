@@ -2,21 +2,20 @@ package schack;
 
 public class Queen extends Pieces
 {
-    private final PieceType type;
-    private int posX;
-    private int posY;
-
-    public Queen(final String color, int x, int y) {
-	super(color);
-	this.posX = x;
-	this.posY = y;
-	this.type = PieceType.QUEEN;
+    public Queen(final int x, final int y, final PieceType type, final String color) {
+	super(x, y, type, color);
     }
 
     public static String getPath() {
-	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen_w.png";
-	//return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen.png";
+	if(color == "white"){
+	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen_w.png";
+	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen_w.png";
+	} else {
+	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen_b.png";
+	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen_b.png";
+	}
     }
+
 
     public PieceType getType() {
 	return type;

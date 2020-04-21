@@ -3,15 +3,9 @@ package schack;
 public class Pawn extends Pieces
 {
     private boolean firstStep;
-    private final PieceType type;
-    private int posX;
-    private int posY;
 
-    public Pawn(final String color, int x, int y) {
-        super(color);
-        this.posX = x;
-        this.posY = y;
-        this.type = PieceType.PAWN;
+    public Pawn(final int x, final int y, final PieceType type, final String color) {
+        super(x, y, type, color);
         this.firstStep = true;
     }
 
@@ -20,8 +14,13 @@ public class Pawn extends Pieces
     }
 
     public static String getPath() {
-        return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_b.png";
-        //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn.png";
+        if(color == "white"){
+            //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_w.png";
+            return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_w.png";
+        } else {
+            //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_b.png";
+            return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_b.png";
+        }
     }
 
     public PieceType getType() {
@@ -55,7 +54,7 @@ public class Pawn extends Pieces
         }
     }
 
-    public boolean rookUpgrade() { //TODO Lägg till riktiga färger här sen. :)
+    public boolean rookUpgrade() {
         if (this.color == "white" && pieceY == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
             return true;
         }

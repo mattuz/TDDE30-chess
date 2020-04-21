@@ -2,20 +2,18 @@ package schack;
 
 public class Knight extends Pieces
 {
-    private final PieceType type;
-    private int posX;
-    private int posY;
-
-    public Knight(final String color, int x, int y) {
-	super(color);
-	this.posX = x;
-	this.posY = y;
-	this.type = PieceType.KNIGHT;
+    public Knight(final int x, final int y, final PieceType type, final String color) {
+	super(x, y, type, color);
     }
 
     public static String getPath() {
-	return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight_b.png";
-	//return "C:\\Users\\lisac\\IdeaProjects\\Pics\\knight.png";
+	if(color == "white"){
+	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight_w.png";
+	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\knight_w.png";
+	} else {
+	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight_b.png";
+	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\knight_b.png";
+	}
     }
 
     public PieceType getType() {

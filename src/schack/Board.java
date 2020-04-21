@@ -11,19 +11,23 @@ public class Board
     private PieceType[][] square;
     private List<PieceType> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
+    private PieceMaker maker = new PieceMaker();
 
     public Board(final int width, final int height) { //Man ska kunna ändra den om man vill
 	this.width = width;
 	this.height = height;
-	this.square = new PieceType[width][height]; //TODO Se till att det finns ett fält i spelpjäsen som bestämmer vilken spelare den tillhör.
-	for (int i = 0; i < width; i++) {
-	    for (int j = 0; j < height; j++) {
-		square[i][j] = PieceType.EMPTY;
-		placePieces(i,j);
-
+	this.square = new PieceType[width][height];
+	for (int x = 0; x < width; x++) {
+	    for (int y = 0; y < height; y++) {
+		square[x][y] = PieceType.EMPTY;
+		placePieces(x,y);
+		if (y == 0){
+		    maker.pieceCreator(x, y, getPieceAt(x,y), "white");
+		} else if(y == 7){
+		    maker.pieceCreator(x, y, getPieceAt(x,y), "black");
+		}
 	    }
 	}
-
     }
 
     public void playerAssign() { //Eller vill man göra något sånt här?
