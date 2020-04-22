@@ -6,7 +6,7 @@ public class Knight extends Pieces
 	super(x, y, type, color);
     }
 
-    public static String getPath() {
+    public String getPath() {
 	if(color == "white"){
 	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight_w.png";
 	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\knight_w.png";

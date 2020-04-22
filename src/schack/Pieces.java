@@ -2,7 +2,7 @@ package schack;
 
 public abstract class Pieces
 {
-    protected static String color = null;
+    protected final String color;
     protected int pieceX;
     protected int pieceY;
     protected final PieceType type;
@@ -14,7 +14,7 @@ public abstract class Pieces
         this.type = type;
     }
 
-    public static String getColor() {
+    public String getColor() {
 	return color;
     }
 

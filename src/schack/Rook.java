@@ -6,7 +6,7 @@ public class Rook extends Pieces
 	super(x, y, type, color);
     }
 
-    public static String getPath() {
+    public String getPath() {
         if(color == "black"){
 	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\rook_w.png";
 	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\rook_b.png";

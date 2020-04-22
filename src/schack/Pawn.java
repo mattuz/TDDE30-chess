@@ -13,7 +13,7 @@ public class Pawn extends Pieces
         return firstStep;
     }
 
-    public static String getPath() {
+    public String getPath() {
         if(color == "white"){
             //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_w.png";
             return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_w.png";
