@@ -17,14 +17,16 @@ public class Board
 	this.width = width;
 	this.height = height;
 	this.square = new PieceType[width][height];
-	for (int x = 0; x < width; x++) {
-	    for (int y = 0; y < height; y++) {
+	for (int y = 0; y < height; y++) {
+	    for (int x = 0; x < width; x++) {
 		square[x][y] = PieceType.EMPTY;
 		placePieces(x,y);
-		if (y == 0){
-		    maker.pieceCreator(x, y, getPieceAt(x,y), "white");
-		} else if(y == 7){
+		if (y < 2){
 		    maker.pieceCreator(x, y, getPieceAt(x,y), "black");
+		    System.out.println("svart");
+		}else if (y > 5){
+		    maker.pieceCreator(x, y, getPieceAt(x,y), "white");
+		    System.out.println("vit");
 		}
 	    }
 	}

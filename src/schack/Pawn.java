@@ -13,13 +13,13 @@ public class Pawn extends Pieces
         return firstStep;
     }
 
-    public String getPath() {
+    public static String getPath() {
         if(color == "white"){
-            //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_w.png";
-            return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_w.png";
+            return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_w.png";
+            //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_w.png";
         } else {
-            //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_b.png";
-            return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_b.png";
+            return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_b.png";
+            //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_b.png";
         }
     }
 
@@ -55,10 +55,10 @@ public class Pawn extends Pieces
     }
 
     public boolean rookUpgrade() {
-        if (this.color == "white" && pieceY == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
+        if (color == "white" && pieceY == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
             return true;
         }
-        else return this.color == "black" && pieceY == 7;
+        else return color == "black" && pieceY == 7;
     }
 
 }

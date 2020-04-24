@@ -6,13 +6,13 @@ public class Queen extends Pieces
 	super(x, y, type, color);
     }
 
-    public String getPath() {
+    public static String getPath() {
 	if(color == "white"){
-	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen_w.png";
-	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen_w.png";
+	    return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen_w.png";
+	    //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen_w.png";
 	} else {
-	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen_b.png";
-	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen_b.png";
+	    return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\queen_b.png";
+	  //  return "C:\\Users\\lisac\\IdeaProjects\\Pics\\queen_b.png";
 	}
     }
 

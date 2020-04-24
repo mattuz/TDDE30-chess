@@ -6,13 +6,13 @@ public class Rook extends Pieces
 	super(x, y, type, color);
     }
 
-    public String getPath() {
+    public static String getPath() {
         if(color == "black"){
-	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\rook_w.png";
-	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\rook_b.png";
+	    return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\rook_b.png";
+	    //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\rook_b.png";
 	} else if(color == "white"){
-	    //return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\rook_b.png";
-	    return "C:\\Users\\lisac\\IdeaProjects\\Pics\\rook_w.png";
+	    return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\rook_w.png";
+	    //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\rook_w.png";
 	} else return null;
     }
 

@@ -8,7 +8,7 @@ import java.util.EnumMap;
 
 public class PiecePainter
 {
-    private String picturepath = null;
+    private static String picturepath = null;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
 
@@ -32,7 +32,7 @@ public class PiecePainter
 	return img;
     }
 
-    public String pieceSelector(PieceType piece) {
+    public static String pieceSelector(PieceType piece) {
 	switch (piece) {
 	    case PAWN:
 		picturepath = Pawn.getPath();
@@ -58,7 +58,7 @@ public class PiecePainter
 	return picturepath;
     }
 
-    public BufferedImage bufferedImageMaker(PieceType piece) { //"Skapar" en bild, tar den från Pics :)
+    public static BufferedImage bufferedImageMaker(PieceType piece) { //"Skapar" en bild, tar den från Pics :)
 	//Path path = FileSystems.getDefault().getPath("C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\"); //Detta gick inte så bra :(
 	//String pathstring = path.toString();
 	BufferedImage myPicture = null;
