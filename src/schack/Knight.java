@@ -1,18 +1,20 @@
 package schack;
 
+import java.net.URL;
+
 public class Knight extends Pieces
 {
     public Knight(final int x, final int y, final PieceType type, final String color) {
 	super(x, y, type, color);
     }
 
-    public static String getPath() {
+    public static URL getPath() {
 	if(color == "white"){
-	    return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight_w.png";
-	  //  return "C:\\Users\\lisac\\IdeaProjects\\Pics\\knight_w.png";
+	    return ClassLoader.getSystemResource("knight_w.png");
+
 	} else {
-	    return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\knight_b.png";
-	  //  return "C:\\Users\\lisac\\IdeaProjects\\Pics\\knight_b.png";
+	    return ClassLoader.getSystemResource("knight_b.png");
+
 	}
     }
 

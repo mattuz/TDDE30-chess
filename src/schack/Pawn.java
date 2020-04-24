@@ -1,5 +1,7 @@
 package schack;
 
+import java.net.URL;
+
 public class Pawn extends Pieces
 {
     private boolean firstStep;
@@ -13,13 +15,13 @@ public class Pawn extends Pieces
         return firstStep;
     }
 
-    public static String getPath() {
+    public static URL getPath() {
         if(color == "white"){
-            return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_w.png";
-            //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_w.png";
+            return ClassLoader.getSystemResource("pawn_w.png");
+
         } else {
-            return "C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\pawn_b.png";
-            //return "C:\\Users\\lisac\\IdeaProjects\\Pics\\pawn_b.png";
+            return ClassLoader.getSystemResource("pawn_b.png");
+
         }
     }
 

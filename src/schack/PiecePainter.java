@@ -2,13 +2,13 @@ package schack;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.EnumMap;
 
 public class PiecePainter
 {
-    private static String picturepath = null;
+    private static URL picturepath = null;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
 
@@ -32,7 +32,7 @@ public class PiecePainter
 	return img;
     }
 
-    public static String pieceSelector(PieceType piece) {
+    public static URL pieceSelector(PieceType piece) {
 	switch (piece) {
 	    case PAWN:
 		picturepath = Pawn.getPath();
@@ -63,7 +63,7 @@ public class PiecePainter
 	//String pathstring = path.toString();
 	BufferedImage myPicture = null;
 	try {
-	    myPicture = ImageIO.read(new File(pieceSelector(piece)));
+	    myPicture = ImageIO.read(/*new File*/(pieceSelector(piece)));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
