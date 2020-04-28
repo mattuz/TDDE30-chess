@@ -4,8 +4,8 @@ import java.net.URL;
 
 public class Knight extends Pieces
 {
-    public Knight(final int x, final int y, final PieceType type, final String color) {
-	super(x, y, type, color);
+    public Knight(final int x, final int y, final PieceType type, final String color, final URL path) {
+	super(x, y, type, color, path);
     }
 
     public static URL getPath() {
@@ -16,10 +16,6 @@ public class Knight extends Pieces
 	    return ClassLoader.getSystemResource("knight_b.png");
 
 	}
-    }
-
-    public PieceType getType() {
-	return type;
     }
 
     public boolean legalMove(int x, int y){

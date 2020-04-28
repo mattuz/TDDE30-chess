@@ -16,8 +16,8 @@ public class BoardTest
 
 
 	System.out.println(b1.getDeadpieces()); //Visar alla "döda" pjäser.
-	System.out.println(BoardToText.convertToTextBoard(b1));
-	System.out.println(b1.getPieceAt(0,0));
+	//System.out.println(BoardToText.convertToTextBoard(b1));
+	System.out.println(b1.getPieceTypeAt(0, 0));
 
     }
 

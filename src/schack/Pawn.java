@@ -6,8 +6,8 @@ public class Pawn extends Pieces
 {
     private boolean firstStep;
 
-    public Pawn(final int x, final int y, final PieceType type, final String color) {
-        super(x, y, type, color);
+    public Pawn(final int x, final int y, final PieceType type, final String color, final URL path) {
+        super(x, y, type, color, path);
         this.firstStep = true;
     }
 
@@ -23,10 +23,6 @@ public class Pawn extends Pieces
             return ClassLoader.getSystemResource("pawn_b.png");
 
         }
-    }
-
-    public PieceType getType() {
-        return type;
     }
 
     public boolean legalMove(int x, int y) {

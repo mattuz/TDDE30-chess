@@ -6,7 +6,7 @@ public class BoardToText
 	StringBuilder textboard = new StringBuilder();
 	for (int i = 0; i < board.getHeight(); i++) {
 	    for (int j = 0; j < board.getWidth(); j++) {
-		switch (board.getPieceAt(j, i)) {
+		switch (board.getPieceTypeAt(j, i)) {
 		    case EMPTY:
 			textboard.append(" - ");
 			break;

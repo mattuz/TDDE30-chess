@@ -1,11 +1,7 @@
 package schack;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.EnumMap;
 
 import static java.awt.Color.*;
@@ -66,8 +62,9 @@ public class PieceComponent extends JComponent implements BoardListener
 		g2d.setColor(BLACK);
 		g2d.drawRect(positionX, positionY, BOARDCONSTANT,
 			     BOARDCONSTANT);
-		g2d.drawString(piece.get(board.getPieceAt(x,y)), CENTERTEXT + positionX, CENTERTEXT + positionY);
-		if (board.getPieceAt(x, y) != PieceType.EMPTY) {
+		System.out.println("HejHej!!!!");
+		g2d.drawString(piece.get(board.getPieceTypeAt(x, y)), CENTERTEXT + positionX, CENTERTEXT + positionY);
+		if (board.getPieceTypeAt(x, y) != PieceType.EMPTY) {
 		    g2d.drawImage((PiecePainter.scale(PiecePainter.bufferedImageMaker(board.getPieceAt(x, y)), BOARDCONSTANT, BOARDCONSTANT)), positionX,
 				  positionY, this);
 		}

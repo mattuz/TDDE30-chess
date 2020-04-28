@@ -4,8 +4,8 @@ import java.net.URL;
 
 public class Queen extends Pieces
 {
-    public Queen(final int x, final int y, final PieceType type, final String color) {
-	super(x, y, type, color);
+    public Queen(final int x, final int y, final PieceType type, final String color, final URL path) {
+	super(x, y, type, color, path);
     }
 
     public static URL getPath() {
@@ -18,10 +18,6 @@ public class Queen extends Pieces
 	}
     }
 
-
-    public PieceType getType() {
-	return type;
-    }
 
     public boolean leagalMove(int x, int y){
 	if (getPieceX() == x || getPieceY() == y){
