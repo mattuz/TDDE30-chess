@@ -8,15 +8,15 @@ public class Queen extends Pieces
 	super(x, y, type, color, path);
     }
 
-    public static URL getPath() {
-	if(color == "white"){
-	    return ClassLoader.getSystemResource("queen_w.png");
-
-	} else {
-	    return ClassLoader.getSystemResource("queen_b.png");
-
-	}
-    }
+//    public static URL getPath() {
+//	if(color == "white"){
+//	    return ClassLoader.getSystemResource("queen_w.png");
+//
+//	} else {
+//	    return ClassLoader.getSystemResource("queen_b.png");
+//
+//	}
+//    }
 
 
     public boolean leagalMove(int x, int y){

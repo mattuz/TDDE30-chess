@@ -8,15 +8,15 @@ public class Rook extends Pieces
 	super(x, y, type, color, path);
     }
 
-    public static URL getPath() {
-        if(color == "black"){
-	    return ClassLoader.getSystemResource("rook_b.png");
-
-	} else if(color == "white"){
-	    return ClassLoader.getSystemResource("rook_w.png");
-
-	} else return null;
-    }
+//    public static URL getPath() {
+//        if(color == "black"){
+//	    return ClassLoader.getSystemResource("rook_b.png");
+//
+//	} else if(color == "white"){
+//	    return ClassLoader.getSystemResource("rook_w.png");
+//
+//	} else return null;
+//    }
 
     public boolean legalMove(int x, int y){
 	return getPieceX() == x || getPieceY() == y;

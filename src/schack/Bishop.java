@@ -8,13 +8,13 @@ public class Bishop extends Pieces
 	super(x, y, type, color, path);
     }
 
-    public static URL getPath() {
-        if(color == "white"){
-	    return ClassLoader.getSystemResource("bishop_w.png");
-	} else {
-	    return ClassLoader.getSystemResource("bishop_b.png");
-	}
-    }
+//    public static URL getPath() {
+//        if(color == "white"){
+//	    return ClassLoader.getSystemResource("bishop_w.png");
+//	} else {
+//	    return ClassLoader.getSystemResource("bishop_b.png");
+//	}
+//    }
 
 
     public boolean legalMove(int x, int y){

@@ -15,15 +15,15 @@ public class Pawn extends Pieces
         return firstStep;
     }
 
-    public static URL getPath() {
-        if(color == "white"){
-            return ClassLoader.getSystemResource("pawn_w.png");
-
-        } else {
-            return ClassLoader.getSystemResource("pawn_b.png");
-
-        }
-    }
+//    public static URL getPath() {
+//        if(color == "white"){
+//            return ClassLoader.getSystemResource("pawn_w.png");
+//
+//        } else {
+//            return ClassLoader.getSystemResource("pawn_b.png");
+//
+//        }
+//    }
 
     public boolean legalMove(int x, int y) {
         if (getColor() == "black") {

@@ -1,5 +1,6 @@
 package schack;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,18 +61,68 @@ public class Board
 	}
         else if (y == 1) {
 	    //square[x][y] = PieceType.PAWN;
-	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"black");
+	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"black",assignPaths("black",PieceType.PAWN) );
 
 	    //square[x][y] = new Pawn("black", x, y); //Vill man göra såhär?
 	}
         else if (y == 6) {
 	  //  square[x][y] = PieceType.PAWN;
-	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"white");
+	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"white",assignPaths("white",PieceType.PAWN));
 	}
         else if (y == 7) {
 	    pieceSwitcher(x, y, "white");
 	}
+    }
 
+    public URL assignPaths(String color, PieceType type) {
+        URL path;
+        switch (type) {
+	    case KING:
+	        if (color == "white") {
+		    path = ClassLoader.getSystemResource("king_w.png");
+		} else {
+	            path = ClassLoader.getSystemResource("king_b_bra.png");
+		}
+	        break;
+	    case PAWN:
+		if (color == "white") {
+		    path = ClassLoader.getSystemResource("pawn_w.png");
+		} else {
+		    path = ClassLoader.getSystemResource("pawn_b.png");
+		}
+		break;
+	    case ROOK:
+		if (color == "white") {
+		    path = ClassLoader.getSystemResource("rook_w.png");
+		} else {
+		    path = ClassLoader.getSystemResource("rook_b.png");
+		}
+		break;
+	    case QUEEN:
+		if (color == "white") {
+		    path = ClassLoader.getSystemResource("queen_w.png");
+		} else {
+		    path = ClassLoader.getSystemResource("queen_b_bra.png");
+		}
+		break;
+	    case BISHOP:
+		if (color == "white") {
+		    path = ClassLoader.getSystemResource("bishop_w.png");
+		} else {
+		    path = ClassLoader.getSystemResource("bishop_b.png");
+		}
+		break;
+	    case KNIGHT:
+		if (color == "white") {
+		    path = ClassLoader.getSystemResource("knight_w.png");
+		} else {
+		    path = ClassLoader.getSystemResource("knight_b.png");
+		}
+		break;
+	    default:
+		throw new IllegalStateException("Unexpected value: " + type);
+	}
+	return path;
     }
 
     public void pieceSwitcher(int x, int y, String color) {
@@ -79,25 +130,25 @@ public class Board
 	    case 0:
 	    case 7:
 		//square[x][y] = PieceType.ROOK;
-		square[x][y] = new Rook(x,y,PieceType.ROOK,color);
+		square[x][y] = new Rook(x,y,PieceType.ROOK,color, assignPaths(color,PieceType.ROOK));
 	        break;
 	    case 1:
 	    case 6:
 		//square[x][y] = PieceType.KNIGHT;
-		square[x][y] = new Knight(x,y,PieceType.KNIGHT,color);
+		square[x][y] = new Knight(x,y,PieceType.KNIGHT,color, assignPaths(color,PieceType.KNIGHT));
 	        break;
 	    case 2:
 	    case 5:
 		//square[x][y] = PieceType.BISHOP;
-		square[x][y] = new Bishop(x,y,PieceType.BISHOP,color);
+		square[x][y] = new Bishop(x,y,PieceType.BISHOP,color,assignPaths(color,PieceType.BISHOP));
 		break;
 	    case 3:
 	        //square[x][y] = PieceType.QUEEN;
-		square[x][y] = new Queen(x,y,PieceType.QUEEN,color);
+		square[x][y] = new Queen(x,y,PieceType.QUEEN,color,assignPaths(color,PieceType.QUEEN));
 		break;
 	    case 4:
 	       // square[x][y] = PieceType.KING;
-		square[x][y] = new King(x,y,PieceType.KING,color);
+		square[x][y] = new King(x,y,PieceType.KING,color,assignPaths(color,PieceType.KING));
 		break;
 	    default:
 	        break;

@@ -8,14 +8,14 @@ public class King extends Pieces
 	super(x, y, type, color, path);
     }
 
-    public static URL getPath() {
-	if(color == "white"){
-	    return ClassLoader.getSystemResource("king_w.png");
-	} else {
-	    return ClassLoader.getSystemResource("king_b.png");
-
-	}
-    }
+//    public static URL getPath() {
+//	if(color == "white"){
+//	    return ClassLoader.getSystemResource("king_w.png");
+//	} else {
+//	    return ClassLoader.getSystemResource("king_b.png");
+//
+//	}
+//    }
 
     public boolean legalMove(int x, int y){
         if (getPieceX() == x && Math.abs(getPieceY() - y) == 1){

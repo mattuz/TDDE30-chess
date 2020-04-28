@@ -8,15 +8,15 @@ public class Knight extends Pieces
 	super(x, y, type, color, path);
     }
 
-    public static URL getPath() {
-	if(color == "white"){
-	    return ClassLoader.getSystemResource("knight_w.png");
-
-	} else {
-	    return ClassLoader.getSystemResource("knight_b.png");
-
-	}
-    }
+//    public static URL getPath() {
+//	if(color == "white"){
+//	    return ClassLoader.getSystemResource("knight_w.png");
+//
+//	} else {
+//	    return ClassLoader.getSystemResource("knight_b.png");
+//
+//	}
+//    }
 
     public boolean legalMove(int x, int y){
 	return (Math.abs(getPieceX() - x) == 1 && Math.abs(getPieceY() - y) == 2) ||
