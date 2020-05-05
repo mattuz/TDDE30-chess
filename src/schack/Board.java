@@ -74,7 +74,7 @@ public class Board
 	}
     }
 
-    public URL assignPaths(String color, PieceType type) {
+    public URL assignPaths(String color, PieceType type) { //TODO: Denna ska nog läggas separat. Passar ej in i board.
         URL path;
         switch (type) {
 	    case KING:

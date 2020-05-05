@@ -13,7 +13,6 @@ public class PieceComponent extends JComponent implements BoardListener
     public static final int CENTERTEXT = 49;
     private Board board;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
-    //final private ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("gnome child.png"));
 
 
     public PieceComponent(final Board board) {
