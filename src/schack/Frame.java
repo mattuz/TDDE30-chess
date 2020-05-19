@@ -26,9 +26,13 @@ public class Frame extends AbstractAction
     public void show() {
         frame.setLayout(new BorderLayout());
         frame.add(graphics, BorderLayout.CENTER);
+        frame.add(new Panel(), BorderLayout.PAGE_END);
         frame.pack();
         frame.setVisible(true);
+
     }
+
+
 
     public void keyBindings() {
         InputMap im = graphics.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);

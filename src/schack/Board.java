@@ -15,6 +15,11 @@ public class Board
     private PieceMaker maker = new PieceMaker();
     public List<Pieces> piecesList = new ArrayList<>();
 
+    private String state = WHITE_STATE;
+
+    static final String WHITE_STATE = "white";
+    static final String BLACK_STATE = "black";
+
     public Board(final int width, final int height) { //Man ska kunna ändra den om man vill
 	this.width = width;
 	this.height = height;
