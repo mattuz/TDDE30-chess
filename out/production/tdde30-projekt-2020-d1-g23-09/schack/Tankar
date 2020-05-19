@@ -1,0 +1,18 @@
+Vad behöver göras? /Idéer:
+
+1. Behöver få till en lösning på själva konstruktionen av pjäserna. Som det ser ut nu har vi inte en pjäsklass som representerar
+varje pjäs, utan bara en typ. Detta tror jag vi måste ändra på så att vi utformar allt utifrån det vi gjort i pjäsklasserna.
+
+Menar att vi istället för att göra square[x][y] = PieceType.XXX, så har vi att square[x][y] = new XXX(färg/spelare, posX, posY).
+Detta kan man sedan uppdatera när man väl flyttar på en pjäs, genom att ändra på fälten i t.ex Pawn eller dyl. I och med det så
+kommer vi ha ett objekt (tror jag) för varje pjäs på planen. Tror att det är bra? :p
+
+2. Fixa så att PiecePainter fungerar som tänkt. Jag vill flytta hela BufferedImage-delen dit så att PieceComponent blir lite
+lättare att följa. PieceComponent ska användas för hantering av komponenterna på boarden, dvs alla pjäser. Här kommer vi lägga
+in actionmaps så att man kan flytta på pjäserna.
+
+3. Kan man på något sätt använda "superklassen" Pieces för att välja en Piece? Eller måste man skriva "Pawn" hela tiden istället
+för att ha någon form av Piece.getPiece => Pawn/King/Rook osv? Hade varit ganska najs då man isåfall slipper repetera kod som
+"if Rook..., if Pawn.....".
+
+Kanske besvaras av Hugo!!!
