@@ -13,6 +13,8 @@ public class PieceComponent extends JComponent implements BoardListener
     public static final int CENTERTEXT = 49;
     private Board board;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
+    private Pieces pieces = null;
+
 
 
     public PieceComponent(final Board board) {
@@ -35,12 +37,13 @@ public class PieceComponent extends JComponent implements BoardListener
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
 
+	//TODO: ta bort dessa nedan när vi är säkra på att de inte behövs för något.
 	piece.put(PieceType.EMPTY, " ");
 	piece.put(PieceType.PAWN, "P");
 	piece.put(PieceType.BISHOP, "B");
 	piece.put(PieceType.KING, "K");
 
-	piece.put(PieceType.QUEEN, "Q");       //Vet inte om något av detta kommer att behövas. Vi ska ju ändå ha bilder för varje pjäs.
+	piece.put(PieceType.QUEEN, "Q");
 	piece.put(PieceType.ROOK, "R");
 	piece.put(PieceType.KNIGHT, "Kn");
 
@@ -61,7 +64,6 @@ public class PieceComponent extends JComponent implements BoardListener
 		g2d.setColor(BLACK);
 		g2d.drawRect(positionX, positionY, BOARDCONSTANT,
 			     BOARDCONSTANT);
-		System.out.println("HejHej!!!!");
 		g2d.drawString(piece.get(board.getPieceTypeAt(x, y)), CENTERTEXT + positionX, CENTERTEXT + positionY);
 		if (board.getPieceTypeAt(x, y) != PieceType.EMPTY) {
 		    g2d.drawImage((PiecePainter.scale(PiecePainter.bufferedImageMaker(board.getPieceAt(x, y)), BOARDCONSTANT, BOARDCONSTANT)), positionX,

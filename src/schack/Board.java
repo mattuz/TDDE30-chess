@@ -13,6 +13,7 @@ public class Board
     private List<PieceType> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
     private PieceMaker maker = new PieceMaker();
+    public List<Pieces> piecesList = new ArrayList<>();
 
     public Board(final int width, final int height) { //Man ska kunna ändra den om man vill
 	this.width = width;
@@ -21,16 +22,21 @@ public class Board
 	this.enumsquare = new PieceType[width][height];
 	for (int y = 0; y < height; y++) {
 	    for (int x = 0; x < width; x++) {
-		//square[x][y] = PieceType.EMPTY;
+
 		enumsquare[x][y] = PieceType.EMPTY;
 		placePieces(x,y);
-		/*if (y < 2){
-		    maker.pieceCreator(x, y, getPieceAt(x,y).getType(), "black");
-		    System.out.println("svart");
-		}else if (y > 5){
-		    maker.pieceCreator(x, y, getPieceAt(x,y).getType(), "white");
-		    System.out.println("vit");
-		}*/
+		addPieces();
+
+	    }
+	}
+    }
+
+    public void addPieces() {
+	for (int y = 0; y < height; y++) {
+	    for (int x = 0; x < width; x++) {
+		if (square[x][y] != null) {
+		    piecesList.add(square[x][y]);
+		}
 	    }
 	}
     }
@@ -45,7 +51,6 @@ public class Board
 
     public PieceType getPieceTypeAt(int x, int y) {
         if (square[x][y] != null) {
-	    System.out.println("Här finns ett objekt");
 	    return square[x][y].getType();
 	}
         return enumsquare[x][y];
@@ -157,10 +162,9 @@ public class Board
 
     public void addBoardListener(BoardListener bl) {
 	listenerlist.add(bl);
-	System.out.println("Det finns en listener nu");
     }
 
-    private void notifyListeners() {
+    public void notifyListeners() {
 	for (BoardListener listeners : listenerlist) {
 	    listeners.boardChanged();
 	}

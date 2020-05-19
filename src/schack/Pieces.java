@@ -31,6 +31,14 @@ public abstract class Pieces
         return pieceY;
     }
 
+    public void newX(int x) {
+        this.pieceX = x;
+    }
+
+    public void newY(int y) {
+        this.pieceX = y;
+    }
+
     public URL getPath() {
         return path;
     }

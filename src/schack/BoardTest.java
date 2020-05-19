@@ -11,6 +11,9 @@ public class BoardTest
 
 	}*/
 	Frame f1 = new Frame(b1);
+	PieceMove pm = new PieceMove(b1,f1.getGraphics());
+
+
 	b1.addBoardListener(f1.getGraphics());
 	f1.show();
 
