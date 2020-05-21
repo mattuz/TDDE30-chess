@@ -2,11 +2,11 @@ package schack;
 
 import java.net.URL;
 
-public class Pawn extends Pieces
+public class Pawn extends Piece
 {
     private boolean firstStep;
 
-    public Pawn(final int x, final int y, final PieceType type, final String color, final URL path) {
+    public Pawn(int x, int y, final PieceType type, final String color, final URL path) {
         super(x, y, type, color, path);
         this.firstStep = true;
     }

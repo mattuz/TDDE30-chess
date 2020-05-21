@@ -13,7 +13,7 @@ public class PieceComponent extends JComponent implements BoardListener
     public static final int CENTERTEXT = 49;
     private Board board;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
-    private Pieces pieces = null;
+    private Piece pieces = null;
 
 
 
@@ -23,6 +23,7 @@ public class PieceComponent extends JComponent implements BoardListener
 
     @Override public void boardChanged() {
 	repaint();
+	System.out.println("Repainting");
     }
 
     @Override public Dimension getPreferredSize() {
@@ -72,5 +73,9 @@ public class PieceComponent extends JComponent implements BoardListener
 		}
 	    }
 	}
+
+    public static int getBOARDCONSTANT() {
+	return BOARDCONSTANT;
     }
+}
 

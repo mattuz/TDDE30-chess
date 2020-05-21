@@ -1,9 +1,8 @@
 package schack;
 
-import java.io.File;
 import java.net.URL;
 
-public abstract class Pieces
+public abstract class Piece
 {
     protected static String color = null;
     protected final URL path;
@@ -11,8 +10,8 @@ public abstract class Pieces
     protected int pieceY;
     protected final PieceType type;
 
-    protected Pieces(int x, int y, PieceType type, String color, URL path){
-        Pieces.color = color;
+    protected Piece(int x, int y, PieceType type, String color, URL path){
+        Piece.color = color;
         this.pieceX = x;
         this.pieceY = y;
         this.type = type;

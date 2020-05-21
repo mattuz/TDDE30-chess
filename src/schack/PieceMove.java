@@ -2,25 +2,23 @@ package schack;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 public class PieceMove extends MouseAdapter
 {
-    private List<Pieces> pieces;
+    private List<Piece> pieces;
     private PieceComponent graphics;
     private Board board;
 
     private int dragOffsetX;
     private int dragOffsetY;
-    private Pieces dragPiece = null;
+    private Piece dragPiece = null;
 
     public PieceMove(Board board, final PieceComponent graphics) {
-	this.pieces = board.piecesList;
+	this.pieces = board.pieceList;
 	this.graphics = graphics;
 	this.board = board;
+	System.out.println("PieceMove activated!");
     }
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
@@ -45,7 +43,7 @@ public class PieceMove extends MouseAdapter
 	int y = mouseEvent.getPoint().y;
 	System.out.println("Mouse pressed!");
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
-	    Pieces piece = this.pieces.get(i);
+	    Piece piece = this.pieces.get(i);
 
 
 	    if (mouseOverPiece(piece, x, y)) {
@@ -60,11 +58,11 @@ public class PieceMove extends MouseAdapter
 	}
     }
 
-    private boolean mouseOverPiece(Pieces piece, int x, int y) {
+    private boolean mouseOverPiece(Piece piece, int x, int y) {
         return piece.getPieceX() <= x &&
-	       piece.getPieceX() + 100 >= x &&
+	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() >= x && //* eller + här?
 	       piece.getPieceY() <= y &&
-	       piece.getPieceY() + 100 >= y;
+	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() >= y;
     }
 
 }

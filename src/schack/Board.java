@@ -8,12 +8,12 @@ public class Board
 {
     private  int width;
     private  int height;
-    private Pieces[][] square;
+    private Piece[][] square;
     private PieceType[][] enumsquare;
     private List<PieceType> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
     private PieceMaker maker = new PieceMaker();
-    public List<Pieces> piecesList = new ArrayList<>();
+    public List<Piece> pieceList = new ArrayList<>();
 
     private String state = WHITE_STATE;
 
@@ -23,7 +23,7 @@ public class Board
     public Board(final int width, final int height) { //Man ska kunna ändra den om man vill
 	this.width = width;
 	this.height = height;
-	this.square = new Pieces[width][height];
+	this.square = new Piece[width][height];
 	this.enumsquare = new PieceType[width][height];
 	for (int y = 0; y < height; y++) {
 	    for (int x = 0; x < width; x++) {
@@ -31,7 +31,6 @@ public class Board
 		enumsquare[x][y] = PieceType.EMPTY;
 		placePieces(x,y);
 		addPieces();
-
 	    }
 	}
     }
@@ -40,7 +39,7 @@ public class Board
 	for (int y = 0; y < height; y++) {
 	    for (int x = 0; x < width; x++) {
 		if (square[x][y] != null) {
-		    piecesList.add(square[x][y]);
+		    pieceList.add(square[x][y]);
 		}
 	    }
 	}
@@ -61,7 +60,7 @@ public class Board
         return enumsquare[x][y];
     }
 
-    public Pieces getPieceAt(int x, int y) {
+    public Piece getPieceAt(int x, int y) {
         return square[x][y];
     }
 
@@ -175,6 +174,21 @@ public class Board
 	}
     }
 
+    public void movePieceTest(int x, int y) {
+
+        if (getPieceAt(x,y).getPieceX() == x && getPieceAt(x,y).getPieceY() == y) {
+            if (y <= 1) {
+		System.out.println("Current Y:" + getPieceAt(x,y).getPieceY());
+		getPieceAt(x,y).newY(y+1);
+		System.out.println("New Y:" + getPieceAt(x,y).getPieceY());
+	    } if (y>=6) {
+		System.out.println("Current Y:" + getPieceAt(x,y).getPieceY());
+		getPieceAt(x,y).newY(y-1);
+	    }
+	}
+        notifyListeners();
+    }
+
     public void removePiece(int x, int y) {
         //deadpieces.add(getPieceAt(x, y));
        // square[x][y] = PieceType.EMPTY;
@@ -187,7 +201,7 @@ public class Board
 	} else {state = WHITE_STATE;}
     }
 
-    public Pieces[][] getSquare() {
+    public Piece[][] getSquare() {
 	return square;
     }
 
