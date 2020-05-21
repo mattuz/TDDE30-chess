@@ -35,7 +35,7 @@ public abstract class Piece
     }
 
     public void newY(int y) {
-        this.pieceX = y;
+        this.pieceY = y;
     }
 
     public URL getPath() {

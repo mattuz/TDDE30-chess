@@ -10,7 +10,7 @@ public class Board
     private  int height;
     private Piece[][] square;
     private PieceType[][] enumsquare;
-    private List<PieceType> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
+    private List<Piece> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
     private PieceMaker maker = new PieceMaker();
     public List<Piece> pieceList = new ArrayList<>();
@@ -175,12 +175,14 @@ public class Board
     }
 
     public void movePieceTest(int x, int y) {
-
-        if (getPieceAt(x,y).getPieceX() == x && getPieceAt(x,y).getPieceY() == y) {
+	Piece p = getPieceAt(x,y);
+        if (square[x][y] != null) {
             if (y <= 1) {
 		System.out.println("Current Y:" + getPieceAt(x,y).getPieceY());
-		getPieceAt(x,y).newY(y+1);
-		System.out.println("New Y:" + getPieceAt(x,y).getPieceY());
+		p.newY(y+1);
+		square[x][y+1] = square[x][y];
+		removePiece(x,y);
+		System.out.println("New Y:" + getPieceAt(x,y+1).getPieceY());
 	    } if (y>=6) {
 		System.out.println("Current Y:" + getPieceAt(x,y).getPieceY());
 		getPieceAt(x,y).newY(y-1);
@@ -190,8 +192,8 @@ public class Board
     }
 
     public void removePiece(int x, int y) {
-        //deadpieces.add(getPieceAt(x, y));
-       // square[x][y] = PieceType.EMPTY;
+        deadpieces.add(getPieceAt(x, y));
+        square[x][y] = null;
         notifyListeners();
     }
 
@@ -213,7 +215,7 @@ public class Board
 	return height;
     }
 
-    public List<PieceType> getDeadpieces() {
+    public List<Piece> getDeadpieces() {
 	return deadpieces;
     }
 }
