@@ -181,6 +181,11 @@ public class Board
         notifyListeners();
     }
 
+    public void changeState() {
+        if (state == WHITE_STATE) {
+            state = BLACK_STATE;
+	} else {state = WHITE_STATE;}
+    }
 
     public Pieces[][] getSquare() {
 	return square;

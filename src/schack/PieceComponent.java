@@ -9,7 +9,7 @@ import static java.awt.Color.BLACK;
 
 public class PieceComponent extends JComponent implements BoardListener
 {
-    public static final int BOARDCONSTANT = 100;
+    public static final int BOARDCONSTANT = 80;
     public static final int CENTERTEXT = 49;
     private Board board;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
