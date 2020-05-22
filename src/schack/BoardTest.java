@@ -1,5 +1,7 @@
 package schack;
 
+import java.awt.event.MouseListener;
+
 public class BoardTest
 {
     public static void main(String[] args) {
@@ -11,16 +13,15 @@ public class BoardTest
 
 	b1.addBoardListener(f1.getGraphics());
 	f1.show();
-	//b1.removePiece(0,1);
 
-	System.out.println(b1.getDeadpieces()); //Visar alla "döda" pjäser.
+	//System.out.println(b1.getDeadpieces()); //Visar alla "döda" pjäser.
 	//System.out.println(BoardToText.convertToTextBoard(b1));
-	System.out.println(b1.getPieceTypeAt(0, 1));
-	System.out.println(b1.getPieceTypeAt(0,2));
+	//System.out.println(b1.getPieceTypeAt(0, 1));
+	//System.out.println(b1.getPieceTypeAt(0,2));
 	//System.out.println(b1.getPieceAt(0,1));
-	b1.movePieceTest(0,1);
-	System.out.println(b1.getPieceTypeAt(0, 1));
-	System.out.println(b1.getPieceTypeAt(0,2));
+	//b1.movePieceTest(0,1);
+	//System.out.println(b1.getPieceTypeAt(0, 1));
+	//System.out.println(b1.getPieceTypeAt(0,2));
 	//System.out.println(b1.getPieceAt(0,1));
 
 

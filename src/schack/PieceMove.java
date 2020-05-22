@@ -42,14 +42,17 @@ public class PieceMove extends MouseAdapter
 	int x = mouseEvent.getPoint().x;
 	int y = mouseEvent.getPoint().y;
 	System.out.println("Mouse pressed!");
+	System.out.println(x + " " + y);
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 
 
 	    if (mouseOverPiece(piece, x, y)) {
+		//System.out.println(piece);
 		this.dragOffsetX = x - piece.getPieceX();
 		this.dragOffsetY = y - piece.getPieceY();
 		this.dragPiece = piece;
+		//System.out.println(dragPiece);
 	    }
 	}
 	if (this.dragPiece != null){
