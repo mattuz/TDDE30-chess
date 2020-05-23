@@ -17,7 +17,7 @@ public class King extends Piece
 //	}
 //    }
 
-    public boolean legalMove(int x, int y){
+    public boolean isLegal(int x, int y){
         if (getPieceX() == x && Math.abs(getPieceY() - y) == 1){
             return true;
 	}

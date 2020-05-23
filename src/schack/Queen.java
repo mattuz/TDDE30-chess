@@ -19,7 +19,7 @@ public class Queen extends Piece
 //    }
 
 
-    public boolean leagalMove(int x, int y){
+    public boolean isLegal(int x, int y){
 	if (getPieceX() == x || getPieceY() == y){
 	    return true;
 	}

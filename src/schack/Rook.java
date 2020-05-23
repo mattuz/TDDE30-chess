@@ -18,7 +18,7 @@ public class Rook extends Piece
 //	} else return null;
 //    }
 
-    public boolean legalMove(int x, int y){
+    public boolean isLegal(int x, int y){
 	return getPieceX() == x || getPieceY() == y;
     }
 }

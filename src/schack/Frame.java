@@ -19,6 +19,7 @@ public class Frame extends AbstractAction
 	this.board = board;
 	PieceMove pm = new PieceMove(board, graphics);
 	frame.addMouseListener(pm);
+	frame.addMouseMotionListener(pm);
     }
 
     public PieceComponent getGraphics() { //Används för att lägga till en listener.

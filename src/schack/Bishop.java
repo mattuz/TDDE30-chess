@@ -17,7 +17,7 @@ public class Bishop extends Piece
 //    }
 
 
-    public boolean legalMove(int x, int y){
+    public boolean isLegal(int x, int y){
 	return Math.abs(getPieceX() - x) == Math.abs(getPieceY() - y);
     }
 }

@@ -37,10 +37,7 @@ public class Board
     public List<Piece> addPieces() {
 	for (int y = 0; y < height; y++) {
 	    for (int x = 0; x < width; x++) {
-		System.out.println("x: " + x +", y: "+y);
 		if (square[x][y] != null) {
-		    //System.out.println(x + " " + y);
-		    //System.out.println(square[x][y]);
 		    pieceList.add(square[x][y]);
 		}
 	    }
