@@ -18,6 +18,7 @@ public class PieceMove extends MouseAdapter
 	this.pieces = board.pieceList;
 	this.graphics = graphics;
 	this.board = board;
+	this.pieces = board.addPieces();
 	System.out.println("PieceMove activated!");
     }
 
@@ -43,6 +44,7 @@ public class PieceMove extends MouseAdapter
 	int y = mouseEvent.getPoint().y;
 	System.out.println("Mouse pressed!");
 	System.out.println(x + " " + y);
+	//System.out.println("pieces:" +pieces);
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 
@@ -62,10 +64,16 @@ public class PieceMove extends MouseAdapter
     }
 
     private boolean mouseOverPiece(Piece piece, int x, int y) {
-        return piece.getPieceX() <= x &&
-	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() >= x && //* eller + här?
-	       piece.getPieceY() <= y &&
-	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() >= y;
+	//System.out.println(piece);
+	System.out.println("P_X: " + piece.getPieceX() + ", P_Y: " + piece.getPieceY());
+	System.out.println(piece.getPieceX() * PieceComponent.getBOARDCONSTANT() <= x &&
+			   piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x && //* eller + här?
+			   piece.getPieceY() * PieceComponent.getBOARDCONSTANT() <= y &&
+			   piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y);
+        return piece.getPieceX() * PieceComponent.getBOARDCONSTANT() <= x &&
+	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x && //* eller + här?
+	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() <= y &&
+	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
     }
 
 }
