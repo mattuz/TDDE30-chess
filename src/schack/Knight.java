@@ -2,7 +2,7 @@ package schack;
 
 import java.net.URL;
 
-public class Knight extends Pieces
+public class Knight extends Piece
 {
     public Knight(final int x, final int y, final PieceType type, final String color, final URL path) {
 	super(x, y, type, color, path);

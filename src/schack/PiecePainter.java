@@ -58,7 +58,7 @@ public class PiecePainter
 //	return picturepath;
 //    }
 
-    public static BufferedImage bufferedImageMaker(Pieces piece) { //"Skapar" en bild, tar den från Pics :)
+    public static BufferedImage bufferedImageMaker(Piece piece) { //"Skapar" en bild, tar den från Pics :)
 	//Path path = FileSystems.getDefault().getPath("C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\"); //Detta gick inte så bra :(
 	//String pathstring = path.toString();
 	BufferedImage myPicture = null;
