@@ -2,6 +2,8 @@ package schack;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Method;
+import java.security.PrivateKey;
 import java.util.List;
 
 public class PieceMove extends MouseAdapter
@@ -29,7 +31,6 @@ public class PieceMove extends MouseAdapter
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
 	System.out.println("Mouse released!!");
 	/*if (dragPiece.getPieceX() != oldX && dragPiece.getPieceY() != oldY){
-
 	}*/
 	board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
 
@@ -42,9 +43,9 @@ public class PieceMove extends MouseAdapter
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	System.out.println("Mouse dragged!");
 	if (this.dragPiece != null){
-	    this.dragPiece.newX((mouseEvent.getPoint().x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT());
+	    this.dragPiece.newX((mouseEvent.getPoint().x - (this.dragOffsetX-40))/PieceComponent.getBOARDCONSTANT());
 	    this.dragPiece.newY((mouseEvent.getPoint().y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT());
-	    System.out.println((mouseEvent.getPoint().x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT());
+	    System.out.println((mouseEvent.getPoint().x - (this.dragOffsetX))/PieceComponent.getBOARDCONSTANT());
 	    System.out.println((mouseEvent.getPoint().y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT());
 	   // board.notifyListeners();
 	}
@@ -52,7 +53,7 @@ public class PieceMove extends MouseAdapter
 
 
     @Override public void mousePressed(final MouseEvent mouseEvent) {
-	int x = mouseEvent.getPoint().x;
+	int x = mouseEvent.getPoint().x-5;
 	int y = mouseEvent.getPoint().y;
 	System.out.println("Mouse pressed!");
 	//System.out.println(x + " " + y);
@@ -62,7 +63,7 @@ public class PieceMove extends MouseAdapter
 
 
 	    if (mouseOverPiece(piece, x, y)) {
-		this.dragOffsetX = x - piece.getPieceX() * PieceComponent.getBOARDCONSTANT() - 7;
+		this.dragOffsetX = x - piece.getPieceX() * PieceComponent.getBOARDCONSTANT() -7;
 		this.dragOffsetY = y - piece.getPieceY() * PieceComponent.getBOARDCONSTANT() - WINDOWOFFSET;
 		this.oldX = (mouseEvent.getPoint().x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
 		this.oldY = (mouseEvent.getPoint().y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
