@@ -8,16 +8,7 @@ public class Bishop extends Piece
 	super(x, y, type, color, path);
     }
 
-//    public static URL getPath() {
-//        if(color == "white"){
-//	    return ClassLoader.getSystemResource("bishop_w.png");
-//	} else {
-//	    return ClassLoader.getSystemResource("bishop_b.png");
-//	}
-//    }
-
-
     public boolean isLegal(int x, int y){
-	return Math.abs(getPieceX() - x) == Math.abs(getPieceY() - y);
+	return Math.abs(getPieceX() - x) == Math.abs(getPieceY() - y) && color == Board.getState();
     }
 }

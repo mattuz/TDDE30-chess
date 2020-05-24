@@ -4,22 +4,18 @@ import java.net.URL;
 
 public abstract class Piece
 {
-    protected static String color = null;
+    protected String color;
     protected final URL path;
     protected int pieceX;
     protected int pieceY;
     protected final PieceType type;
 
     protected Piece(int x, int y, PieceType type, String color, URL path){
-        Piece.color = color;
+        this.color = color;
         this.pieceX = x;
         this.pieceY = y;
         this.type = type;
         this.path = path;
-    }
-
-    public static String getColor() {
-	return color;
     }
 
     public int getPieceX() {
@@ -45,4 +41,9 @@ public abstract class Piece
     public PieceType getType() {
         return type;
     }
+
+    public String getColor(){
+        return color;
+    }
+
 }

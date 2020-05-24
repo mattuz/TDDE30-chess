@@ -4,29 +4,20 @@ import java.net.URL;
 
 public class Pawn extends Piece
 {
-    private boolean firstStep;
+    protected static String color = null;
+    private static boolean firstStep;
 
     public Pawn(int x, int y, final PieceType type, final String color, final URL path) {
         super(x, y, type, color, path);
         this.firstStep = true;
     }
 
-    public boolean isFirstStep() {
+    public static boolean isFirstStep() {
         return firstStep;
     }
 
-//    public static URL getPath() {
-//        if(color == "white"){
-//            return ClassLoader.getSystemResource("pawn_w.png");
-//
-//        } else {
-//            return ClassLoader.getSystemResource("pawn_b.png");
-//
-//        }
-//    }
-
     public boolean isLegal(int x, int y) {
-        if (getColor() == "black") {
+        if (color == "black" && color == Board.getState()) {
             if (getPieceX() == x) {
                 if (firstStep && getPieceY() == y - 1 || getPieceY() == y - 2) {
                     return true;
@@ -36,7 +27,7 @@ public class Pawn extends Piece
             } else {
                 return Math.abs(getPieceX() - x) == 1 && getPieceY() == y - 1;
             }
-        } else if (getColor() == "white") {
+        } else if (color == "white" && color == Board.getState()) {
             if (getPieceX() == x) {
                 if (firstStep && getPieceY() == y + 1 || getPieceY() == y + 2) {
                     return true;
@@ -44,7 +35,7 @@ public class Pawn extends Piece
                     return (!firstStep && getPieceY() == y + 1);
                 }
             } else {
-                return Math.abs(getPieceX() - x) == 1 && getPieceY() == y + 1;
+                return ((Math.abs(getPieceX() - x) == 1 && getPieceY() == y + 1) && color == Board.getState());
             }
         }
         else{

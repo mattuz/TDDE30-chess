@@ -15,10 +15,11 @@ public class Board
     private PieceMaker maker = new PieceMaker();
     public List<Piece> pieceList = new ArrayList<>();
 
-    private String state = WHITE_STATE;
+    final static String WHITE_STATE = "white";
+    final static String BLACK_STATE = "black";
 
-    static final String WHITE_STATE = "white";
-    static final String BLACK_STATE = "black";
+    private static String state = WHITE_STATE;
+
 
     public Board(final int width, final int height) { //Man ska kunna ändra den om man vill
 	this.width = width;
@@ -51,6 +52,10 @@ public class Board
 		getPieceTypeAt(x, y);
 	    }
 	}
+    }
+
+    public static String getState(){
+        return state;
     }
 
     public PieceType getPieceTypeAt(int x, int y) {
@@ -200,10 +205,14 @@ public class Board
 
     }
 
-    public void changeState() {
+    public static void changeState() {
         if (state == WHITE_STATE) {
             state = BLACK_STATE;
-	} else {state = WHITE_STATE;}
+            Panel.getLabel().setText(Panel.BLACK_LABEL);
+	} else {
+            state = WHITE_STATE;
+	    Panel.getLabel().setText(Panel.WHITE_LABEL);
+        }
     }
 
     public Piece[][] getSquare() {
