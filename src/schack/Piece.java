@@ -4,6 +4,7 @@ import java.net.URL;
 
 public abstract class Piece
 {
+    protected boolean firstStep;
     protected String color;
     protected final URL path;
     protected int pieceX;
@@ -16,6 +17,7 @@ public abstract class Piece
         this.pieceY = y;
         this.type = type;
         this.path = path;
+        this.firstStep = true;
     }
 
     public int getPieceX() {
@@ -45,5 +47,11 @@ public abstract class Piece
     public String getColor(){
         return color;
     }
+
+    public boolean isFirstStep() {
+        return firstStep;
+    }
+
+    public abstract boolean isLegal(final int prevX, final int prevY);
 
 }

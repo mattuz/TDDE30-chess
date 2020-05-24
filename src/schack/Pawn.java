@@ -4,38 +4,45 @@ import java.net.URL;
 
 public class Pawn extends Piece
 {
-    protected static String color = null;
-    private static boolean firstStep;
+    //protected static String color = null;
+    public boolean firstStep;
 
     public Pawn(int x, int y, final PieceType type, final String color, final URL path) {
         super(x, y, type, color, path);
         this.firstStep = true;
     }
 
-    public static boolean isFirstStep() {
+    public boolean isFirstStep() {
         return firstStep;
     }
 
-    public boolean isLegal(int x, int y) {
+    public boolean isLegal(int prevX, int prevY) {
+       // System.out.println(Board.getState());
         if (color == "black" && color == Board.getState()) {
-            if (getPieceX() == x) {
-                if (firstStep && getPieceY() == y - 1 || getPieceY() == y - 2) {
+            if (getPieceX() == prevX) {
+                if (firstStep && (getPieceY() == prevY + 1 || getPieceY() == prevY + 2)) {
+                    System.out.println("Okej move");
+                    System.out.println(firstStep);
+                    firstStep = false; // DETTA VERKAR EJ FUNGERA
                     return true;
                 } else {
-                    return (!firstStep && getPieceY() == y - 1);
+                    return (/*!firstStep &&*/ getPieceY() == prevY + 1);
                 }
             } else {
-                return Math.abs(getPieceX() - x) == 1 && getPieceY() == y - 1;
+                return Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY + 1;
             }
         } else if (color == "white" && color == Board.getState()) {
-            if (getPieceX() == x) {
-                if (firstStep && getPieceY() == y + 1 || getPieceY() == y + 2) {
+            if (getPieceX() == prevX) {
+                if (firstStep && (getPieceY() == prevY - 1 || getPieceY() == prevY - 2)) {
+                    System.out.println("Okej move");
+                    System.out.println(firstStep);
+                    firstStep = false;
                     return true;
                 } else {
-                    return (!firstStep && getPieceY() == y + 1);
+                    return (/*!firstStep &&*/ getPieceY() == prevY - 1);
                 }
             } else {
-                return ((Math.abs(getPieceX() - x) == 1 && getPieceY() == y + 1) && color == Board.getState());
+                return ((Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY - 1) && color == Board.getState());
             }
         }
         else{

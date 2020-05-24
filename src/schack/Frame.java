@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class Frame extends AbstractAction
+public class Frame
 {
     private JFrame frame = new JFrame();
     private Board board;
@@ -37,16 +37,5 @@ public class Frame extends AbstractAction
 
 
 
-    public void keyBindings() {
-        InputMap im = graphics.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap am = graphics.getActionMap();
 
-
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LeftArrow");
-        im.put(KeyStroke.getKeyStroke(MouseEvent.BUTTON1, 0), "LeftButton");
-    }
-
-    @Override public void actionPerformed(final ActionEvent actionEvent) {
-
-    }
 }

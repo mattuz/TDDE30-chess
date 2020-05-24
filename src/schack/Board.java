@@ -54,9 +54,7 @@ public class Board
 	}
     }
 
-    public static String getState(){
-        return state;
-    }
+
 
     public PieceType getPieceTypeAt(int x, int y) {
         if (square[x][y] != null) {
@@ -217,6 +215,9 @@ public class Board
 	    Panel.getLabel().setText(Panel.getPlayer1());
 	    //Panel.getLabel().setText(Panel.WHITE_LABEL);
         }
+    }
+    public static String getState(){
+	return state;
     }
 
     public Piece[][] getSquare() {

@@ -28,11 +28,26 @@ public class PieceMove extends MouseAdapter
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
 	//System.out.println("Mouse released!!");
-	board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
+	System.out.println(dragPiece.isLegal(oldX,oldY));
+	//System.out.println(dragPiece.getColor());
 
-	if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY){
-	    board.removePiece(oldX,oldY);
+	if (dragPiece.isLegal(oldX,oldY)) {
+
+	    board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
+	    if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
+		board.removePiece(oldX, oldY);
+	    }
+	    /*if (dragPiece.getType() == PieceType.PAWN) {
+		System.out.println(); //TODO Fixa så att firstStep förändras när man flyttar på något. - Håller på med det inuti Pawn.
+	    }*/
+
+	} else {
+	    dragPiece.newX(oldX);
+	    dragPiece.newY(oldY);
+	    Board.changeState();
 	}
+
+
 
 	this.dragPiece = null;
         board.notifyListeners();
@@ -40,6 +55,12 @@ public class PieceMove extends MouseAdapter
         Board.changeState();
     }
 
+    public void moveLegal(PieceType type, int prevX, int prevY) {
+        switch (type) {
+	    case PAWN:
+	        dragPiece.isLegal(prevX,prevY);
+	}
+    }
 
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	//System.out.println("Mouse dragged!");
@@ -71,6 +92,7 @@ public class PieceMove extends MouseAdapter
 		this.dragPiece = piece;
 		//System.out.println(dragPiece);
 		//System.out.println(dragOffsetX + " " + dragOffsetY);
+		System.out.println(dragPiece.getType());
 	    }
 	}
 	if (this.dragPiece != null){

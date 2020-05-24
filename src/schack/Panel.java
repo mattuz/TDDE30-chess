@@ -10,7 +10,7 @@ public class Panel extends JPanel
 	private static String player1 = "";
 	private static String player2 = null;
 	private static JPanel panel = new JPanel();
-	private static JLabel label = new JLabel("Player1 goes first", JLabel.LEFT);
+	private static JLabel label = new JLabel("White goes first", JLabel.LEFT);
 
 	public Panel() {
 	    panel.setLayout(new FlowLayout());

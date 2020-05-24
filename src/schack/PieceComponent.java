@@ -23,7 +23,6 @@ public class PieceComponent extends JComponent implements BoardListener
 
     @Override public void boardChanged() {
 	repaint();
-	System.out.println("Repainting");
     }
 
     @Override public Dimension getPreferredSize() {

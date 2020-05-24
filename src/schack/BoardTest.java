@@ -15,9 +15,9 @@ public class BoardTest
 	b1.addBoardListener(f1.getGraphics());
 	f1.show();
 
-	String p1 = JOptionPane.showInputDialog("Write the name of player1");
+	String p1 = JOptionPane.showInputDialog("White player: ");
 	Panel.setPlayer1(p1);
-	String p2 = JOptionPane.showInputDialog("Write the name of player2");
+	String p2 = JOptionPane.showInputDialog("Black player: ");
 	Panel.setPlayer2(p2);
 
 	//System.out.println(b1.getDeadpieces()); //Visar alla "döda" pjäser.
