@@ -200,18 +200,22 @@ public class Board
         square[x][y] = null;
         notifyListeners();
     }
+
     public void deadPiece(int x, int y) {
         deadpieces.add(square[x][y]);
 
     }
 
     public static void changeState() {
+	//System.out.println("statechange");
         if (state == WHITE_STATE) {
             state = BLACK_STATE;
-            Panel.getLabel().setText(Panel.BLACK_LABEL);
+            Panel.getLabel().setText(Panel.getPlayer2());
+	    //Panel.getLabel().setText(Panel.BLACK_LABEL);
 	} else {
             state = WHITE_STATE;
-	    Panel.getLabel().setText(Panel.WHITE_LABEL);
+	    Panel.getLabel().setText(Panel.getPlayer1());
+	    //Panel.getLabel().setText(Panel.WHITE_LABEL);
         }
     }
 
