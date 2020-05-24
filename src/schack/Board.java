@@ -192,9 +192,12 @@ public class Board
     }
 
     public void removePiece(int x, int y) {
-        deadpieces.add(getPieceAt(x, y));
         square[x][y] = null;
         notifyListeners();
+    }
+    public void deadPiece(int x, int y) {
+        deadpieces.add(square[x][y]);
+
     }
 
     public void changeState() {

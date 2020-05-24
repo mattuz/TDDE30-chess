@@ -28,12 +28,14 @@ public class PieceMove extends MouseAdapter
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
 	System.out.println("Mouse released!!");
-	/*if (dragPiece.getPieceX() != oldX && dragPiece.getPieceY() != oldY){
-	}*/
+
 	board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
 
+	if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY){
+	    board.removePiece(oldX,oldY);
+	}
 
-	board.removePiece(oldX,oldY);
+
 	this.dragPiece = null;
         board.notifyListeners();
     }
@@ -42,8 +44,8 @@ public class PieceMove extends MouseAdapter
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	System.out.println("Mouse dragged!");
 	if (this.dragPiece != null){
-	    this.dragPiece.newX((mouseEvent.getPoint().x - (this.dragOffsetX))/PieceComponent.getBOARDCONSTANT());
-	    this.dragPiece.newY((mouseEvent.getPoint().y - (this.dragOffsetY))/PieceComponent.getBOARDCONSTANT());
+	    this.dragPiece.newX((mouseEvent.getPoint().x - 7)/PieceComponent.getBOARDCONSTANT());
+	    this.dragPiece.newY((mouseEvent.getPoint().y - WINDOWOFFSET)/PieceComponent.getBOARDCONSTANT());
 	    System.out.println((mouseEvent.getPoint().x));
 	    System.out.println((mouseEvent.getPoint().y ));
 	   // board.notifyListeners();
