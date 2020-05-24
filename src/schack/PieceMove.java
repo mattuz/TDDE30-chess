@@ -2,8 +2,6 @@ package schack;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.Method;
-import java.security.PrivateKey;
 import java.util.List;
 
 public class PieceMove extends MouseAdapter
@@ -34,8 +32,9 @@ public class PieceMove extends MouseAdapter
 	}*/
 	board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
 
-	this.dragPiece = null;
+
 	board.removePiece(oldX,oldY);
+	this.dragPiece = null;
         board.notifyListeners();
     }
 
@@ -43,33 +42,33 @@ public class PieceMove extends MouseAdapter
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	System.out.println("Mouse dragged!");
 	if (this.dragPiece != null){
-	    this.dragPiece.newX((mouseEvent.getPoint().x - (this.dragOffsetX-40))/PieceComponent.getBOARDCONSTANT());
-	    this.dragPiece.newY((mouseEvent.getPoint().y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT());
-	    System.out.println((mouseEvent.getPoint().x - (this.dragOffsetX))/PieceComponent.getBOARDCONSTANT());
-	    System.out.println((mouseEvent.getPoint().y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT());
+	    this.dragPiece.newX((mouseEvent.getPoint().x - (this.dragOffsetX))/PieceComponent.getBOARDCONSTANT());
+	    this.dragPiece.newY((mouseEvent.getPoint().y - (this.dragOffsetY))/PieceComponent.getBOARDCONSTANT());
+	    System.out.println((mouseEvent.getPoint().x));
+	    System.out.println((mouseEvent.getPoint().y ));
 	   // board.notifyListeners();
 	}
     }
 
 
     @Override public void mousePressed(final MouseEvent mouseEvent) {
-	int x = mouseEvent.getPoint().x-5;
-	int y = mouseEvent.getPoint().y;
+	int x = mouseEvent.getPoint().x - 7; //TODO ändra detta till konstant.
+	int y = mouseEvent.getPoint().y - WINDOWOFFSET; //Båda dessa konstanter pga x = 7, y = 30 i början av board
 	System.out.println("Mouse pressed!");
 	//System.out.println(x + " " + y);
 	//System.out.println("pieces:" +pieces);
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 
-
 	    if (mouseOverPiece(piece, x, y)) {
-		this.dragOffsetX = x - piece.getPieceX() * PieceComponent.getBOARDCONSTANT() -7;
-		this.dragOffsetY = y - piece.getPieceY() * PieceComponent.getBOARDCONSTANT() - WINDOWOFFSET;
-		this.oldX = (mouseEvent.getPoint().x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
-		this.oldY = (mouseEvent.getPoint().y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
+		System.out.println("x: " + x + " y: " + y);
+		this.dragOffsetX = x - piece.getPieceX() * PieceComponent.getBOARDCONSTANT();
+		this.dragOffsetY = y - piece.getPieceY() * PieceComponent.getBOARDCONSTANT();
+		this.oldX = (x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
+		this.oldY = (y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
 		//System.out.println(dragPiece);
-		//System.out.println(dragOffsetX + " " + dragOffsetY);
+		System.out.println(dragOffsetX + " " + dragOffsetY);
 	    }
 	}
 	if (this.dragPiece != null){
@@ -79,10 +78,10 @@ public class PieceMove extends MouseAdapter
     }
 
     private boolean mouseOverPiece(Piece piece, int x, int y) {
-        return piece.getPieceX() * PieceComponent.getBOARDCONSTANT() <= x &&
-	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x &&//* eller + här?
-	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + WINDOWOFFSET <= y &&
-	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() + WINDOWOFFSET >= y;
+        return piece.getPieceX() * PieceComponent.getBOARDCONSTANT()  <= x &&
+	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x &&
+	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() <= y &&
+	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
     }
 
 }
