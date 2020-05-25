@@ -28,7 +28,7 @@ public class PieceMove extends MouseAdapter
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
 	//System.out.println("Mouse released!!");
-	System.out.println(dragPiece.isLegal(oldX,oldY));
+	//System.out.println(dragPiece.isLegal(oldX,oldY));
 	//System.out.println(dragPiece.getColor());
 
 	if (dragPiece.isLegal(oldX,oldY)) {
@@ -47,20 +47,11 @@ public class PieceMove extends MouseAdapter
 	    Board.changeState();
 	}
 
-
-
 	this.dragPiece = null;
         board.notifyListeners();
-
         Board.changeState();
     }
 
-    public void moveLegal(PieceType type, int prevX, int prevY) {
-        switch (type) {
-	    case PAWN:
-	        dragPiece.isLegal(prevX,prevY);
-	}
-    }
 
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	//System.out.println("Mouse dragged!");

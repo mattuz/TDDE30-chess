@@ -8,8 +8,8 @@ public class Board
 {
     private  int width;
     private  int height;
-    private Piece[][] square;
-    private PieceType[][] enumsquare;
+    private static Piece[][] square;
+    private static PieceType[][] enumsquare;
     private List<Piece> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
     private PieceMaker maker = new PieceMaker();
@@ -56,14 +56,14 @@ public class Board
 
 
 
-    public PieceType getPieceTypeAt(int x, int y) {
+    public static PieceType getPieceTypeAt(int x, int y) {
         if (square[x][y] != null) {
 	    return square[x][y].getType();
 	}
         return enumsquare[x][y];
     }
 
-    public Piece getPieceAt(int x, int y) {
+    public static Piece getPieceAt(int x, int y) {
         return square[x][y];
     }
 
@@ -218,6 +218,18 @@ public class Board
     }
     public static String getState(){
 	return state;
+    }
+
+    public static boolean isCastlingPossible(){
+        if (state == "white"){
+            if(getPieceTypeAt(0,0) == PieceType.ROOK && getPieceTypeAt(4,0) == PieceType.KING) {
+                //gör en knapp som frågar om man vill göra
+	    }
+	}
+        return true;
+    }
+    public void doCastling(){
+
     }
 
     public Piece[][] getSquare() {

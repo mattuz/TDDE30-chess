@@ -54,4 +54,5 @@ public abstract class Piece
 
     public abstract boolean isLegal(final int prevX, final int prevY);
 
+
 }
