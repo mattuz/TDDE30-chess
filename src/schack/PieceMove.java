@@ -44,7 +44,7 @@ public class PieceMove extends MouseAdapter
             if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
                 board.removePiece(oldX, oldY);
             }
-            else if (dragPiece.getType() == PieceType.PAWN && Pawn.pawnUpgradePossible()){
+            else if (dragPiece.getType() == PieceType.PAWN && pawnUpgradePossible(dragPiece.getPieceY())){
                 //gör ett meny val
 	    }
 	} else {
@@ -113,6 +113,13 @@ public class PieceMove extends MouseAdapter
 	    return false;
 	}
 	return false;
+    }
+
+    public boolean pawnUpgradePossible(int y) {
+	if (dragPiece.getColor() == "white" && y == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
+	    return true;
+	}
+	else return dragPiece.getColor() == "black" && y == 7;
     }
 
     public static void doCastling(){

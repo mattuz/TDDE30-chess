@@ -58,11 +58,5 @@ public class Pawn extends Piece
         return false;
     }
 
-    public static boolean pawnUpgradePossible() {
-        if (color == "white" && pieceY == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
-            return true;
-        }
-        else return color == "black" && pieceY == 7;
-    }
 
 }
