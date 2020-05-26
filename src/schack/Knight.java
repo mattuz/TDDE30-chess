@@ -15,6 +15,7 @@ public class Knight extends Piece
 		(Math.abs(getPieceX() - prevX) == 2 && Math.abs(getPieceY() - prevY) == 1))
 	         && color == Board.getState() && isValidDestination();
     }
+
     public boolean isValidDestination(){
 	return (Board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY || Board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
     }

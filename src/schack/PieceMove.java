@@ -10,9 +10,9 @@ public class PieceMove extends MouseAdapter
     private PieceComponent graphics;
     private Board board;
     private static final int WINDOWOFFSET = 30;
+    private static final int XOFFSET = 7;
     private int oldX;
     private int oldY;
-
 
     private int dragOffsetX;
     private int dragOffsetY;
@@ -43,6 +43,9 @@ public class PieceMove extends MouseAdapter
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
             if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
                 board.removePiece(oldX, oldY);
+            }
+            else if (dragPiece.getType() == PieceType.PAWN && Pawn.pawnUpgradePossible()){
+                //gör ett meny val
 	    }
 	} else {
 	    dragPiece.newX(oldX);
@@ -54,7 +57,6 @@ public class PieceMove extends MouseAdapter
         board.notifyListeners();
         Board.changeState();
     }
-
 
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	//System.out.println("Mouse dragged!");
@@ -68,24 +70,18 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mousePressed(final MouseEvent mouseEvent) {
-	int x = mouseEvent.getPoint().x - 7; //TODO ändra detta till konstant.
+	int x = mouseEvent.getPoint().x - XOFFSET;
 	int y = mouseEvent.getPoint().y - WINDOWOFFSET; //Båda dessa konstanter pga x = 7, y = 30 i början av board
-	//System.out.println("Mouse pressed!");
-	//System.out.println(x + " " + y);
-	//System.out.println("pieces:" +pieces);
+
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 
 	    if (mouseOverPiece(piece, x, y)) {
-		//System.out.println("x: " + x + " y: " + y);
 		this.dragOffsetX = x - piece.getPieceX() * PieceComponent.getBOARDCONSTANT();
 		this.dragOffsetY = y - piece.getPieceY() * PieceComponent.getBOARDCONSTANT();
 		this.oldX = (x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
-		//System.out.println(dragPiece);
-		//System.out.println(dragOffsetX + " " + dragOffsetY);
-		System.out.println(dragPiece.getType());
 	    }
 	}
 	if (this.dragPiece != null){

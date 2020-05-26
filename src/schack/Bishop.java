@@ -49,6 +49,7 @@ public class Bishop extends Piece
 	    return false;
 	}
     }
+
     public boolean isValidDestination(){
 	return (Board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY || Board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
     }

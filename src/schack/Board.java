@@ -72,13 +72,9 @@ public class Board
             pieceSwitcher(x, y, "black");
 	}
         else if (y == 1) {
-	    //square[x][y] = PieceType.PAWN;
 	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"black",assignPaths("black",PieceType.PAWN) );
-
-	    //square[x][y] = new Pawn("black", x, y); //Vill man göra såhär?
 	}
         else if (y == 6) {
-	  //  square[x][y] = PieceType.PAWN;
 	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"white",assignPaths("white",PieceType.PAWN));
 	}
         else if (y == 7) {
@@ -141,25 +137,20 @@ public class Board
         switch (x) {
 	    case 0:
 	    case 7:
-		//square[x][y] = PieceType.ROOK;
 		square[x][y] = new Rook(x,y,PieceType.ROOK,color, assignPaths(color,PieceType.ROOK));
 	        break;
 	    case 1:
 	    case 6:
-		//square[x][y] = PieceType.KNIGHT;
 		square[x][y] = new Knight(x,y,PieceType.KNIGHT,color, assignPaths(color,PieceType.KNIGHT));
 	        break;
 	    case 2:
 	    case 5:
-		//square[x][y] = PieceType.BISHOP;
 		square[x][y] = new Bishop(x,y,PieceType.BISHOP,color,assignPaths(color,PieceType.BISHOP));
 		break;
 	    case 3:
-	        //square[x][y] = PieceType.QUEEN;
 		square[x][y] = new Queen(x,y,PieceType.QUEEN,color,assignPaths(color,PieceType.QUEEN));
 		break;
 	    case 4:
-	       // square[x][y] = PieceType.KING;
 		square[x][y] = new King(x,y,PieceType.KING,color,assignPaths(color,PieceType.KING));
 		break;
 	    default:
@@ -201,7 +192,6 @@ public class Board
 
     public void deadPiece(int x, int y) {
         deadpieces.add(square[x][y]);
-
     }
 
     public static void changeState() {
@@ -216,6 +206,7 @@ public class Board
 	    //Panel.getLabel().setText(Panel.WHITE_LABEL);
         }
     }
+
     public static String getState(){
 	return state;
     }

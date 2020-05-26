@@ -16,7 +16,6 @@ public class PieceComponent extends JComponent implements BoardListener
     private Piece pieces = null;
 
 
-
     public PieceComponent(final Board board) {
 	this.board = board;
     }
@@ -31,21 +30,9 @@ public class PieceComponent extends JComponent implements BoardListener
 			     (board.getHeight()) * BOARDCONSTANT);
     }
 
-
-    @Override
-    protected void paintComponent(Graphics g) {
+    @Override protected void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	final Graphics2D g2d = (Graphics2D) g;
-
-	//TODO: ta bort dessa nedan när vi är säkra på att de inte behövs för något.
-	piece.put(PieceType.EMPTY, " ");
-	piece.put(PieceType.PAWN, "P");
-	piece.put(PieceType.BISHOP, "B");
-	piece.put(PieceType.KING, "K");
-
-	piece.put(PieceType.QUEEN, "Q");
-	piece.put(PieceType.ROOK, "R");
-	piece.put(PieceType.KNIGHT, "Kn");
 
 	for (int x = 0; x < board.getWidth(); x++) {
 	    for (int y = 0; y < board.getHeight(); y++) {

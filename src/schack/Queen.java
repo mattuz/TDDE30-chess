@@ -4,7 +4,6 @@ import java.net.URL;
 
 public class Queen extends Piece
 {
-    //protected static String color = null;
 
     public Queen(final int x, final int y, final PieceType type, final String color, final URL path) {
 	super(x, y, type, color, path);
