@@ -37,9 +37,11 @@ public class PieceMove extends MouseAdapter
 	    if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
 		board.removePiece(oldX, oldY);
 	    }
-	    /*if (dragPiece.getType() == PieceType.PAWN) {
-		System.out.println(); //TODO Fixa så att firstStep förändras när man flyttar på något. - Håller på med det inuti Pawn.
-	    }*/
+	   // if (dragPiece.getType() == PieceType.PAWN) {
+		//System.out.println(dragPiece.firstStep);
+	        //dragPiece.firstStep = false;
+		//System.out.println(dragPiece.firstStep); //TODO Fixa så att firstStep förändras när man flyttar på något. - Håller på med det inuti Pawn.
+	    //}
 
 	} else {
 	    dragPiece.newX(oldX);

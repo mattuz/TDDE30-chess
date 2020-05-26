@@ -222,11 +222,21 @@ public class Board
 
     public static boolean isCastlingPossible(){
         if (state == "white"){
-            if(getPieceTypeAt(0,0) == PieceType.ROOK && getPieceTypeAt(4,0) == PieceType.KING) {
-                //gör en knapp som frågar om man vill göra
+            if(getPieceTypeAt(0,0) == PieceType.ROOK && getPieceTypeAt(4,0) == PieceType.KING
+	       && getPieceTypeAt(3,0) == PieceType.EMPTY && getPieceTypeAt(2,0) == PieceType.EMPTY
+	       && getPieceTypeAt(1,0) == PieceType.EMPTY) {
+                return true;
+            }
+        } else if(state == "black"){
+            if(getPieceTypeAt(0,8) == PieceType.ROOK && getPieceTypeAt(4,8) == PieceType.KING
+	       && getPieceTypeAt(3,8) == PieceType.EMPTY && getPieceTypeAt(2,8) == PieceType.EMPTY
+	       && getPieceTypeAt(1,8) == PieceType.EMPTY) {
+		return true;
 	    }
-	}
-        return true;
+        } else {
+            return false;
+        }
+        return false;
     }
     public void doCastling(){
 
