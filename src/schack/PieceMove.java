@@ -27,22 +27,23 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
-	//System.out.println("Mouse released!!");
-	//System.out.println(dragPiece.isLegal(oldX,oldY));
-	//System.out.println(dragPiece.getColor());
-
-	if (dragPiece.isLegal(oldX,oldY)) {
-
-	    board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
-	    if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
-		board.removePiece(oldX, oldY);
+        if (isCastlingPossible(oldX, oldY) && dragPiece.getPieceX() == 2){
+            if (dragPiece.getColor() == "black" && dragPiece.getPieceY() == 8) {
+		board.getSquare()[2][8] = board.getSquare()[0][8];
+		board.removePiece(0,8);
 	    }
-	   // if (dragPiece.getType() == PieceType.PAWN) {
-		//System.out.println(dragPiece.firstStep);
-	        //dragPiece.firstStep = false;
-		//System.out.println(dragPiece.firstStep); //TODO Fixa så att firstStep förändras när man flyttar på något. - Håller på med det inuti Pawn.
-	    //}
-
+            else if(dragPiece.getColor() == "white" && dragPiece.getPieceY() == 0){
+		board.getSquare()[2][0] = board.getSquare()[0][0];
+		board.removePiece(0,0);
+	    }
+            board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
+            board.removePiece(oldX, oldY);
+        }
+        else if (dragPiece.isLegal(oldX,oldY)) {
+            board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
+            if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
+                board.removePiece(oldX, oldY);
+	    }
 	} else {
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
@@ -65,7 +66,6 @@ public class PieceMove extends MouseAdapter
 	   // board.notifyListeners();
 	}
     }
-
 
     @Override public void mousePressed(final MouseEvent mouseEvent) {
 	int x = mouseEvent.getPoint().x - 7; //TODO ändra detta till konstant.
@@ -99,5 +99,27 @@ public class PieceMove extends MouseAdapter
 	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x &&
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() <= y &&
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
+    }
+
+    public static boolean isCastlingPossible(int prevX, int prevY){
+	if (Board.getState() == "white" && prevX == 4 && prevY == 0){
+	    if(Board.getPieceTypeAt(0,0) == PieceType.ROOK && Board.getPieceTypeAt(3,0) == PieceType.EMPTY
+	       && Board.getPieceTypeAt(2,0) == PieceType.EMPTY && Board.getPieceTypeAt(1,0) == PieceType.EMPTY) {
+		return true;
+	    }
+	} else if(Board.getState() == "black" && prevX == 4 && prevY == 8){
+	    if(Board.getPieceTypeAt(0,8) == PieceType.ROOK && Board.getPieceTypeAt(3,8) == PieceType.EMPTY
+	       && Board.getPieceTypeAt(2,8) == PieceType.EMPTY
+	       && Board.getPieceTypeAt(1,8) == PieceType.EMPTY) {
+		return true;
+	    }
+	} else {
+	    return false;
+	}
+	return false;
+    }
+
+    public static void doCastling(){
+
     }
 }

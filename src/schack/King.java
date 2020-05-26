@@ -10,7 +10,7 @@ public class King extends Piece
 	super(x, y, type, color, path);
     }
     public boolean isLegal(int prevX, int prevY){
-	if ((getPieceX() == prevX && Math.abs(getPieceY() - prevY) == 1) && color == Board.getState() && isValidDestination()){
+        if ((getPieceX() == prevX && Math.abs(getPieceY() - prevY) == 1) && color == Board.getState() && isValidDestination()){
 	    return true;
 	}
 	else if ((getPieceY() == prevY && Math.abs(getPieceX() - prevX) == 1) && color == Board.getState() && isValidDestination()){
@@ -25,6 +25,7 @@ public class King extends Piece
     public boolean isValidDestination(){
 	return (Board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY || Board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
     }
+
 
 }
 

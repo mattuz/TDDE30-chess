@@ -238,9 +238,6 @@ public class Board
         }
         return false;
     }
-    public void doCastling(){
-
-    }
 
     public Piece[][] getSquare() {
 	return square;
