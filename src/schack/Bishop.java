@@ -46,13 +46,32 @@ public class Bishop extends Piece
 		}
 	    }
 	    return freePath;
-	} else {
+	}
+	/*if (isValidDestination() && color == Board.getState()) {
+	    return squareChecker(prevX, prevY, freePath);
+	}*/
+	else {
 	    return false;
 	}
     }
 
-    public boolean squareChecker(int prevX) {
-        return false;
+    public boolean squareChecker(int prevX, int prevY, boolean freePath) {
+        if (prevX > getPieceX() && prevY > getPieceY() || prevX > getPieceX() && prevY < getPieceY()) {
+	    for (int i = prevX-1; i > getPieceX(); i--) {
+		if ((Board.getPieceTypeAt(i, prevY - prevX+i ) != PieceType.EMPTY && prevY - prevX+i != -1) ||
+		    (Board.getPieceTypeAt(i, prevY + prevX-i ) != PieceType.EMPTY && prevY + prevX-i != -1 )) {
+		    freePath = false;
+		}
+	    }
+	}
+	else if (prevX < getPieceX() && prevY > getPieceY() || prevX < getPieceX() && prevY < getPieceY()) {
+	    for (int i = prevX+1; i < getPieceX(); i++) {
+		if ((Board.getPieceTypeAt(i, prevY + i-prevX ) != PieceType.EMPTY && prevY + i-prevX != -1 ) ||
+		    (Board.getPieceTypeAt(i, prevY - i+prevX ) != PieceType.EMPTY && prevY - i+prevX != -1)) {
+		    freePath = false;
+		}
+	    }
+	} return freePath;
     }
 
     public boolean isValidDestination(){
