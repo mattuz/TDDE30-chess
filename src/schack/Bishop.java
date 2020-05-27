@@ -13,49 +13,47 @@ public class Bishop extends Piece
     }
 
     public boolean isLegal(int prevX, int prevY){
-	boolean freePath = true;
-	if (prevX < getPieceX() && prevY < getPieceY() && isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX+1; i < getPieceX(); i++) {
-		if (Board.getPieceTypeAt(i, prevY + i-prevX ) != PieceType.EMPTY) {
-		    freePath = false;
+	if ((Math.abs(prevX - getPieceX()) - Math.abs(prevY - getPieceY()) == 0) &&
+	    isValidDestination() && color == Board.getState()) {
+	    boolean freePath = true;
+	    if (prevX < getPieceX() && prevY < getPieceY()) {
+		for (int i = prevX+1; i < getPieceX(); i++) {
+		    if (Board.getPieceTypeAt(i, prevY + i-prevX ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
 		}
 	    }
-	    return freePath;
-	}
-	if (prevX > getPieceX() && prevY < getPieceY() && isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX-1; i > getPieceX(); i--) {
-	        if (Board.getPieceTypeAt(i, prevY + prevX-i ) != PieceType.EMPTY) {
-	            freePath = false;
+	    if (prevX > getPieceX() && prevY < getPieceY()) {
+		for (int i = prevX-1; i > getPieceX(); i--) {
+		    if (Board.getPieceTypeAt(i, prevY + prevX-i ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
 		}
 	    }
-	    System.out.println(freePath);
-	    return freePath;
-	}
-	if (prevX < getPieceX() && prevY > getPieceY()&& isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX+1; i < getPieceX(); i++) {
-	        if (Board.getPieceTypeAt(i, prevY - i+prevX ) != PieceType.EMPTY) {
-	            freePath = false;
+	    if (prevX < getPieceX() && prevY > getPieceY()) {
+		for (int i = prevX+1; i < getPieceX(); i++) {
+		    if (Board.getPieceTypeAt(i, prevY - i+prevX ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
 		}
 	    }
-	    return freePath;
-	}
-	if (prevX > getPieceX() && prevY > getPieceY() && isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX-1; i > getPieceX(); i--) {
-	        if (Board.getPieceTypeAt(i, prevY - prevX+i ) != PieceType.EMPTY) {
-	            freePath = false;
+	    if (prevX > getPieceX() && prevY > getPieceY()) {
+		for (int i = prevX-1; i > getPieceX(); i--) {
+		    if (Board.getPieceTypeAt(i, prevY - prevX+i ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
 		}
-	    }
-	    return freePath;
-	}
-	/*if (isValidDestination() && color == Board.getState()) {
-	    return squareChecker(prevX, prevY, freePath);
-	}*/
-	else {
+	    } return freePath;
+	} else {
 	    return false;
 	}
     }
 
-    public boolean squareChecker(int prevX, int prevY, boolean freePath) {
+    public boolean squareChecker(int prevX, int prevY, boolean freePath) { //TODO vet inte ens om denna behövs längre
         if (prevX > getPieceX() && prevY > getPieceY() || prevX > getPieceX() && prevY < getPieceY()) {
 	    for (int i = prevX-1; i > getPieceX(); i--) {
 		if ((Board.getPieceTypeAt(i, prevY - prevX+i ) != PieceType.EMPTY && prevY - prevX+i != -1) ||
@@ -79,3 +77,5 @@ public class Bishop extends Piece
 		Board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
     }
 }
+
+

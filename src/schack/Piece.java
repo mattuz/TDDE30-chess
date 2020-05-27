@@ -1,5 +1,6 @@
 package schack;
 
+import java.awt.desktop.AppReopenedEvent;
 import java.net.URL;
 
 public abstract class Piece
