@@ -54,19 +54,6 @@ public class Board
 	}
     }
 
-
-
-    public static PieceType getPieceTypeAt(int x, int y) {
-        if (square[x][y] != null) {
-	    return square[x][y].getType();
-	}
-        return enumsquare[x][y];
-    }
-
-    public static Piece getPieceAt(int x, int y) {
-        return square[x][y];
-    }
-
     public void placePieces(int x, int y) {
         if (y == 0) {
             pieceSwitcher(x, y, "black");
@@ -195,39 +182,31 @@ public class Board
     }
 
     public static void changeState() {
-	//System.out.println("statechange");
         if (state == WHITE_STATE) {
             state = BLACK_STATE;
-            Panel.getLabel().setText(Panel.getPlayer2());
-	    //Panel.getLabel().setText(Panel.BLACK_LABEL);
+            Panel.getjLabel().setText(Panel.getPlayer2());
 	} else {
             state = WHITE_STATE;
-	    Panel.getLabel().setText(Panel.getPlayer1());
-	    //Panel.getLabel().setText(Panel.WHITE_LABEL);
+	    Panel.getjLabel().setText(Panel.getPlayer1());
+        }
+    }
+
+    public static boolean isCastlingPossible(){
+        if (state == "white"){
+	    return getPieceTypeAt(0, 0) == PieceType.ROOK && getPieceTypeAt(4, 0) == PieceType.KING &&
+		   getPieceTypeAt(3, 0) == PieceType.EMPTY && getPieceTypeAt(2, 0) == PieceType.EMPTY &&
+		   getPieceTypeAt(1, 0) == PieceType.EMPTY;
+        } else if(state == "black"){
+	    return getPieceTypeAt(0, 8) == PieceType.ROOK && getPieceTypeAt(4, 8) == PieceType.KING &&
+		   getPieceTypeAt(3, 8) == PieceType.EMPTY && getPieceTypeAt(2, 8) == PieceType.EMPTY &&
+		   getPieceTypeAt(1, 8) == PieceType.EMPTY;
+        } else {
+            return false;
         }
     }
 
     public static String getState(){
 	return state;
-    }
-
-    public static boolean isCastlingPossible(){
-        if (state == "white"){
-            if(getPieceTypeAt(0,0) == PieceType.ROOK && getPieceTypeAt(4,0) == PieceType.KING
-	       && getPieceTypeAt(3,0) == PieceType.EMPTY && getPieceTypeAt(2,0) == PieceType.EMPTY
-	       && getPieceTypeAt(1,0) == PieceType.EMPTY) {
-                return true;
-            }
-        } else if(state == "black"){
-            if(getPieceTypeAt(0,8) == PieceType.ROOK && getPieceTypeAt(4,8) == PieceType.KING
-	       && getPieceTypeAt(3,8) == PieceType.EMPTY && getPieceTypeAt(2,8) == PieceType.EMPTY
-	       && getPieceTypeAt(1,8) == PieceType.EMPTY) {
-		return true;
-	    }
-        } else {
-            return false;
-        }
-        return false;
     }
 
     public Piece[][] getSquare() {
@@ -245,4 +224,16 @@ public class Board
     public List<Piece> getDeadpieces() {
 	return deadpieces;
     }
+
+    public static PieceType getPieceTypeAt(int x, int y) {
+	if (square[x][y] != null) {
+	    return square[x][y].getType();
+	}
+	return enumsquare[x][y];
+    }
+
+    public static Piece getPieceAt(int x, int y) {
+	return square[x][y];
+    }
+
 }
