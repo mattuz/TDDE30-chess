@@ -30,7 +30,7 @@ public class Pawn extends Piece
                     } else {
                         return false;
                     }
-                } else if (!firstStep) {
+                } else {
                     return (getPieceY() == prevY + 1);
                 }
             } else return (Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY + 1 &&
@@ -49,7 +49,7 @@ public class Pawn extends Piece
                     } else {
                         return false;
                     }
-                } else if (!firstStep) {
+                } else {
                     return (getPieceY() == prevY - 1);
                 }
             } else return (Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY - 1 &&

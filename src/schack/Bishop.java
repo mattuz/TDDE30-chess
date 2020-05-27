@@ -15,23 +15,24 @@ public class Bishop extends Piece
     public boolean isLegal(int prevX, int prevY){
 	boolean freePath = true;
 	if (prevX < getPieceX() && prevY < getPieceY() && isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX; i < getPieceX(); i++) {
-	        if (Board.getPieceTypeAt(i, prevY + i-prevX ) != PieceType.EMPTY) {
-	            freePath = false;
-	        }
-	    }
-	    return freePath;
-	}
-	if (prevX > getPieceX() && prevY < getPieceY() && isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX; i > getPieceX(); i--) {
-	        if (Board.getPieceTypeAt(i, prevY + prevX-i ) != PieceType.EMPTY) {
-	            freePath = false;
+	    for (int i = prevX+1; i < getPieceX(); i++) {
+		if (Board.getPieceTypeAt(i, prevY + i-prevX ) != PieceType.EMPTY) {
+		    freePath = false;
 		}
 	    }
 	    return freePath;
 	}
+	if (prevX > getPieceX() && prevY < getPieceY() && isValidDestination() && color == Board.getState()) {
+	    for (int i = prevX-1; i > getPieceX(); i--) {
+	        if (Board.getPieceTypeAt(i, prevY + prevX-i ) != PieceType.EMPTY) {
+	            freePath = false;
+		}
+	    }
+	    System.out.println(freePath);
+	    return freePath;
+	}
 	if (prevX < getPieceX() && prevY > getPieceY()&& isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX; i < getPieceX(); i++) {
+	    for (int i = prevX+1; i < getPieceX(); i++) {
 	        if (Board.getPieceTypeAt(i, prevY - i+prevX ) != PieceType.EMPTY) {
 	            freePath = false;
 		}
@@ -39,7 +40,7 @@ public class Bishop extends Piece
 	    return freePath;
 	}
 	if (prevX > getPieceX() && prevY > getPieceY() && isValidDestination() && color == Board.getState()) {
-	    for (int i = prevX; i > getPieceX(); i--) {
+	    for (int i = prevX-1; i > getPieceX(); i--) {
 	        if (Board.getPieceTypeAt(i, prevY - prevX+i ) != PieceType.EMPTY) {
 	            freePath = false;
 		}
@@ -50,7 +51,12 @@ public class Bishop extends Piece
 	}
     }
 
+    public boolean squareChecker(int prevX) {
+        return false;
+    }
+
     public boolean isValidDestination(){
-	return (Board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY || Board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
+	return (Board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY ||
+		Board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
     }
 }
