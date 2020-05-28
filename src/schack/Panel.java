@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class Panel extends JPanel
     {
-	static final String WHITE_LABEL = "White's turn";
-	static final String BLACK_LABEL = "Black's turn";
+	private static final String WHITE_LABEL = "White's turn";
+	private static final String BLACK_LABEL = "Black's turn";
 	private static String player1 = "";
-	private static String player2 = null;
+	private static String player2 = "";
 	private static final JPanel J_PANEL = new JPanel(); //TODO ändrade dessa till final enligt kodanalysen.
 	private static final JLabel J_LABEL = new JLabel("White goes first", SwingConstants.LEFT);
 

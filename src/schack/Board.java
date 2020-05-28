@@ -15,8 +15,8 @@ public class Board
     private PieceMaker maker = new PieceMaker();
     public List<Piece> pieceList = new ArrayList<>();
 
-    final static String WHITE_STATE = "white";
-    final static String BLACK_STATE = "black";
+    private final static String WHITE_STATE = "white";
+    private final static String BLACK_STATE = "black";
 
     private String state = WHITE_STATE;
 
