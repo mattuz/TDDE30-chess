@@ -33,11 +33,10 @@ public class PiecePainter
     }
 
     public static BufferedImage bufferedImageMaker(Piece piece) { //"Skapar" en bild, tar den från Pics :)
-	//Path path = FileSystems.getDefault().getPath("C:\\Users\\Matth\\IdeaProjects\\tdde30-projekt-2020-d1-g23-09\\Pics\\"); //Detta gick inte så bra :(
-	//String pathstring = path.toString();
 	BufferedImage myPicture = null;
 	try {
-	    myPicture = ImageIO.read(piece.getPath()/*pieceSelector(piece.getType())*/);
+	    myPicture = ImageIO.read(piece.getPath());
+
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
