@@ -28,9 +28,9 @@ public class PieceMove extends MouseAdapter
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
         if (isCastlingPossible(oldX, oldY) && dragPiece.getPieceX() == 2){
-            if (dragPiece.getColor() == "black" && dragPiece.getPieceY() == 8) {
-		board.getSquare()[2][8] = board.getSquare()[0][8];
-		board.removePiece(0,8);
+            if (dragPiece.getColor() == "black" && dragPiece.getPieceY() == 7) {
+		board.getSquare()[2][7] = board.getSquare()[0][7];
+		board.removePiece(0,7);
 	    }
             else if(dragPiece.getColor() == "white" && dragPiece.getPieceY() == 0){
 		board.getSquare()[2][0] = board.getSquare()[0][0];
@@ -51,9 +51,7 @@ public class PieceMove extends MouseAdapter
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
 	    Board.changeState();
-	}
-
-	this.dragPiece = null;
+	} this.dragPiece = null;
         board.notifyListeners();
         Board.changeState();
     }
@@ -72,7 +70,6 @@ public class PieceMove extends MouseAdapter
     @Override public void mousePressed(final MouseEvent mouseEvent) {
 	int x = mouseEvent.getPoint().x - XOFFSET;
 	int y = mouseEvent.getPoint().y - WINDOWOFFSET; //Båda dessa konstanter pga x = 7, y = 30 i början av board
-
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 
@@ -82,6 +79,7 @@ public class PieceMove extends MouseAdapter
 		this.oldX = (x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
+		System.out.println(dragPiece.getType());
 	    }
 	}
 	if (this.dragPiece != null){

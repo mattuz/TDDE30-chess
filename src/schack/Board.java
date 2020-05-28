@@ -180,9 +180,9 @@ public class Board
 		   getPieceTypeAt(3, 0) == PieceType.EMPTY && getPieceTypeAt(2, 0) == PieceType.EMPTY &&
 		   getPieceTypeAt(1, 0) == PieceType.EMPTY;
         } else if(state == "black"){
-	    return getPieceTypeAt(0, 8) == PieceType.ROOK && getPieceTypeAt(4, 8) == PieceType.KING &&
-		   getPieceTypeAt(3, 8) == PieceType.EMPTY && getPieceTypeAt(2, 8) == PieceType.EMPTY &&
-		   getPieceTypeAt(1, 8) == PieceType.EMPTY;
+	    return getPieceTypeAt(0, 7) == PieceType.ROOK && getPieceTypeAt(4, 7) == PieceType.KING &&
+		   getPieceTypeAt(3, 7) == PieceType.EMPTY && getPieceTypeAt(2, 7) == PieceType.EMPTY &&
+		   getPieceTypeAt(1, 7) == PieceType.EMPTY;
         } else {
             return false;
         }
