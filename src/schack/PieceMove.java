@@ -23,7 +23,6 @@ public class PieceMove extends MouseAdapter
 	this.graphics = graphics;
 	this.board = board;
 	this.pieces = board.addPieces();
-	//System.out.println("PieceMove activated!");
     }
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
@@ -45,15 +44,15 @@ public class PieceMove extends MouseAdapter
                 board.removePiece(oldX, oldY);
             }
             else if (dragPiece.getType() == PieceType.PAWN && pawnUpgradePossible(dragPiece.getPieceY())){
-                //gör ett meny val
-	    }
+                //gör ett menyval
+            }
 	} else {
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
-	    Board.changeState();
+	    board.changeState();
 	} this.dragPiece = null;
         board.notifyListeners();
-        Board.changeState();
+        board.changeState();
     }
 
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
@@ -95,22 +94,16 @@ public class PieceMove extends MouseAdapter
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
     }
 
-    public static boolean isCastlingPossible(int prevX, int prevY){
-	if (Board.getState() == "white" && prevX == 4 && prevY == 0){
-	    if(Board.getPieceTypeAt(0,0) == PieceType.ROOK && Board.getPieceTypeAt(3,0) == PieceType.EMPTY
-	       && Board.getPieceTypeAt(2,0) == PieceType.EMPTY && Board.getPieceTypeAt(1,0) == PieceType.EMPTY) {
-		return true;
-	    }
-	} else if(Board.getState() == "black" && prevX == 4 && prevY == 8){
-	    if(Board.getPieceTypeAt(0,8) == PieceType.ROOK && Board.getPieceTypeAt(3,8) == PieceType.EMPTY
-	       && Board.getPieceTypeAt(2,8) == PieceType.EMPTY
-	       && Board.getPieceTypeAt(1,8) == PieceType.EMPTY) {
-		return true;
-	    }
+    public boolean isCastlingPossible(int prevX, int prevY){
+	if (board.getState() == "white" && prevX == 4 && prevY == 0){
+	    return board.getPieceTypeAt(0, 0) == PieceType.ROOK && board.getPieceTypeAt(3, 0) == PieceType.EMPTY &&
+		   board.getPieceTypeAt(2, 0) == PieceType.EMPTY && board.getPieceTypeAt(1, 0) == PieceType.EMPTY;
+	} else if(board.getState() == "black" && prevX == 4 && prevY == 8){
+	    return board.getPieceTypeAt(0, 8) == PieceType.ROOK && board.getPieceTypeAt(3, 8) == PieceType.EMPTY &&
+		   board.getPieceTypeAt(2, 8) == PieceType.EMPTY && board.getPieceTypeAt(1, 8) == PieceType.EMPTY;
 	} else {
 	    return false;
 	}
-	return false;
     }
 
     public boolean pawnUpgradePossible(int y) {

@@ -1,24 +1,25 @@
 package schack;
 
-import java.awt.desktop.AppReopenedEvent;
 import java.net.URL;
 
 public abstract class Piece
 {
-    protected boolean firstStep;
+    //protected boolean firstStep;
     protected String color;
     protected final URL path;
     protected int pieceX;
     protected int pieceY;
     protected final PieceType type;
+    protected final Board board;
 
-    protected Piece(int x, int y, PieceType type, String color, URL path){
+    protected Piece(int x, int y, PieceType type, String color, URL path, Board board){
         this.color = color;
         this.pieceX = x;
         this.pieceY = y;
         this.type = type;
         this.path = path;
-        this.firstStep = true;
+        //this.firstStep = true;
+        this.board = board;
     }
 
     public int getPieceX() {
@@ -49,10 +50,10 @@ public abstract class Piece
         return color;
     }
 
-    public boolean isFirstStep() {
+    /*public boolean isFirstStep() {
         return firstStep;
     }
-
+*/
     public abstract boolean isLegal(final int prevX, final int prevY);
 
 

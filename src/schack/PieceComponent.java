@@ -5,7 +5,6 @@ import java.awt.*;
 import java.util.EnumMap;
 
 import static java.awt.Color.*;
-import static java.awt.Color.BLACK;
 
 public class PieceComponent extends JComponent implements BoardListener
 {

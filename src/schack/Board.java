@@ -8,8 +8,8 @@ public class Board
 {
     private  int width;
     private  int height;
-    private static Piece[][] square;
-    private static PieceType[][] enumsquare;
+    private Piece[][] square;
+    private PieceType[][] enumsquare;
     private List<Piece> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
     private PieceMaker maker = new PieceMaker();
@@ -18,7 +18,7 @@ public class Board
     final static String WHITE_STATE = "white";
     final static String BLACK_STATE = "black";
 
-    private static String state = WHITE_STATE;
+    private String state = WHITE_STATE;
 
 
     public Board(final int width, final int height) { //Man ska kunna ändra den om man vill
@@ -59,10 +59,10 @@ public class Board
             pieceSwitcher(x, y, "black");
 	}
         else if (y == 1) {
-	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"black",assignPaths("black",PieceType.PAWN) );
+	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"black",assignPaths("black",PieceType.PAWN), this );
 	}
         else if (y == 6) {
-	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"white",assignPaths("white",PieceType.PAWN));
+	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"white",assignPaths("white",PieceType.PAWN), this);
 	}
         else if (y == 7) {
 	    pieceSwitcher(x, y, "white");
@@ -124,21 +124,21 @@ public class Board
         switch (x) {
 	    case 0:
 	    case 7:
-		square[x][y] = new Rook(x,y,PieceType.ROOK,color, assignPaths(color,PieceType.ROOK));
+		square[x][y] = new Rook(x,y,PieceType.ROOK,color, assignPaths(color,PieceType.ROOK), this);
 	        break;
 	    case 1:
 	    case 6:
-		square[x][y] = new Knight(x,y,PieceType.KNIGHT,color, assignPaths(color,PieceType.KNIGHT));
+		square[x][y] = new Knight(x,y,PieceType.KNIGHT,color, assignPaths(color,PieceType.KNIGHT), this);
 	        break;
 	    case 2:
 	    case 5:
-		square[x][y] = new Bishop(x,y,PieceType.BISHOP,color,assignPaths(color,PieceType.BISHOP));
+		square[x][y] = new Bishop(x,y,PieceType.BISHOP,color,assignPaths(color,PieceType.BISHOP), this);
 		break;
 	    case 3:
-		square[x][y] = new Queen(x,y,PieceType.QUEEN,color,assignPaths(color,PieceType.QUEEN));
+		square[x][y] = new Queen(x,y,PieceType.QUEEN,color,assignPaths(color,PieceType.QUEEN), this);
 		break;
 	    case 4:
-		square[x][y] = new King(x,y,PieceType.KING,color,assignPaths(color,PieceType.KING));
+		square[x][y] = new King(x,y,PieceType.KING,color,assignPaths(color,PieceType.KING), this);
 		break;
 	    default:
 	        break;
@@ -164,7 +164,7 @@ public class Board
         deadpieces.add(square[x][y]);
     }
 
-    public static void changeState() {
+    public void changeState() {
         if (state == WHITE_STATE) {
             state = BLACK_STATE;
             Panel.getjLabel().setText(Panel.getPlayer2());
@@ -174,7 +174,7 @@ public class Board
         }
     }
 
-    public static boolean isCastlingPossible(){
+    public boolean isCastlingPossible(){
         if (state == "white"){
 	    return getPieceTypeAt(0, 0) == PieceType.ROOK && getPieceTypeAt(4, 0) == PieceType.KING &&
 		   getPieceTypeAt(3, 0) == PieceType.EMPTY && getPieceTypeAt(2, 0) == PieceType.EMPTY &&
@@ -188,7 +188,7 @@ public class Board
         }
     }
 
-    public static String getState(){
+    public String getState(){
 	return state;
     }
 
@@ -208,14 +208,14 @@ public class Board
 	return deadpieces;
     }
 
-    public static PieceType getPieceTypeAt(int x, int y) {
+    public PieceType getPieceTypeAt(int x, int y) {
 	if (square[x][y] != null) {
 	    return square[x][y].getType();
 	}
 	return enumsquare[x][y];
     }
 
-    public static Piece getPieceAt(int x, int y) {
+    public Piece getPieceAt(int x, int y) {
 	return square[x][y];
     }
 

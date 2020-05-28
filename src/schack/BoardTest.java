@@ -1,7 +1,6 @@
 package schack;
 
 import javax.swing.*;
-import java.awt.event.MouseListener;
 
 public class BoardTest
 {
