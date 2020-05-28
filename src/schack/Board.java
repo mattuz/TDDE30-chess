@@ -155,23 +155,6 @@ public class Board
 	}
     }
 
-    public void movePieceTest(int x, int y) {
-	Piece p = getPieceAt(x,y);
-        if (square[x][y] != null) {
-            if (y <= 1) {
-		System.out.println("Current Y:" + getPieceAt(x,y).getPieceY());
-		p.newY(y+1);
-		square[x][y+1] = square[x][y];
-		removePiece(x,y);
-		System.out.println("New Y:" + getPieceAt(x,y+1).getPieceY());
-	    } if (y>=6) {
-		System.out.println("Current Y:" + getPieceAt(x,y).getPieceY());
-		getPieceAt(x,y).newY(y-1);
-	    }
-	}
-        notifyListeners();
-    }
-
     public void removePiece(int x, int y) {
         square[x][y] = null;
         notifyListeners();
