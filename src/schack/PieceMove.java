@@ -2,6 +2,7 @@ package schack;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PieceMove extends MouseAdapter
@@ -26,6 +27,7 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
+       // updateLegalMoves();
         if (isCastlingPossible(oldX, oldY) && dragPiece.getPieceX() == 2){
             if (dragPiece.getColor() == "black" && dragPiece.getPieceY() == 7) {
 		board.getSquare()[2][7] = board.getSquare()[0][7];
@@ -38,7 +40,7 @@ public class PieceMove extends MouseAdapter
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
             board.removePiece(oldX, oldY);
         }
-        else if (dragPiece.isLegal(oldX,oldY)) {
+        else if (containsPosition(dragPiece.getlegalMoves(), new Position(dragPiece.pieceX, dragPiece.pieceY))){
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
             if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
                 board.removePiece(oldX, oldY);
@@ -115,5 +117,15 @@ public class PieceMove extends MouseAdapter
 
     public static void doCastling(){
 
+    }
+    private boolean containsPosition(ArrayList list, Position pos){
+        Boolean doesContain = false;
+        for (Object elem: list) {
+	    if (elem.equals(pos)) {
+		doesContain = true;
+		break;
+	    }
+	}
+        return doesContain;
     }
 }

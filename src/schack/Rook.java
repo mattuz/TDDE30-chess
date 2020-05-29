@@ -7,7 +7,13 @@ public class Rook extends Piece
     public Rook( int x,  int y, final PieceType type, final String color, final URL path, final Board board) {
 	super(x, y, type, color, path, board);
     }
-    public boolean isLegal(int prevX, int prevY) {
+
+    public void updateLegalMoves(){
+        Position position = new Position(getPieceX(), getPieceY());
+        legalMoves = addHorisontal(legalMoves, 7, position);
+        legalMoves = addVertical(legalMoves, 7, position);
+    }
+    /*public boolean isLegal(int prevX, int prevY) {
 	if (isValidDestination() && color == board.getState() &&
 	    ((Math.abs(prevX - getPieceX()) != 0 && Math.abs(prevY - getPieceY()) == 0) ||
 	     (Math.abs(prevX - getPieceX()) == 0 && Math.abs(prevY - getPieceY()) != 0))) {
@@ -49,10 +55,6 @@ public class Rook extends Piece
 	    return false;
 	}
 	}
+     */
 
-
-
-    public boolean isValidDestination(){
-	return (board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY || board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
-    }
 }

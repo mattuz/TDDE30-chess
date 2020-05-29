@@ -1,6 +1,7 @@
 package schack;
 
 import java.net.URL;
+import java.util.List;
 
 public class Pawn extends Piece
 {
@@ -14,8 +15,12 @@ public class Pawn extends Piece
     public boolean isFirstStep() {
         return firstStep;
     }
+    private List<Position> addLegalMoves(List<Position> list, Position p){
+        
 
-    public boolean isLegal(int prevX, int prevY) {
+    }
+
+    /*public boolean isLegal(int prevX, int prevY) {
         if (color == "black" && color == board.getState()) {
             if (getPieceX() == prevX && board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY) {
                 if (firstStep) {
@@ -56,7 +61,7 @@ public class Pawn extends Piece
                            board.getPieceAt(getPieceX(), getPieceY()).getColor() == "black");
         }
         return false;
-    }
+    }*/
 
 
 }

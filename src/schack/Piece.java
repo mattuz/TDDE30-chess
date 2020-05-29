@@ -57,7 +57,7 @@ public abstract class Piece
         return color;
     }
 
-    public abstract boolean isLegal(final int prevX, final int prevY);
+   // public abstract boolean isLegal(final int prevX, final int prevY);
 
     /*public boolean isFirstStep() {
         return firstStep;

@@ -13,7 +13,7 @@ public class Queen extends Piece
 	    return true;
 	}
 	return ((Math.abs(getPieceX() - prevX) == Math.abs(getPieceY() - prevY)) && color == Board.getState());
-    }*/
+    }
 	public boolean isLegal(int prevX, int prevY){
 	    boolean freePath = true;
 	    if ((Math.abs(prevX - getPieceX()) - Math.abs(prevY - getPieceY()) == 0) && isValidDestination() && color == board.getState()) {
@@ -90,12 +90,12 @@ public class Queen extends Piece
 	        return false;
 	    }
 	}
+	*/
 
-
-
-
-    public boolean isValidDestination(){
-	return (board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY ||
-		board.getPieceAt(getPieceX(), getPieceY()).getColor() != color);
-    }
+	public void updateLegalMoves(){
+	    Position position = new Position(getPieceX(), getPieceY());
+	    legalMoves = addDiagonal(legalMoves, 7, position);
+	    legalMoves = addHorisontal(legalMoves, 7, position);
+	    legalMoves = addVertical(legalMoves, 7, position);
+	}
 }
