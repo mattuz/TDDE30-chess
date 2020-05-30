@@ -28,6 +28,7 @@ public class Bishop extends Piece
     }
 
     public void updateLegalMoves(){
+        legalMoves.clear();
         legalMoves = addDiagonal(legalMoves,7, new Position(getPieceX(),getPieceY()));
     }
 

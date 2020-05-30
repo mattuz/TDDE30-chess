@@ -28,6 +28,8 @@ public class PieceMove extends MouseAdapter
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
        // updateLegalMoves();
+
+	System.out.println(dragPiece.getlegalMoves());
         if (isCastlingPossible(oldX, oldY) && dragPiece.getPieceX() == 2){
             if (dragPiece.getColor() == "black" && dragPiece.getPieceY() == 7) {
 		board.getSquare()[2][7] = board.getSquare()[0][7];
@@ -80,6 +82,7 @@ public class PieceMove extends MouseAdapter
 		this.oldX = (x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
+		dragPiece.updateLegalMoves();
 		System.out.println(dragPiece.getType());
 	    }
 	}
@@ -96,7 +99,7 @@ public class PieceMove extends MouseAdapter
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
     }
 
-    public boolean isCastlingPossible(int prevX, int prevY){
+    public boolean isCastlingPossible(int prevX, int prevY){ //TODO: Denna bör inte ligga i PieceMove
 	if (board.getState() == "white" && prevX == 4 && prevY == 0){
 	    return board.getPieceTypeAt(0, 0) == PieceType.ROOK && board.getPieceTypeAt(3, 0) == PieceType.EMPTY &&
 		   board.getPieceTypeAt(2, 0) == PieceType.EMPTY && board.getPieceTypeAt(1, 0) == PieceType.EMPTY;
@@ -108,7 +111,7 @@ public class PieceMove extends MouseAdapter
 	}
     }
 
-    public boolean pawnUpgradePossible(int y) {
+    public boolean pawnUpgradePossible(int y) { //TODO: Denna bör inte ligga i PieceMove
 	if (dragPiece.getColor() == "white" && y == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
 	    return true;
 	}
@@ -118,7 +121,7 @@ public class PieceMove extends MouseAdapter
     public static void doCastling(){
 
     }
-    private boolean containsPosition(ArrayList list, Position pos){
+    private boolean containsPosition(ArrayList list, Position pos){ //TODO: Denna kanske inte bör ligga i PieceMove
         Boolean doesContain = false;
         for (Object elem: list) {
 	    if (elem.equals(pos)) {

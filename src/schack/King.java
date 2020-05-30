@@ -24,6 +24,7 @@ public class King extends Piece
 
     public void updateLegalMoves(){
         Position position = new Position (getPieceX(), getPieceY());
+        legalMoves.clear();
         legalMoves = addHorisontal(legalMoves, 1, position);
         legalMoves = addDiagonal(legalMoves, 1, position);
         legalMoves = addVertical(legalMoves, 1, position);

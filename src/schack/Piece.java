@@ -196,4 +196,6 @@ public abstract class Piece
         return (board.getPieceTypeAt(newX, newY) == PieceType.EMPTY ||
                 board.getPieceAt(newX, newY).color != piece.color);
     }
+
+    public abstract void updateLegalMoves();
 }
