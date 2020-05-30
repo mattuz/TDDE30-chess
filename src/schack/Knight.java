@@ -19,7 +19,7 @@ public class Knight extends Piece
 	if (color == board.getState() && isValidDestination(this)) {
 	    for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
-		    if ((Math.abs(x - p.getY()) == 1 && Math.abs(y - p.getY()) == 2) ||
+		    if ((Math.abs(x - p.getX()) == 1 && Math.abs(y - p.getY()) == 2) ||
 			(Math.abs(x - p.getX()) == 2 && Math.abs(y - p.getY()) == 1)) {
 			list.add(new Position(x, y));
 		    }

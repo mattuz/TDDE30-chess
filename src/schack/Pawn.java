@@ -15,9 +15,26 @@ public class Pawn extends Piece
     public boolean isFirstStep() {
         return firstStep;
     }
-    private List<Position> addLegalMoves(List<Position> list, Position p){
-        
 
+    private List<Position> addLegalMoves(List<Position> list, Position p){
+        if (color == board.getState() && isValidDestination(this)) {
+            if (color == "white") {
+                int x;
+                if (Math.abs(x - p.getX()) == 1) { // Såhär kan man ju inte göra..
+
+            }                   //TODO Här måste vi ha en loop också tror jag, annars kan vi inte kolla x till höger/vänster.
+                int y = p.getY() - 1;
+                list.add(new Position(x, y));
+            }
+            }
+        }
+
+
+
+    public void updateLegalMoves(){
+        Position position = new Position(getPieceX(), getPieceY());
+        legalMoves = addLegalMoves(legalMoves, new Position(pieceX, pieceY));
+        legalMoves = addVertical(legalMoves, 1, position); //Frågan är om man kan implementera detta.
     }
 
     /*public boolean isLegal(int prevX, int prevY) {

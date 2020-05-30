@@ -84,7 +84,7 @@ public abstract class Piece
     }
     public List<Position> addDiagonal(List<Position> list, int maxDistance, Position p){
         for (int x = p.getX() - maxDistance; x < p.getX() + maxDistance; x++){
-            for (int y = p.getY()-maxDistance; x < p.getY() + maxDistance; x++){
+            for (int y = p.getY()-maxDistance; y < p.getY() + maxDistance; y++){
                 if (x >= 0 && x < 8 && y >= 0 && y < 8 &&
                     isLegalDiagonal(this, p.getX(), p.getY(), x, y)) {
                     list.add(new Position(x, y));
@@ -194,6 +194,6 @@ public abstract class Piece
         int newX = piece.pieceX;
         int newY = piece.pieceY;
         return (board.getPieceTypeAt(newX, newY) == PieceType.EMPTY ||
-                board.getPieceAt(newX, newY).getColor() != piece.color);
+                board.getPieceAt(newX, newY).color != piece.color);
     }
 }
