@@ -240,6 +240,28 @@ public class Board
 	       getPieceTypeAt(5,piece.getPieceY()) == PieceType.EMPTY;
     }
 
+    public boolean isChecked(Piece piece) {
+        if (piece.getType() == PieceType.KING) {
+	    for (Piece p: pieceList) {
+		if (p.color != piece.color && containsPosition(p.getlegalMoves(), new Position(piece.getPieceX(), piece.getPieceY()))) {
+		    System.out.println("Don't move in to check!");
+		    return true;
+		}
+	    }
+	} return false;
+    }
+
+    public boolean containsPosition(List<Position> list, Position pos){
+	Boolean doesContain = false;
+	for (Position elem: list) {
+	    if (elem.getX() == pos.getX() && elem.getY() == pos.getY()) {
+		doesContain = true;
+		break;
+	    }
+	}
+	return doesContain;
+    }
+
     public String getState(){
 	return state;
     }

@@ -33,22 +33,24 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
-	for (int i = 0; i < dragPiece.getlegalMoves().size()-1; i++) {
-	   System.out.println(dragPiece.getlegalMoves().get(i).getX() + ", " + dragPiece.getlegalMoves().get(i).getY());
+	int x = dragPiece.getPieceX();
+	int y = dragPiece.getPieceY();
+	if (board.isChecked(dragPiece)) {
+	    dragPiece.newX(oldX);
+	    dragPiece.newY(oldY);
+	    board.changeState();
 	}
-        if (containsPosition(dragPiece.getlegalMoves(), new Position(dragPiece.pieceX, dragPiece.pieceY))){
-            if (board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] != null) {
-                board.destroyPiece(dragPiece.getPieceX(), dragPiece.getPieceY());
+        else if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
+            if (board.getSquare()[x][y] != null) {
+                board.destroyPiece(x, y);
 	    }
-            board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
+            board.getSquare()[x][y] = board.getSquare()[oldX][oldY];
             dragPiece.setFirstStep(false);
 
-            if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
+            if (x != oldX || y != oldY) {
                 board.removePiece(oldX, oldY);
             }
-            if (board.pawnUpgradePossible(dragPiece, dragPiece.getPieceY())){ //TODO borde denna ligga i Pawn egentligen? Hur skulle det funka?
-		int x = dragPiece.getPieceX();
-		int y = dragPiece.getPieceY();
+            if (board.pawnUpgradePossible(dragPiece, y)){ //TODO borde denna ligga i Pawn egentligen? Hur skulle det funka?
 
 		String[] pawnUpgrades = new String[] {"Queen", "Bishop", "Rook", "Knight"};
 		int response = JOptionPane.showOptionDialog(
@@ -58,20 +60,21 @@ public class PieceMove extends MouseAdapter
 		board.destroyPiece(x, y);
 		chooseUpgrade(response, x, y);
 	    }
-            if (dragPiece.getType() == PieceType.KING && dragPiece.getPieceX() - 2 == oldX) {
-		board.getSquare()[dragPiece.getPieceX()-1][dragPiece.getPieceY()] = board.getSquare()[7][dragPiece.getPieceY()];
-		board.removePiece(7, dragPiece.getPieceY());
+            if (dragPiece.getType() == PieceType.KING && x - 2 == oldX) {
+		board.getSquare()[x-1][y] = board.getSquare()[7][y];
+		board.removePiece(7, y);
 	    }
-            if (dragPiece.getType() == PieceType.KING && dragPiece.getPieceX() + 2 == oldX) {
-		board.getSquare()[dragPiece.getPieceX()+1][dragPiece.getPieceY()] = board.getSquare()[0][dragPiece.getPieceY()];
-		board.removePiece(0, dragPiece.getPieceY());
+            if (dragPiece.getType() == PieceType.KING && x + 2 == oldX) {
+		board.getSquare()[x+1][y] = board.getSquare()[0][y];
+		board.removePiece(0, y);
 	    }
 
 	} else {
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
 	    board.changeState();
-	} this.dragPiece = null;
+	} dragPiece.updateLegalMoves();
+        this.dragPiece = null;
         board.notifyListeners();
         board.changeState();
     }
@@ -97,7 +100,8 @@ public class PieceMove extends MouseAdapter
 		this.dragPiece = piece;
 		checkFirstStep = dragPiece.isFirstStep();
 		dragPiece.updateLegalMoves();
-		System.out.println(dragPiece.getType());
+		System.out.println(dragPiece.getType()); //TODO for-loop här kanske, som kollar om samma colors kung är checkad. Är den det måste dragPiece ändras.
+
 	    }
 	}
 	if (this.dragPiece != null){
@@ -149,15 +153,5 @@ public class PieceMove extends MouseAdapter
    	 }
     }
 
-    private boolean containsPosition(List<Position> list, Position pos){ //TODO: Denna kanske inte bör ligga i PieceMove
-        Boolean doesContain = false;
-        for (Position elem: list) {
-	    if (elem.getX() == pos.getX() && elem.getY() == pos.getY()) {
-		doesContain = true;
-		break;
-	    }
-	}
-	System.out.println(doesContain);
-        return doesContain;
-    }
+
 }

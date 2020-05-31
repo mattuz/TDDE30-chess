@@ -9,6 +9,7 @@ public class Knight extends Piece
 
     public Knight( int x,  int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
 	super(x, y, type, color, path, board, firstStep);
+	updateLegalMoves();
     }
 
     public List<Position> addLegalMoves(List<Position> list, Position p) {

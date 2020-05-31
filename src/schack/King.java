@@ -7,6 +7,7 @@ public class King extends Piece
 {
     public King( int x,  int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
         super(x, y, type, color, path, board, firstStep);
+        updateLegalMoves();
     }
 
     public List<Position> addLegalMoves(List<Position> list, Position p) {
@@ -33,6 +34,9 @@ public class King extends Piece
         legalMoves = addHorisontal(legalMoves, 1, position);
         legalMoves = addDiagonal(legalMoves, 1, position);
         legalMoves = addVertical(legalMoves, 1, position);
+        /*if (board.isChecked(this)) {
+            legalMoves.remove(board.containsPosition(this.getlegalMoves(), position));
+        }*/
     }
 
 
