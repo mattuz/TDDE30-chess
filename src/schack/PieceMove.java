@@ -154,17 +154,7 @@ public class PieceMove extends MouseAdapter
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
     }
 
-    public boolean isCastlingPossible(int prevX, int prevY){ //TODO: Denna bör inte ligga i PieceMove
-	if (board.getState() == "white" && prevX == 4 && prevY == 0){
-	    return board.getPieceTypeAt(0, 0) == PieceType.ROOK && board.getPieceTypeAt(3, 0) == PieceType.EMPTY &&
-		   board.getPieceTypeAt(2, 0) == PieceType.EMPTY && board.getPieceTypeAt(1, 0) == PieceType.EMPTY;
-	} else if(board.getState() == "black" && prevX == 4 && prevY == 8){
-	    return board.getPieceTypeAt(0, 8) == PieceType.ROOK && board.getPieceTypeAt(3, 8) == PieceType.EMPTY &&
-		   board.getPieceTypeAt(2, 8) == PieceType.EMPTY && board.getPieceTypeAt(1, 8) == PieceType.EMPTY;
-	} else {
-	    return false;
-	}
-    }
+
 
     public static void doCastling(){
 

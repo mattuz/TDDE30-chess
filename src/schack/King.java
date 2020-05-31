@@ -8,6 +8,12 @@ public class King extends Piece
         super(x, y, type, color, path, board, firstStep);
     }
 
+    public void addLegalMoves() {
+        if (board.isCastlingPossible(this)) {
+
+        }
+    }
+
     public void updateLegalMoves(){
         Position position = new Position (getPieceX(), getPieceY());
         legalMoves.clear();

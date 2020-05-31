@@ -210,6 +210,18 @@ public class Board
 	else return piece.getColor() == "black" && y == 7;
     }
 
+    public boolean isCastlingPossible(Piece piece){
+	if (piece.getType() == PieceType.KING && piece.firstStep) {
+	    if (state == "white" && piece.getPieceX() == 4 && piece.getPieceY() == 0){
+		return getPieceTypeAt(0, 0) == PieceType.ROOK && getPieceTypeAt(3, 0) == PieceType.EMPTY && //TODO For-loopar istället..?
+		       getPieceTypeAt(2, 0) == PieceType.EMPTY && getPieceTypeAt(1, 0) == PieceType.EMPTY;
+	    } else if(state == "black" && piece.getPieceX() == 4 && piece.getPieceY() == 7){
+		return getPieceTypeAt(0, 7) == PieceType.ROOK && getPieceTypeAt(3, 7) == PieceType.EMPTY &&
+		       getPieceTypeAt(2, 7) == PieceType.EMPTY && getPieceTypeAt(1, 7) == PieceType.EMPTY;
+	    } else return false;
+	} else return false;
+    }
+
     public String getState(){
 	return state;
     }
