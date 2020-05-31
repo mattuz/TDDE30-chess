@@ -94,7 +94,7 @@ public class Queen extends Piece
 
 	public void updateLegalMoves(){
 	    Position position = new Position(getPieceX(), getPieceY());
-	    legalMoves.clear(); //Tror man måste göra såhär? Annars lägger man väl till på föregående lista?
+	    legalMoves.clear();
 	    legalMoves = addDiagonal(legalMoves, 8, position);
 	    legalMoves = addHorisontal(legalMoves, 8, position);
 	    legalMoves = addVertical(legalMoves, 8, position);

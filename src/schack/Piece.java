@@ -95,7 +95,7 @@ public abstract class Piece
     }
 
     public boolean isLegalHorisontal(Piece piece, int currentX, int currentY, int x, int y) {
-        if (isValidDestination(piece) && piece.color == board.getState() &&
+        if (isValidDestination(x,y) && piece.color == board.getState() &&
             (Math.abs(currentX - x) != 0 && Math.abs(currentY - y) == 0)){
 
             boolean freePath = true;
@@ -123,7 +123,7 @@ public abstract class Piece
     }
 
     public boolean isLegalVertical(Piece piece, int currentX, int currentY, int x, int y) {
-        if (isValidDestination(piece) && piece.color == board.getState() &&
+        if (isValidDestination(x,y) && piece.color == board.getState() &&
              (Math.abs(currentX - x) == 0 && Math.abs(currentY - y) != 0)) {
             boolean freePath = true;
 
@@ -151,7 +151,7 @@ public abstract class Piece
 
     public boolean isLegalDiagonal(Piece piece, int currentX, int currentY, int x, int y) {
         if ((Math.abs(currentX - x) - Math.abs(currentY - y) == 0) &&
-            isValidDestination(piece) && piece.color == board.getState()) {
+            isValidDestination(x,y) && piece.color == board.getState()) {
             boolean freePath = true;
             if (currentX < x && currentY < y) {
                 for (int i = currentX+1; i < x; i++) {
@@ -190,11 +190,9 @@ public abstract class Piece
         }
     }
 
-    public boolean isValidDestination(Piece piece){
-        int newX = piece.pieceX;
-        int newY = piece.pieceY;
-        return (board.getPieceTypeAt(newX, newY) == PieceType.EMPTY ||
-                board.getPieceAt(newX, newY).color != piece.color);
+    public boolean isValidDestination(int newX, int newY){
+        return (board.getPieceAt(newX, newY) == null ||
+                board.getPieceAt(newX, newY).color != board.getState());
     }
 
     public abstract void updateLegalMoves();

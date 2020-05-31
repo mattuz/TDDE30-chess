@@ -17,23 +17,31 @@ public class Pawn extends Piece
     }
 
     private List<Position> addLegalMoves(List<Position> list, Position p){ //TODO: Implementera firstStep.
-        if (color == board.getState() /*&& isValidDestination(this)*/) { //TODO: Tror inte vi kan kolla isValid här..
+        if (color == board.getState()) { //TODO: Tror inte vi kan kolla isValid här..
             if (color == "white") {
                 int y = p.getY() - 1;
                 for (int x = 0; x < 8; x++) {
-                    if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null && board.getPieceAt(x,y).getColor() != "white") ||
+                    if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
+                         board.getPieceAt(x,y).getColor() != "white") ||
                         (x == p.getX() && board.getPieceAt(x,y) == null)) {
                         System.out.println(x + ", " + y);
+                        if (firstStep) {
+                            list.add(new Position(x, y-1));
+                            //firstStep = false; //Tänkte att man kunde skriva såhär, men kommer bli knas om man trycker men inte flyttar.
+                        }
                         list.add(new Position(x, y));
                     }
                 }
             } else {
                 int y = p.getY() + 1;
                 for (int x = 0; x < 8; x++) {
-                    if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null && board.getSquare()[x][y].getColor() != "black") ||
+                    if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
+                         board.getSquare()[x][y].getColor() != "black") ||
                         (x == p.getX() && board.getSquare()[x][y] == null)) {
                         System.out.println(x + ", " + y);
-
+                        if (firstStep) {
+                            list.add(new Position(x,y+1));
+                        }
                         list.add(new Position(x, y));
                     }
                 }
@@ -48,7 +56,6 @@ public class Pawn extends Piece
         //firstStep = false;  // tror att detta måste kollas här? - Nope, blir knas eftersom detta måste göras innan en pjäs flyttas..
         legalMoves.clear();
         addLegalMoves(legalMoves, new Position(pieceX, pieceY));
-        System.out.println(legalMoves);
     }
 
     /*public boolean isLegal(int prevX, int prevY) {
