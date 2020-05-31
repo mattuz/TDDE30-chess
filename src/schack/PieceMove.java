@@ -28,7 +28,7 @@ public class PieceMove extends MouseAdapter
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
 	for (int i = 0; i < dragPiece.getlegalMoves().size()-1; i++) {
-	    System.out.println(dragPiece.getlegalMoves().get(i).getX() + ", " + dragPiece.getlegalMoves().get(i).getY());
+	   // System.out.println(dragPiece.getlegalMoves().get(i).getX() + ", " + dragPiece.getlegalMoves().get(i).getY());
 	}
 
         /*if (isCastlingPossible(oldX, oldY) && dragPiece.getPieceX() == 2){ //TODO fixa så att denna endast kollas om det "blir möjligt".
@@ -47,6 +47,8 @@ public class PieceMove extends MouseAdapter
             if (board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] != null) {
                 board.removePiece(dragPiece.getPieceX(), dragPiece.getPieceY());
 	    }
+            board.removePiece(dragPiece.getPieceX(), dragPiece.getPieceY());
+	    System.out.println(board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] + " = piecen på rutan du släppte på");
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
 
             if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
