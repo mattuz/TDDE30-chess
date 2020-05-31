@@ -195,6 +195,16 @@ public class Board
         }
     }
 
+    public boolean pawnUpgradePossible(Piece piece, int y) { //TODO: Denna bör inte ligga i PieceMove
+	if (piece.getType() != PieceType.PAWN) {
+	    return false;
+	}
+        else if (piece.getColor() == "white" && y == 0) {
+	    return true;
+	}
+	else return piece.getColor() == "black" && y == 7;
+    }
+
     public String getState(){
 	return state;
     }

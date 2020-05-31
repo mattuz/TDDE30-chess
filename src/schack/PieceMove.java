@@ -47,6 +47,11 @@ public class PieceMove extends MouseAdapter
         if (containsPosition(dragPiece.getlegalMoves(), new Position(dragPiece.pieceX, dragPiece.pieceY))){
             if (board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] != null) {
                 board.removePiece(dragPiece.getPieceX(), dragPiece.getPieceY());
+                board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = new Pawn(dragPiece.getPieceX(),dragPiece.getPieceY(),
+											    PieceType.PAWN,
+											    "white",board.assignPaths("white",PieceType.PAWN),
+											    board,true);
+		board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = null;
 	    }
 	    System.out.println(board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] + " = piecen på rutan du släppte på");
 
@@ -56,7 +61,8 @@ public class PieceMove extends MouseAdapter
             if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
                 board.removePiece(oldX, oldY);
             }
-            else if (dragPiece.getType() == PieceType.PAWN && pawnUpgradePossible(dragPiece.getPieceY())){
+            if (board.pawnUpgradePossible(dragPiece, dragPiece.getPieceY())){
+		System.out.println("Hallelujah motherfucker");
                 //gör ett menyval
             }
 	} else {
@@ -115,13 +121,6 @@ public class PieceMove extends MouseAdapter
 	} else {
 	    return false;
 	}
-    }
-
-    public boolean pawnUpgradePossible(int y) { //TODO: Denna bör inte ligga i PieceMove
-	if (dragPiece.getColor() == "white" && y == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
-	    return true;
-	}
-	else return dragPiece.getColor() == "black" && y == 7;
     }
 
     public static void doCastling(){
