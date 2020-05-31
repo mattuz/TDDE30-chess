@@ -241,4 +241,7 @@ public class Board
 	return square[x][y];
     }
 
+    public List<Piece> getPieceList() {
+	return pieceList;
+    }
 }

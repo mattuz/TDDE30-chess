@@ -1,5 +1,7 @@
 package schack;
 
+import javafx.scene.control.ComboBox;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +12,7 @@ public class Frame
     private JTextArea textarea = null;
     private PieceComponent graphics;
     private Panel p = new Panel();
+
 
 
     public Frame(final Board board) {
@@ -32,7 +35,7 @@ public class Frame
 	Panel.setPlayer1(p1);
 	String p2 = JOptionPane.showInputDialog("Black player: ");
 	Panel.setPlayer2(p2);
-        frame.pack();
+	frame.pack();
         frame.setVisible(true);
 
     }

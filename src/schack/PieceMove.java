@@ -1,8 +1,12 @@
 package schack;
 
+import javafx.scene.control.ComboBox;
+
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Optional;
 
 public class PieceMove extends MouseAdapter
 {
@@ -18,6 +22,8 @@ public class PieceMove extends MouseAdapter
     private int dragOffsetY;
     private Piece dragPiece = null;
     private boolean checkFirstStep;
+
+
 
     public PieceMove(Board board, final PieceComponent graphics) {
 	this.pieces = board.pieceList;
@@ -58,9 +64,50 @@ public class PieceMove extends MouseAdapter
                 board.removePiece(oldX, oldY);
             }
             if (board.pawnUpgradePossible(dragPiece, dragPiece.getPieceY())){
-		System.out.println("Hallelujah motherfucker");
-                //gör ett menyval
-            }
+		int x = dragPiece.getPieceX();
+		int y = dragPiece.getPieceY();
+
+		String[] pawnUpgrades = new String[] {"Queen", "Bishop", "Rook", "Knight"};
+		int response = JOptionPane.showOptionDialog(
+			null, "Choose one of the following: ", "Upgrade pawn!",
+			JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, pawnUpgrades, pawnUpgrades[0]);
+		board.destroyPiece(x, y);
+		switch (response) {
+		    case 0:
+		        board.getSquare()[x][y] =
+				new Queen(x,y,PieceType.QUEEN,dragPiece.color,
+					  board.assignPaths(dragPiece.color, PieceType.QUEEN), board, false);
+		        board.getPieceList().add(board.getSquare()[x][y]);
+		        break;
+		    case 1:
+			board.getSquare()[x][y] =
+				new Bishop(x,y,PieceType.BISHOP,dragPiece.color,
+					  board.assignPaths(dragPiece.color, PieceType.BISHOP), board, false);
+			board.getPieceList().add(board.getSquare()[x][y]);
+
+			break;
+
+		    case 2:
+			board.getSquare()[x][y] =
+				new Rook(x,y,PieceType.ROOK,dragPiece.color,
+					  board.assignPaths(dragPiece.color, PieceType.ROOK), board, false);
+			board.getPieceList().add(board.getSquare()[x][y]);
+
+			break;
+
+		    case 3:
+			board.getSquare()[x][y] =
+				new Knight(x,y,PieceType.KNIGHT,dragPiece.color,
+					  board.assignPaths(dragPiece.color, PieceType.KNIGHT), board, false);
+			board.getPieceList().add(board.getSquare()[x][y]);
+
+			break;
+		    default:
+		        break;
+		}
+
+
+	    }
 	} else {
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
