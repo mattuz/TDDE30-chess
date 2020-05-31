@@ -28,7 +28,8 @@ public class Bishop extends Piece
     }
 
     public void updateLegalMoves(){
-        legalMoves = addDiagonal(legalMoves,7, new Position(getPieceX(),getPieceY()));
+        legalMoves.clear();
+        legalMoves = addDiagonal(legalMoves,8, new Position(getPieceX(),getPieceY()));
     }
 
     /*public boolean istLegal(int prevX, int prevY){

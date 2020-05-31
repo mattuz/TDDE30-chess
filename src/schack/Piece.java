@@ -84,7 +84,7 @@ public abstract class Piece
     }
     public List<Position> addDiagonal(List<Position> list, int maxDistance, Position p){
         for (int x = p.getX() - maxDistance; x < p.getX() + maxDistance; x++){
-            for (int y = p.getY()-maxDistance; x < p.getY() + maxDistance; x++){
+            for (int y = p.getY()-maxDistance; y < p.getY() + maxDistance; y++){
                 if (x >= 0 && x < 8 && y >= 0 && y < 8 &&
                     isLegalDiagonal(this, p.getX(), p.getY(), x, y)) {
                     list.add(new Position(x, y));
@@ -95,7 +95,7 @@ public abstract class Piece
     }
 
     public boolean isLegalHorisontal(Piece piece, int currentX, int currentY, int x, int y) {
-        if (isValidDestination(piece) && piece.color == board.getState() &&
+        if (isValidDestination(x,y) && piece.color == board.getState() &&
             (Math.abs(currentX - x) != 0 && Math.abs(currentY - y) == 0)){
 
             boolean freePath = true;
@@ -123,7 +123,7 @@ public abstract class Piece
     }
 
     public boolean isLegalVertical(Piece piece, int currentX, int currentY, int x, int y) {
-        if (isValidDestination(piece) && piece.color == board.getState() &&
+        if (isValidDestination(x,y) && piece.color == board.getState() &&
              (Math.abs(currentX - x) == 0 && Math.abs(currentY - y) != 0)) {
             boolean freePath = true;
 
@@ -151,7 +151,7 @@ public abstract class Piece
 
     public boolean isLegalDiagonal(Piece piece, int currentX, int currentY, int x, int y) {
         if ((Math.abs(currentX - x) - Math.abs(currentY - y) == 0) &&
-            isValidDestination(piece) && piece.color == board.getState()) {
+            isValidDestination(x,y) && piece.color == board.getState()) {
             boolean freePath = true;
             if (currentX < x && currentY < y) {
                 for (int i = currentX+1; i < x; i++) {
@@ -190,10 +190,10 @@ public abstract class Piece
         }
     }
 
-    public boolean isValidDestination(Piece piece){
-        int newX = piece.pieceX;
-        int newY = piece.pieceY;
-        return (board.getPieceTypeAt(newX, newY) == PieceType.EMPTY ||
-                board.getPieceAt(newX, newY).getColor() != piece.color);
+    public boolean isValidDestination(int newX, int newY){
+        return (board.getPieceAt(newX, newY) == null ||
+                board.getPieceAt(newX, newY).color != board.getState());
     }
+
+    public abstract void updateLegalMoves();
 }

@@ -94,8 +94,9 @@ public class Queen extends Piece
 
 	public void updateLegalMoves(){
 	    Position position = new Position(getPieceX(), getPieceY());
-	    legalMoves = addDiagonal(legalMoves, 7, position);
-	    legalMoves = addHorisontal(legalMoves, 7, position);
-	    legalMoves = addVertical(legalMoves, 7, position);
+	    legalMoves.clear();
+	    legalMoves = addDiagonal(legalMoves, 8, position);
+	    legalMoves = addHorisontal(legalMoves, 8, position);
+	    legalMoves = addVertical(legalMoves, 8, position);
 	}
 }

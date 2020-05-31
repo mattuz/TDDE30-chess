@@ -27,8 +27,11 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
-       // updateLegalMoves();
-        if (isCastlingPossible(oldX, oldY) && dragPiece.getPieceX() == 2){
+	for (int i = 0; i < dragPiece.getlegalMoves().size()-1; i++) {
+	    System.out.println(dragPiece.getlegalMoves().get(i).getX() + ", " + dragPiece.getlegalMoves().get(i).getY());
+	}
+
+        /*if (isCastlingPossible(oldX, oldY) && dragPiece.getPieceX() == 2){ //TODO fixa så att denna endast kollas om det "blir möjligt".
             if (dragPiece.getColor() == "black" && dragPiece.getPieceY() == 7) {
 		board.getSquare()[2][7] = board.getSquare()[0][7];
 		board.removePiece(0,7);
@@ -39,9 +42,13 @@ public class PieceMove extends MouseAdapter
 	    }
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
             board.removePiece(oldX, oldY);
-        }
-        else if (containsPosition(dragPiece.getlegalMoves(), new Position(dragPiece.pieceX, dragPiece.pieceY))){
+        }*/
+        if (containsPosition(dragPiece.getlegalMoves(), new Position(dragPiece.pieceX, dragPiece.pieceY))){
+            if (board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] != null) {
+                board.removePiece(dragPiece.getPieceX(), dragPiece.getPieceY());
+	    }
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
+
             if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
                 board.removePiece(oldX, oldY);
             }
@@ -58,19 +65,15 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
-	//System.out.println("Mouse dragged!");
 	if (this.dragPiece != null){
 	    this.dragPiece.newX((mouseEvent.getPoint().x - 7)/PieceComponent.getBOARDCONSTANT());
 	    this.dragPiece.newY((mouseEvent.getPoint().y - WINDOWOFFSET)/PieceComponent.getBOARDCONSTANT());
-	   // System.out.println((mouseEvent.getPoint().x));
-	   // System.out.println((mouseEvent.getPoint().y ));
-	   // board.notifyListeners();
 	}
     }
 
     @Override public void mousePressed(final MouseEvent mouseEvent) {
 	int x = mouseEvent.getPoint().x - XOFFSET;
-	int y = mouseEvent.getPoint().y - WINDOWOFFSET; //Båda dessa konstanter pga x = 7, y = 30 i början av board
+	int y = mouseEvent.getPoint().y - WINDOWOFFSET;
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 
@@ -80,6 +83,7 @@ public class PieceMove extends MouseAdapter
 		this.oldX = (x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
+		dragPiece.updateLegalMoves();
 		System.out.println(dragPiece.getType());
 	    }
 	}
@@ -96,7 +100,7 @@ public class PieceMove extends MouseAdapter
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
     }
 
-    public boolean isCastlingPossible(int prevX, int prevY){
+    public boolean isCastlingPossible(int prevX, int prevY){ //TODO: Denna bör inte ligga i PieceMove
 	if (board.getState() == "white" && prevX == 4 && prevY == 0){
 	    return board.getPieceTypeAt(0, 0) == PieceType.ROOK && board.getPieceTypeAt(3, 0) == PieceType.EMPTY &&
 		   board.getPieceTypeAt(2, 0) == PieceType.EMPTY && board.getPieceTypeAt(1, 0) == PieceType.EMPTY;
@@ -108,7 +112,7 @@ public class PieceMove extends MouseAdapter
 	}
     }
 
-    public boolean pawnUpgradePossible(int y) {
+    public boolean pawnUpgradePossible(int y) { //TODO: Denna bör inte ligga i PieceMove
 	if (dragPiece.getColor() == "white" && y == 0) { //Tänker att vi kollar detta villkor i t.ex component och tar upp en menyval om "true".
 	    return true;
 	}
@@ -118,14 +122,15 @@ public class PieceMove extends MouseAdapter
     public static void doCastling(){
 
     }
-    private boolean containsPosition(ArrayList list, Position pos){
+    private boolean containsPosition(List<Position> list, Position pos){ //TODO: Denna kanske inte bör ligga i PieceMove
         Boolean doesContain = false;
-        for (Object elem: list) {
-	    if (elem.equals(pos)) {
+        for (Position elem: list) {
+	    if (elem.getX() == pos.getX() && elem.getY() == pos.getY()) {
 		doesContain = true;
 		break;
 	    }
 	}
+	System.out.println(doesContain);
         return doesContain;
     }
 }
