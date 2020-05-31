@@ -12,8 +12,8 @@ public class Pawn extends Piece
 
 
 
-    private List<Position> addLegalMoves(List<Position> list, Position p){ //TODO: Implementera firstStep.
-        if (color == board.getState()) { //TODO: Tror inte vi kan kolla isValid här..
+    private List<Position> addLegalMoves(List<Position> list, Position p){
+        if (color == board.getState()) {
             if (color == "white") {
                 int y = p.getY() - 1;
                 for (int x = 0; x < 8; x++) {

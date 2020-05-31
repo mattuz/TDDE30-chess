@@ -68,7 +68,7 @@ public abstract class Piece
 
     public List<Position> addHorisontal(List<Position> list, int maxDistance, Position p) {
         int y = p.getY();
-        for (int x = p.getX() - maxDistance; x < p.getX() + maxDistance; x++) {
+        for (int x = p.getX() - maxDistance; x <= p.getX() + maxDistance; x++) {
             if (x >= 0 && x < 8 && isLegalHorisontal(this, p.getX(), p.getY(), x, y)){
                 list.add(new Position(x, y));
             }
@@ -78,7 +78,7 @@ public abstract class Piece
 
     public List<Position> addVertical(List<Position> list, int maxDistance, Position p){
         int x = p.getX();
-        for (int y = p.getY() - maxDistance; y < p.getY() + maxDistance; y++){
+        for (int y = p.getY() - maxDistance; y <= p.getY() + maxDistance; y++){
             if (y >= 0 && y < 8 && isLegalVertical(this, p.getX(), p.getY(), x, y)) {
                 list.add(new Position(x, y));
             }
@@ -86,8 +86,8 @@ public abstract class Piece
         return list;
     }
     public List<Position> addDiagonal(List<Position> list, int maxDistance, Position p){
-        for (int x = p.getX() - maxDistance; x < p.getX() + maxDistance; x++){
-            for (int y = p.getY()-maxDistance; y < p.getY() + maxDistance; y++){
+        for (int x = p.getX() - maxDistance; x <= p.getX() + maxDistance; x++){
+            for (int y = p.getY()-maxDistance; y <= p.getY() + maxDistance; y++){
                 if (x >= 0 && x < 8 && y >= 0 && y < 8 &&
                     isLegalDiagonal(this, p.getX(), p.getY(), x, y)) {
                     list.add(new Position(x, y));

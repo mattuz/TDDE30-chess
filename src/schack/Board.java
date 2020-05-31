@@ -186,7 +186,7 @@ public class Board
         }
     }
 
-    public boolean isCastlingPossible(){
+   /* public boolean isCastlingPossible(){
         if (state == "white"){
 	    return getPieceTypeAt(0, 0) == PieceType.ROOK && getPieceTypeAt(4, 0) == PieceType.KING &&
 		   getPieceTypeAt(3, 0) == PieceType.EMPTY && getPieceTypeAt(2, 0) == PieceType.EMPTY &&
@@ -198,7 +198,7 @@ public class Board
         } else {
             return false;
         }
-    }
+    }*/
 
     public boolean pawnUpgradePossible(Piece piece, int y) { //TODO: Denna bör inte ligga i PieceMove
 	if (piece.getType() != PieceType.PAWN) {
@@ -210,16 +210,34 @@ public class Board
 	else return piece.getColor() == "black" && y == 7;
     }
 
-    public boolean isCastlingPossible(Piece piece){
-	if (piece.getType() == PieceType.KING && piece.firstStep) {
-	    if (state == "white" && piece.getPieceX() == 4 && piece.getPieceY() == 0){
-		return getPieceTypeAt(0, 0) == PieceType.ROOK && getPieceTypeAt(3, 0) == PieceType.EMPTY && //TODO For-loopar istället..?
-		       getPieceTypeAt(2, 0) == PieceType.EMPTY && getPieceTypeAt(1, 0) == PieceType.EMPTY;
-	    } else if(state == "black" && piece.getPieceX() == 4 && piece.getPieceY() == 7){
-		return getPieceTypeAt(0, 7) == PieceType.ROOK && getPieceTypeAt(3, 7) == PieceType.EMPTY &&
-		       getPieceTypeAt(2, 7) == PieceType.EMPTY && getPieceTypeAt(1, 7) == PieceType.EMPTY;
-	    } else return false;
-	} else return false;
+    public int castlingPossiblePath(Piece piece){
+	if (piece.getType() == PieceType.KING && piece.firstStep && piece.getColor() == state) {
+	    if (isCastlingLeft(piece) && isCastlingRight(piece)) {
+		System.out.println("Båda!");
+	        return 3;
+	    }
+	    else if (isCastlingLeft(piece)) {
+		System.out.println("Vänster!");
+		return 1;
+	    }
+	    else if (isCastlingRight(piece)) {
+		System.out.println("Höger!");
+	        return 2;
+	    }
+	} return 0;
+    }
+
+    private boolean isCastlingLeft(final Piece piece) {
+	return getPieceTypeAt(0, piece.getPieceY()) == PieceType.ROOK && square[0][piece.getPieceY()].isFirstStep() &&
+	    getPieceTypeAt(3, piece.getPieceY()) == PieceType.EMPTY &&
+	    getPieceTypeAt(2, piece.getPieceY()) == PieceType.EMPTY &&
+	    getPieceTypeAt(1, piece.getPieceY()) == PieceType.EMPTY;
+    }
+
+    private boolean isCastlingRight(final Piece piece) {
+        return getPieceTypeAt(7, piece.getPieceY()) == PieceType.ROOK && square[7][piece.getPieceY()].isFirstStep() &&
+	       getPieceTypeAt(6, piece.getPieceY()) == PieceType.EMPTY &&
+	       getPieceTypeAt(5,piece.getPieceY()) == PieceType.EMPTY;
     }
 
     public String getState(){

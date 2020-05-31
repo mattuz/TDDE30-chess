@@ -1,6 +1,7 @@
 package schack;
 
 import java.net.URL;
+import java.util.List;
 
 public class King extends Piece
 {
@@ -8,18 +9,30 @@ public class King extends Piece
         super(x, y, type, color, path, board, firstStep);
     }
 
-    public void addLegalMoves() {
-        if (board.isCastlingPossible(this)) {
-
-        }
+    public List<Position> addLegalMoves(List<Position> list, Position p) {
+        switch (board.castlingPossiblePath(this)) {
+            case 0:
+                break;
+            case 1:
+                list.add(new Position(2,pieceY));
+                break;
+            case 2:
+                list.add(new Position(6, pieceY));
+                break;
+            case 3:
+                list.add(new Position(2,pieceY));
+                list.add(new Position(6, pieceY));
+                break;
+        } return list;
     }
 
     public void updateLegalMoves(){
         Position position = new Position (getPieceX(), getPieceY());
         legalMoves.clear();
-        legalMoves = addHorisontal(legalMoves, 2, position);
-        legalMoves = addDiagonal(legalMoves, 2, position);
-        legalMoves = addVertical(legalMoves, 2, position);
+        addLegalMoves(legalMoves, position);
+        legalMoves = addHorisontal(legalMoves, 1, position);
+        legalMoves = addDiagonal(legalMoves, 1, position);
+        legalMoves = addVertical(legalMoves, 1, position);
     }
 
 
