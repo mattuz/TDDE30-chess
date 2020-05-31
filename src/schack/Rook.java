@@ -14,48 +14,6 @@ public class Rook extends Piece
         legalMoves = addHorisontal(legalMoves, 8, position);
         legalMoves = addVertical(legalMoves, 8, position);
     }
-    /*public boolean isLegal(int prevX, int prevY) {
-	if (isValidDestination() && color == board.getState() &&
-	    ((Math.abs(prevX - getPieceX()) != 0 && Math.abs(prevY - getPieceY()) == 0) ||
-	     (Math.abs(prevX - getPieceX()) == 0 && Math.abs(prevY - getPieceY()) != 0))) {
-	    boolean freePath = true;
-	    if (prevX < getPieceX() && getPieceY() == prevY) {
-		for (int i = getPieceX() - 1; i > prevX; i--) {
-		    if (board.getPieceTypeAt(i, getPieceY()) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    }
-	    if (prevX > getPieceX() && getPieceY() == prevY) {
-		for (int i = getPieceX() + 1; i < prevX; i++) {
-		    if (board.getPieceTypeAt(i, getPieceY()) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    }
-	    if (prevY > getPieceY() && getPieceX() == prevX) {
-		for (int i = getPieceY() + 1; i < prevY; i++) {
-		    if (board.getPieceTypeAt(getPieceX(), i) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    }
-	    if (prevY < getPieceY() && getPieceX() == prevX) {
-		for (int i = getPieceY() - 1; i > prevY; i--) {
-		    if (board.getPieceTypeAt(getPieceX(), i) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    }	return freePath;
 
-	} else {
-	    return false;
-	}
-	}
-     */
 
 }

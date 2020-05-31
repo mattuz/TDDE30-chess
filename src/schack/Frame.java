@@ -9,6 +9,7 @@ public class Frame
     private Board board;
     private JTextArea textarea = null;
     private PieceComponent graphics;
+    private Panel p = new Panel();
 
 
     public Frame(final Board board) {
@@ -26,7 +27,11 @@ public class Frame
     public void show() {
         frame.setLayout(new BorderLayout());
         frame.add(graphics, BorderLayout.CENTER);
-        frame.add(new Panel(), BorderLayout.PAGE_END);
+        frame.add(p, BorderLayout.PAGE_END);
+	String p1 = JOptionPane.showInputDialog("White player: ");
+	Panel.setPlayer1(p1);
+	String p2 = JOptionPane.showInputDialog("Black player: ");
+	Panel.setPlayer2(p2);
         frame.pack();
         frame.setVisible(true);
 

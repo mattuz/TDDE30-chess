@@ -6,7 +6,6 @@ import java.util.List;
 
 public abstract class Piece
 {
-    //protected boolean firstStep;
     protected String color;
     protected final URL path;
     protected int pieceX;
@@ -66,12 +65,7 @@ public abstract class Piece
         return color;
     }
 
-   // public abstract boolean isLegal(final int prevX, final int prevY);
 
-    /*public boolean isFirstStep() {
-        return firstStep;
-    }
-*/
     public List<Position> addHorisontal(List<Position> list, int maxDistance, Position p) {
         int y = p.getY();
         for (int x = p.getX() - maxDistance; x < p.getX() + maxDistance; x++) {

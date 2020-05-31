@@ -14,21 +14,6 @@ public class BoardTest
 	b1.addBoardListener(f1.getGraphics());
 	f1.show();
 
-	String p1 = JOptionPane.showInputDialog("White player: ");
-	Panel.setPlayer1(p1);
-	String p2 = JOptionPane.showInputDialog("Black player: ");
-	Panel.setPlayer2(p2);
-
-	//System.out.println(b1.getDeadpieces()); //Visar alla "döda" pjäser.
-	//System.out.println(BoardToText.convertToTextBoard(b1));
-	//System.out.println(b1.getPieceTypeAt(0, 1));
-	//System.out.println(b1.getPieceTypeAt(0,2));
-	//System.out.println(b1.getPieceAt(0,1));
-	//b1.movePieceTest(0,1);
-	//System.out.println(b1.getPieceTypeAt(0, 1));
-	//System.out.println(b1.getPieceTypeAt(0,2));
-	//System.out.println(b1.getPieceAt(0,1));
-
 	f1.getGraphics().repaint();
     }
 

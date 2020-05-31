@@ -31,52 +31,6 @@ public class Bishop extends Piece
         legalMoves.clear();
         legalMoves = addDiagonal(legalMoves,8, new Position(getPieceX(),getPieceY()));
     }
-
-    /*public boolean istLegal(int prevX, int prevY){
-	return Math.abs(getPieceX() - prevX) == Math.abs(getPieceY() - prevY) && color == board.getState();
-    }
-
-    public boolean isLegal(int prevX, int prevY){
-	if ((Math.abs(prevX - getPieceX()) - Math.abs(prevY - getPieceY()) == 0) &&
-	    isValidDestination() && color == board.getState()) {
-	    boolean freePath = true;
-	    if (prevX < getPieceX() && prevY < getPieceY()) {
-		for (int i = prevX+1; i < getPieceX(); i++) {
-		    if (board.getPieceTypeAt(i, prevY + i-prevX ) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    }
-	    if (prevX > getPieceX() && prevY < getPieceY()) {
-		for (int i = prevX-1; i > getPieceX(); i--) {
-		    if (board.getPieceTypeAt(i, prevY + prevX-i ) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    }
-	    if (prevX < getPieceX() && prevY > getPieceY()) {
-		for (int i = prevX+1; i < getPieceX(); i++) {
-		    if (board.getPieceTypeAt(i, prevY - i+prevX ) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    }
-	    if (prevX > getPieceX() && prevY > getPieceY()) {
-		for (int i = prevX-1; i > getPieceX(); i--) {
-		    if (board.getPieceTypeAt(i, prevY - prevX+i ) != PieceType.EMPTY) {
-			freePath = false;
-			break;
-		    }
-		}
-	    } return freePath;
-	} else {
-	    return false;
-	}
-    }
-    */
 }
 
 

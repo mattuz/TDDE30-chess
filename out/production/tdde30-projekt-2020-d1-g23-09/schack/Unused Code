@@ -1,0 +1,114 @@
+/*public boolean istLegal(int prevX, int prevY){
+	return Math.abs(getPieceX() - prevX) == Math.abs(getPieceY() - prevY) && color == board.getState();
+    }
+
+    public boolean isLegal(int prevX, int prevY){
+	if ((Math.abs(prevX - getPieceX()) - Math.abs(prevY - getPieceY()) == 0) &&
+	    isValidDestination() && color == board.getState()) {
+	    boolean freePath = true;
+	    if (prevX < getPieceX() && prevY < getPieceY()) {
+		for (int i = prevX+1; i < getPieceX(); i++) {
+		    if (board.getPieceTypeAt(i, prevY + i-prevX ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
+		}
+	    }
+	    if (prevX > getPieceX() && prevY < getPieceY()) {
+		for (int i = prevX-1; i > getPieceX(); i--) {
+		    if (board.getPieceTypeAt(i, prevY + prevX-i ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
+		}
+	    }
+	    if (prevX < getPieceX() && prevY > getPieceY()) {
+		for (int i = prevX+1; i < getPieceX(); i++) {
+		    if (board.getPieceTypeAt(i, prevY - i+prevX ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
+		}
+	    }
+	    if (prevX > getPieceX() && prevY > getPieceY()) {
+		for (int i = prevX-1; i > getPieceX(); i--) {
+		    if (board.getPieceTypeAt(i, prevY - prevX+i ) != PieceType.EMPTY) {
+			freePath = false;
+			break;
+		    }
+		}
+	    } return freePath;
+	} else {
+	    return false;
+	}
+    }
+    */
+
+
+    KING:
+        /*public boolean isLegal(int prevX, int prevY){
+            if (color == board.getState() && isValidDestination()) {
+    	    if ((getPieceX() == prevX && Math.abs(getPieceY() - prevY) == 1)){
+    		return true;
+    	    }
+    	    else if ((getPieceY() == prevY && Math.abs(getPieceX() - prevX) == 1)){
+    		return true;
+    	    }
+    	    else if(board.isCastlingPossible()){
+    		return true;
+    	    }
+    	    else return Math.abs(getPieceX() - prevX) == 1 && Math.abs(getPieceY() - prevY) == 1;
+    	} return false;
+        } */
+
+
+        KNIGHT:
+            /*public boolean isLegal(int prevX, int prevY){
+        	return ((Math.abs(getPieceX() - prevX) == 1 && Math.abs(getPieceY() - prevY) == 2) ||
+        		(Math.abs(getPieceX() - prevX) == 2 && Math.abs(getPieceY() - prevY) == 1))
+        	       && color == board.getState() && isValidDestination();
+            }*/
+
+            PAWN:
+             /*public boolean isLegal(int prevX, int prevY) {
+                    if (color == "black" && color == board.getState()) {
+                        if (getPieceX() == prevX && board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY) {
+                            if (firstStep) {
+                                if (getPieceY() == prevY + 1 || (Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY + 1
+                                                                 && board.getPieceAt(getPieceX(), getPieceY()).getColor() == "white")) {
+                                    firstStep = false;
+                                    return true;
+                                } else if (getPieceY() == prevY + 2
+                                           && board.getPieceTypeAt(getPieceX(), getPieceY() - 1) == PieceType.EMPTY) {
+                                    firstStep = false;
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            } else {
+                                return (getPieceY() == prevY + 1);
+                            }
+                        } else return (Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY + 1 &&
+                                    board.getPieceAt(getPieceX(), getPieceY()).getColor() == "white");
+                    } else if (color == "white" && color == board.getState()) {
+                        if (getPieceX() == prevX && board.getPieceTypeAt(getPieceX(), getPieceY()) == PieceType.EMPTY) {
+                            if (firstStep) {
+                                if (getPieceY() == prevY - 1 || (Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY - 1 &&
+                                                                 board.getPieceAt(getPieceX(), getPieceY()).getColor() == "black")) {
+                                    firstStep = false;
+                                    return true;
+                                } else if (getPieceY() == prevY - 2
+                                           && board.getPieceTypeAt(getPieceX(), getPieceY() + 1) == PieceType.EMPTY) {
+                                    firstStep = false;
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            } else {
+                                return (getPieceY() == prevY - 1);
+                            }
+                        } else return (Math.abs(getPieceX() - prevX) == 1 && getPieceY() == prevY - 1 &&
+                                       board.getPieceAt(getPieceX(), getPieceY()).getColor() == "black");
+                    }
+                    return false;
+                }*/

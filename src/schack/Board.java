@@ -12,7 +12,6 @@ public class Board
     private PieceType[][] enumsquare;
     private List<Piece> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
-    private PieceMaker maker = new PieceMaker();
     public List<Piece> pieceList = new ArrayList<>();
 
     private final static String WHITE_STATE = "white";
@@ -165,6 +164,12 @@ public class Board
     public void removePiece(int x, int y) {
         square[x][y] = null;
         notifyListeners();
+    }
+
+    public void destroyPiece(int x, int y) {
+	pieceList.remove(square[x][y]);
+	square[x][y] = null;
+	notifyListeners();
     }
 
     public void deadPiece(int x, int y) {
