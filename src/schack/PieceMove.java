@@ -2,7 +2,6 @@ package schack;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PieceMove extends MouseAdapter
@@ -18,6 +17,7 @@ public class PieceMove extends MouseAdapter
     private int dragOffsetX;
     private int dragOffsetY;
     private Piece dragPiece = null;
+    private boolean checkFirstStep;
 
     public PieceMove(Board board, final PieceComponent graphics) {
 	this.pieces = board.pieceList;
@@ -43,13 +43,15 @@ public class PieceMove extends MouseAdapter
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
             board.removePiece(oldX, oldY);
         }*/
+
         if (containsPosition(dragPiece.getlegalMoves(), new Position(dragPiece.pieceX, dragPiece.pieceY))){
             if (board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] != null) {
                 board.removePiece(dragPiece.getPieceX(), dragPiece.getPieceY());
 	    }
-            board.removePiece(dragPiece.getPieceX(), dragPiece.getPieceY());
 	    System.out.println(board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] + " = piecen på rutan du släppte på");
+
             board.getSquare()[dragPiece.getPieceX()][dragPiece.getPieceY()] = board.getSquare()[oldX][oldY];
+            dragPiece.setFirstStep(false);
 
             if (dragPiece.getPieceX() != oldX || dragPiece.getPieceY() != oldY) {
                 board.removePiece(oldX, oldY);
@@ -85,6 +87,7 @@ public class PieceMove extends MouseAdapter
 		this.oldX = (x - this.dragOffsetX)/PieceComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY)/PieceComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
+		checkFirstStep = dragPiece.isFirstStep();
 		dragPiece.updateLegalMoves();
 		System.out.println(dragPiece.getType());
 	    }

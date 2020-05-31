@@ -5,8 +5,8 @@ import java.net.URL;
 public class Queen extends Piece
 {
 
-    public Queen( int x,  int y, final PieceType type, final String color, final URL path, final Board board) {
-	super(x, y, type, color, path, board);
+    public Queen( int x,  int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
+	super(x, y, type, color, path, board, firstStep);
     }
 
 	/*if (((getPieceX() == prevX || getPieceY() == prevY)) && color == Board.getState()){

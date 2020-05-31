@@ -5,16 +5,16 @@ import java.util.List;
 
 public class Pawn extends Piece
 {
-    public boolean firstStep;
+    //public boolean firstStep;
 
-    public Pawn(int x, int y, final PieceType type, final String color, final URL path, final Board board) {
-        super(x, y, type, color, path, board);
-        this.firstStep = true;
+    public Pawn(int x, int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
+        super(x, y, type, color, path, board, firstStep);
+        //this.firstStep = true;
     }
 
-    public boolean isFirstStep() {
+   /* public boolean isFirstStep() {
         return firstStep;
-    }
+    }*/
 
     private List<Position> addLegalMoves(List<Position> list, Position p){ //TODO: Implementera firstStep.
         if (color == board.getState()) { //TODO: Tror inte vi kan kolla isValid här..
@@ -25,9 +25,8 @@ public class Pawn extends Piece
                          board.getPieceAt(x,y).getColor() != "white") ||
                         (x == p.getX() && board.getPieceAt(x,y) == null)) {
                         System.out.println(x + ", " + y);
-                        if (firstStep) {
+                        if (firstStep && board.getPieceAt(x,y-1) == null) {
                             list.add(new Position(x, y-1));
-                            //firstStep = false; //Tänkte att man kunde skriva såhär, men kommer bli knas om man trycker men inte flyttar.
                         }
                         list.add(new Position(x, y));
                     }
@@ -39,7 +38,7 @@ public class Pawn extends Piece
                          board.getSquare()[x][y].getColor() != "black") ||
                         (x == p.getX() && board.getSquare()[x][y] == null)) {
                         System.out.println(x + ", " + y);
-                        if (firstStep) {
+                        if (firstStep && board.getPieceAt(x,y+1) == null) {
                             list.add(new Position(x,y+1));
                         }
                         list.add(new Position(x, y));

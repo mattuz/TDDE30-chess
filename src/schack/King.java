@@ -4,8 +4,8 @@ import java.net.URL;
 
 public class King extends Piece
 {
-    public King( int x,  int y, final PieceType type, final String color, final URL path, final Board board) {
-	super(x, y, type, color, path, board);
+    public King( int x,  int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
+        super(x, y, type, color, path, board, firstStep);
     }
     /*public boolean isLegal(int prevX, int prevY){
         if (color == board.getState() && isValidDestination()) {

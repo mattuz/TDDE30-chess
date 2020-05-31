@@ -14,18 +14,19 @@ public abstract class Piece
     protected final PieceType type;
     protected final Board board;
     protected List<Position> legalMoves;
+    protected boolean firstStep;
 
-    protected Piece(int x, int y, PieceType type, String color, URL path, Board board){
+    protected Piece(int x, int y, PieceType type, String color, URL path, Board board, Boolean firstStep){
         this.color = color;
         this.pieceX = x;
         this.pieceY = y;
         this.type = type;
         this.path = path;
         this.legalMoves = new ArrayList<>();
-        //this.firstStep = true;
+        this.firstStep = firstStep;
         this.board = board;
     }
-    public ArrayList<Position> getlegalMoves(){
+    public List<Position> getlegalMoves(){
         return (ArrayList<Position>) legalMoves;
     }
 
@@ -43,6 +44,14 @@ public abstract class Piece
 
     public void newY(int y) {
         this.pieceY = y;
+    }
+
+    public boolean isFirstStep() {
+        return firstStep;
+    }
+
+    public void setFirstStep(final boolean firstStep) {
+        this.firstStep = firstStep;
     }
 
     public URL getPath() {

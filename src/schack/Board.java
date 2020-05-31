@@ -59,10 +59,12 @@ public class Board
             pieceSwitcher(x, y, "black");
 	}
         else if (y == 1) {
-	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"black",assignPaths("black",PieceType.PAWN), this );
+	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"black",assignPaths("black",PieceType.PAWN),
+				    this, true);
 	}
         else if (y == 6) {
-	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"white",assignPaths("white",PieceType.PAWN), this);
+	    square[x][y] = new Pawn(x,y,PieceType.PAWN,"white",assignPaths("white",PieceType.PAWN),
+				    this, true);
 	}
         else if (y == 7) {
 	    pieceSwitcher(x, y, "white");
@@ -124,21 +126,26 @@ public class Board
         switch (x) {
 	    case 0:
 	    case 7:
-		square[x][y] = new Rook(x,y,PieceType.ROOK,color, assignPaths(color,PieceType.ROOK), this);
+		square[x][y] = new Rook(x,y,PieceType.ROOK,color, assignPaths(color,PieceType.ROOK), this,
+					true);
 	        break;
 	    case 1:
 	    case 6:
-		square[x][y] = new Knight(x,y,PieceType.KNIGHT,color, assignPaths(color,PieceType.KNIGHT), this);
+		square[x][y] = new Knight(x,y,PieceType.KNIGHT,color, assignPaths(color,PieceType.KNIGHT), this,
+					  true);
 	        break;
 	    case 2:
 	    case 5:
-		square[x][y] = new Bishop(x,y,PieceType.BISHOP,color,assignPaths(color,PieceType.BISHOP), this);
+		square[x][y] = new Bishop(x,y,PieceType.BISHOP,color,assignPaths(color,PieceType.BISHOP), this,
+					  true);
 		break;
 	    case 3:
-		square[x][y] = new Queen(x,y,PieceType.QUEEN,color,assignPaths(color,PieceType.QUEEN), this);
+		square[x][y] = new Queen(x,y,PieceType.QUEEN,color,assignPaths(color,PieceType.QUEEN), this,
+					 true);
 		break;
 	    case 4:
-		square[x][y] = new King(x,y,PieceType.KING,color,assignPaths(color,PieceType.KING), this);
+		square[x][y] = new King(x,y,PieceType.KING,color,assignPaths(color,PieceType.KING), this,
+					true);
 		break;
 	    default:
 	        break;

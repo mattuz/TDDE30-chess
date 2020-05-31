@@ -4,8 +4,8 @@ import java.net.URL;
 
 public class Bishop extends Piece
 {
-    public Bishop(int x, int y, final PieceType type, final String color, final URL path, final Board board) {
-	super(x, y, type, color, path, board);
+    public Bishop(int x, int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
+	super(x, y, type, color, path, board, firstStep);
     }
 
     public boolean squareChecker(int prevX, int prevY, boolean freePath) { //TODO vet inte ens om denna behövs längre

@@ -7,8 +7,8 @@ public class Knight extends Piece
 {
    // protected static String color = null;
 
-    public Knight( int x,  int y, final PieceType type, final String color, final URL path, final Board board) {
-	super(x, y, type, color, path, board);
+    public Knight( int x,  int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
+	super(x, y, type, color, path, board, firstStep);
     }
     /*public boolean isLegal(int prevX, int prevY){
 	return ((Math.abs(getPieceX() - prevX) == 1 && Math.abs(getPieceY() - prevY) == 2) ||
