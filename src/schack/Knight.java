@@ -28,8 +28,11 @@ public class Knight extends Piece
 	return list;
     }
     public void updateLegalMoves(){
+       // updatePreviousLegalMoves();
         legalMoves.clear();
         legalMoves = addLegalMoves(legalMoves, new Position(pieceX, pieceY));
     }
-
+    public void updatePreviousLegalMoves(){
+	previousLegalMoves = legalMoves;
+    }
 }

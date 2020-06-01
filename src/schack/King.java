@@ -28,6 +28,7 @@ public class King extends Piece
     }
 
     public void updateLegalMoves(){
+        //updatePreviousLegalMoves();
         Position position = new Position (getPieceX(), getPieceY());
         legalMoves.clear();
         addLegalMoves(legalMoves, position);
@@ -39,7 +40,9 @@ public class King extends Piece
         }*/
     }
 
-
+    public void updatePreviousLegalMoves(){
+        previousLegalMoves = legalMoves;
+    }
 
 }
 

@@ -14,6 +14,7 @@ public abstract class Piece
     protected final Board board;
     protected List<Position> legalMoves;
     protected boolean firstStep;
+    protected List<Position> previousLegalMoves = null;
 
     protected Piece(int x, int y, PieceType type, String color, URL path, Board board, Boolean firstStep){
         this.color = color;
@@ -65,6 +66,17 @@ public abstract class Piece
         return color;
     }
 
+    public List<Position> getPreviousLegalMoves() {
+        return previousLegalMoves;
+    }
+
+    public void setPreviousLegalMoves(final List<Position> previousLegalMoves) {
+        this.previousLegalMoves = previousLegalMoves;
+    }
+
+    public void setLegalMoves(final List<Position> legalMoves) {
+        this.legalMoves = legalMoves;
+    }
 
     public List<Position> addHorisontal(List<Position> list, int maxDistance, Position p) {
         int y = p.getY();

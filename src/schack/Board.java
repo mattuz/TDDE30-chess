@@ -13,6 +13,9 @@ public class Board
     private List<Piece> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listenerlist = new ArrayList<>();
     public List<Piece> pieceList = new ArrayList<>();
+    private Piece checkPiece = null;
+
+
 
     private final static String WHITE_STATE = "white";
     private final static String BLACK_STATE = "black";
@@ -186,19 +189,6 @@ public class Board
         }
     }
 
-   /* public boolean isCastlingPossible(){
-        if (state == "white"){
-	    return getPieceTypeAt(0, 0) == PieceType.ROOK && getPieceTypeAt(4, 0) == PieceType.KING &&
-		   getPieceTypeAt(3, 0) == PieceType.EMPTY && getPieceTypeAt(2, 0) == PieceType.EMPTY &&
-		   getPieceTypeAt(1, 0) == PieceType.EMPTY;
-        } else if(state == "black"){
-	    return getPieceTypeAt(0, 7) == PieceType.ROOK && getPieceTypeAt(4, 7) == PieceType.KING &&
-		   getPieceTypeAt(3, 7) == PieceType.EMPTY && getPieceTypeAt(2, 7) == PieceType.EMPTY &&
-		   getPieceTypeAt(1, 7) == PieceType.EMPTY;
-        } else {
-            return false;
-        }
-    }*/
 
     public boolean pawnUpgradePossible(Piece piece, int y) { //TODO: Denna bör inte ligga i PieceMove
 	if (piece.getType() != PieceType.PAWN) {
@@ -241,11 +231,38 @@ public class Board
     }
 
     public boolean isChecked(Piece piece) {
+	Position position = new Position(piece.getPieceX(), piece.getPieceY());
         if (piece.getType() == PieceType.KING) {
 	    for (Piece p: pieceList) {
-		if (p.color != piece.color && containsPosition(p.getlegalMoves(), new Position(piece.getPieceX(), piece.getPieceY()))) {
-		    System.out.println("Don't move in to check!");
+		if (p.color != piece.color && containsPosition(p.getlegalMoves(), position)) {
+		    checkPiece = p;
 		    return true;
+		}
+	    }
+	} return false;
+    }
+
+    public boolean interruptChecked(Piece piece, int newX, int newY) {
+        int pX = piece.getPieceX();
+	int pY = piece.getPieceY();
+	for (int x = 0; x < 8; x++) {
+	    for (int y = 0; y < 8; y++) {
+		if (isChecked(piece) && checkPiece.getPieceX() != pX && checkPiece.getPieceY() == pY) {
+		    if (checkPiece.getPieceX() < newX && newX < pX) {
+		        return true;
+		    }
+		    else return checkPiece.getPieceX() > newX && newX > pX;
+		}
+		else if (isChecked(piece) && checkPiece.getPieceX() == pX && checkPiece.getPieceY() != pY) {
+		    if (checkPiece.getPieceY() < newY && newY < pY) {
+			return true;
+		    }
+		    else return checkPiece.getPieceY() > newY && newY > pY;
+		}
+		else if (isChecked(piece) && Math.abs(pX - checkPiece.getPieceX()) - Math.abs(pY - checkPiece.getPieceY()) == 0
+		&& Math.abs(newX - pX) - Math.abs(newY - pY) == 0) {
+		    return Math.abs(newX - pX) < Math.abs(checkPiece.getPieceX() - pX) &&
+			   Math.abs(newY - pY) < Math.abs(checkPiece.getPieceY() - pY);
 		}
 	    }
 	} return false;
@@ -296,4 +313,5 @@ public class Board
     public List<Piece> getPieceList() {
 	return pieceList;
     }
+
 }

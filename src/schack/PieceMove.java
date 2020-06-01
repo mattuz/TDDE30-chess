@@ -1,12 +1,9 @@
 package schack;
 
-import javafx.scene.control.ComboBox;
-
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Optional;
 
 public class PieceMove extends MouseAdapter
 {
@@ -17,7 +14,8 @@ public class PieceMove extends MouseAdapter
     private static final int XOFFSET = 7;
     private int oldX;
     private int oldY;
-
+    private Piece whiteKing = null;
+    private Piece blackKing = null;
     private int dragOffsetX;
     private int dragOffsetY;
     private Piece dragPiece = null;
@@ -35,30 +33,63 @@ public class PieceMove extends MouseAdapter
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
 	int x = dragPiece.getPieceX();
 	int y = dragPiece.getPieceY();
-	if (board.isChecked(dragPiece)) {
+	/*System.out.println("Ett");
+	System.out.println("före: (prev) " + dragPiece.getPreviousLegalMoves());
+	System.out.println("före:  " + dragPiece.getlegalMoves());
+	updateAllLegalMoves();
+	System.out.println("efter /prev: " + dragPiece.getPreviousLegalMoves());
+	System.out.println("efter:  " + dragPiece.getlegalMoves());
+	if (board.isChecked(whiteKing) && board.getState() == "white") {
+	    revertAllLegalMoves();
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
 	    board.changeState();
+	    JOptionPane.showMessageDialog(null, "Illegal move.");
 	}
-        else if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
-            if (board.getSquare()[x][y] != null) {
-                board.destroyPiece(x, y);
+	System.out.println("två");
+	revertAllLegalMoves();
+	System.out.println("efter /prev: " + dragPiece.getPreviousLegalMoves());
+	System.out.println("efter:  " + dragPiece.getlegalMoves());
+
+*/
+	 if (board.isChecked(dragPiece)) {
+	    dragPiece.newX(oldX);
+	    dragPiece.newY(oldY);
+	    board.changeState();
+	    JOptionPane.showMessageDialog(null, "Illegal move of the king.");
+
+	}
+	else if (board.getState() == "white" && board.isChecked(whiteKing) && dragPiece.getType() != PieceType.KING) {
+	    if (board.interruptChecked(whiteKing, x, y)) {
+	        movePiece(x, y);
+	    } else {
+		dragPiece.newX(oldX);
+		dragPiece.newY(oldY);
+		board.changeState();
+		JOptionPane.showMessageDialog(null, "The king is checked.");
 	    }
-            board.getSquare()[x][y] = board.getSquare()[oldX][oldY];
-            dragPiece.setFirstStep(false);
 
-            if (x != oldX || y != oldY) {
-                board.removePiece(oldX, oldY);
-            }
+	}
+	else if (board.getState() == "black" && board.isChecked(blackKing) && dragPiece.getType() != PieceType.KING) {
+	    if (board.interruptChecked(blackKing, x, y)) {
+		movePiece(x, y);
+	    } else {
+		dragPiece.newX(oldX);
+		dragPiece.newY(oldY);
+		board.changeState();
+		JOptionPane.showMessageDialog(null, "The king is checked.");
+	    }
+
+	}
+
+        if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
+	    System.out.println("tre");
+            if (!board.interruptChecked(whiteKing, x, y)) {
+		movePiece(x,y);
+	    }
+
             if (board.pawnUpgradePossible(dragPiece, y)){ //TODO borde denna ligga i Pawn egentligen? Hur skulle det funka?
-
-		String[] pawnUpgrades = new String[] {"Queen", "Bishop", "Rook", "Knight"};
-		int response = JOptionPane.showOptionDialog(
-			null, "Choose one of the following: ", "Upgrade pawn!",
-			JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, pawnUpgrades, pawnUpgrades[0]);
-
-		board.destroyPiece(x, y);
-		chooseUpgrade(response, x, y);
+                upgradePawn(x, y);
 	    }
             if (dragPiece.getType() == PieceType.KING && x - 2 == oldX) {
 		board.getSquare()[x-1][y] = board.getSquare()[7][y];
@@ -73,8 +104,8 @@ public class PieceMove extends MouseAdapter
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
 	    board.changeState();
-	} dragPiece.updateLegalMoves();
-        this.dragPiece = null;
+	} this.dragPiece = null;
+	updateAllLegalMoves();
         board.notifyListeners();
         board.changeState();
     }
@@ -91,7 +122,13 @@ public class PieceMove extends MouseAdapter
 	int y = mouseEvent.getPoint().y - WINDOWOFFSET;
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
-
+	    if (piece.getColor() == board.getState() && piece.getType() == PieceType.KING) {
+	        if (board.getState() == "white") {
+		    whiteKing = piece;
+		} else {
+	            blackKing = piece;
+		}
+	    }
 	    if (mouseOverPiece(piece, x, y)) {
 		this.dragOffsetX = x - piece.getPieceX() * PieceComponent.getBOARDCONSTANT();
 		this.dragOffsetY = y - piece.getPieceY() * PieceComponent.getBOARDCONSTANT();
@@ -115,6 +152,43 @@ public class PieceMove extends MouseAdapter
 	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x &&
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() <= y &&
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
+    }
+
+    private void movePiece(int x, int y) {
+	if (board.getSquare()[x][y] != null) {
+	    board.destroyPiece(x, y);
+	}
+	board.getSquare()[x][y] = board.getSquare()[oldX][oldY];
+	dragPiece.setFirstStep(false);
+
+	if (x != oldX || y != oldY) {
+	    board.removePiece(oldX, oldY);
+	}
+    }
+
+    private void updateAllLegalMoves(){
+	for (int i = this.pieces.size()-1; i >= 0; i--) {
+	    Piece piece = this.pieces.get(i);
+	    piece.setPreviousLegalMoves(piece.getlegalMoves());
+	    piece.updateLegalMoves();
+	}
+    }
+
+    private void revertAllLegalMoves() {
+	for (int i = this.pieces.size()-1; i >= 0; i--) {
+	    Piece piece = this.pieces.get(i);
+	    piece.setLegalMoves(piece.getPreviousLegalMoves());
+	}
+    }
+
+    private void upgradePawn(int x, int y) {
+	String[] pawnUpgrades = new String[] {"Queen", "Bishop", "Rook", "Knight"};
+	int response = JOptionPane.showOptionDialog(
+		null, "Choose one of the following: ", "Upgrade pawn!",
+		JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, pawnUpgrades, pawnUpgrades[0]);
+
+	board.destroyPiece(x, y);
+	chooseUpgrade(response, x, y);
     }
 
     private void chooseUpgrade(int response, int x, int y) {
