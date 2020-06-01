@@ -50,7 +50,7 @@ public class Pawn extends Piece
        // updatePreviousLegalMoves();
         legalMoves.clear();
         addLegalMoves(legalMoves, new Position(pieceX, pieceY));
-    }
+     }
 
     public void updatePreviousLegalMoves(){
         System.out.println("innan: " + previousLegalMoves);

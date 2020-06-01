@@ -26,17 +26,6 @@ public abstract class Piece
         this.firstStep = firstStep;
         this.board = board;
     }
-    public List<Position> getlegalMoves(){
-        return (ArrayList<Position>) legalMoves;
-    }
-
-    public int getPieceX() {
-        return pieceX;
-    }
-
-    public int getPieceY() {
-        return pieceY;
-    }
 
     public void newX(int x) {
         this.pieceX = x;
@@ -46,39 +35,10 @@ public abstract class Piece
         this.pieceY = y;
     }
 
-    public boolean isFirstStep() {
-        return firstStep;
-    }
-
-    public void setFirstStep(final boolean firstStep) {
-        this.firstStep = firstStep;
-    }
-
-    public URL getPath() {
-        return path;
-    }
-
-    public PieceType getType() {
-        return type;
-    }
-
-    public String getColor(){
-        return color;
-    }
-
-    public List<Position> getPreviousLegalMoves() {
-        return previousLegalMoves;
-    }
-
-    public void setPreviousLegalMoves(final List<Position> previousLegalMoves) {
-        this.previousLegalMoves = previousLegalMoves;
-    }
-
-    public void setLegalMoves(final List<Position> legalMoves) {
-        this.legalMoves = legalMoves;
-    }
-
     public List<Position> addHorisontal(List<Position> list, int maxDistance, Position p) {
+        /**
+         * Adds all legal horisontal moves, from and within a maxdistance from p, to list.
+         */
         int y = p.getY();
         for (int x = p.getX() - maxDistance; x <= p.getX() + maxDistance; x++) {
             if (x >= 0 && x < 8 && isLegalHorisontal(this, p.getX(), p.getY(), x, y)){
@@ -89,6 +49,9 @@ public abstract class Piece
     }
 
     public List<Position> addVertical(List<Position> list, int maxDistance, Position p){
+        /**
+         * Adds all legal vertical moves, from and within a maxdistance from p, to list.
+         */
         int x = p.getX();
         for (int y = p.getY() - maxDistance; y <= p.getY() + maxDistance; y++){
             if (y >= 0 && y < 8 && isLegalVertical(this, p.getX(), p.getY(), x, y)) {
@@ -97,7 +60,11 @@ public abstract class Piece
         }
         return list;
     }
+
     public List<Position> addDiagonal(List<Position> list, int maxDistance, Position p){
+        /**
+         * Adds all legal diagonal moves, from and within a maxdistance from p, to list.
+         */
         for (int x = p.getX() - maxDistance; x <= p.getX() + maxDistance; x++){
             for (int y = p.getY()-maxDistance; y <= p.getY() + maxDistance; y++){
                 if (x >= 0 && x < 8 && y >= 0 && y < 8 &&
@@ -110,6 +77,9 @@ public abstract class Piece
     }
 
     public boolean isLegalHorisontal(Piece piece, int currentX, int currentY, int x, int y) {
+        /**
+         * Checks if a move from (currentx, currenty) to (x,y) is a legal horisontal move for piece.
+         */
         if (isValidDestination(x,y) && piece.color == board.getState() &&
             (Math.abs(currentX - x) != 0 && Math.abs(currentY - y) == 0)){
 
@@ -138,6 +108,9 @@ public abstract class Piece
     }
 
     public boolean isLegalVertical(Piece piece, int currentX, int currentY, int x, int y) {
+        /**
+         * Checks if a move from (currentx, currenty) to (x,y) is a legal vertical move for piece.
+         */
         if (isValidDestination(x,y) && piece.color == board.getState() &&
              (Math.abs(currentX - x) == 0 && Math.abs(currentY - y) != 0)) {
             boolean freePath = true;
@@ -165,6 +138,9 @@ public abstract class Piece
     }
 
     public boolean isLegalDiagonal(Piece piece, int currentX, int currentY, int x, int y) {
+        /**
+         * Checks if a move from (currentx, currenty) to (x,y) is a legal diagonal move for piece.
+         */
         if ((Math.abs(currentX - x) - Math.abs(currentY - y) == 0) &&
             isValidDestination(x,y) && piece.color == board.getState()) {
             boolean freePath = true;
@@ -206,9 +182,56 @@ public abstract class Piece
     }
 
     public boolean isValidDestination(int newX, int newY){
+        /**
+         * Returns true if the position (newX, newY) is ether empty or has a piece with a different color on it.
+         */
         return (board.getPieceAt(newX, newY) == null ||
                 board.getPieceAt(newX, newY).color != board.getState());
     }
 
     public abstract void updateLegalMoves();
+
+    public URL getPath() {
+        return path;
+    }
+
+    public PieceType getType() {
+        return type;
+    }
+
+    public String getColor(){
+        return color;
+    }
+
+    public List<Position> getPreviousLegalMoves() {
+        return previousLegalMoves;
+    }
+
+    public List<Position> getlegalMoves(){
+        return (ArrayList<Position>) legalMoves;
+    }
+
+    public int getPieceX() {
+        return pieceX;
+    }
+
+    public int getPieceY() {
+        return pieceY;
+    }
+
+    public boolean isFirstStep() {
+        return firstStep;
+    }
+
+    public void setFirstStep(final boolean firstStep) {
+        this.firstStep = firstStep;
+    }
+
+    public void setPreviousLegalMoves(final List<Position> previousLegalMoves) {
+        this.previousLegalMoves = previousLegalMoves;
+    }
+
+    public void setLegalMoves(final List<Position> legalMoves) {
+        this.legalMoves = legalMoves;
+    }
 }

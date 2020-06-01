@@ -12,8 +12,10 @@ public class PiecePainter
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
 
-    public static BufferedImage scale(BufferedImage src, int w, int h) //Används för att skala om bilden, så att den har rätt dimensioner.
-    //Behöver kika lite på denna kod, tog ganska mycket hjälp :p
+    public static BufferedImage scale(BufferedImage src, int w, int h)
+    /**
+     * Rescales the given image src and gives it the right dimansions.
+     */
     {
 	BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	int y;
@@ -32,7 +34,10 @@ public class PiecePainter
 	return img;
     }
 
-    public static BufferedImage bufferedImageMaker(Piece piece) { //"Skapar" en bild, tar den från Pics :)
+    public static BufferedImage bufferedImageMaker(Piece piece) {
+	/**
+	 * Returns image corresponding to piece.
+	 */
 	BufferedImage myPicture = null;
 	try {
 	    myPicture = ImageIO.read(piece.getPath());

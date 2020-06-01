@@ -148,7 +148,10 @@ public class PieceMove extends MouseAdapter
     }
 
     private boolean mouseOverPiece(Piece piece, int x, int y) {
-        return piece.getPieceX() * PieceComponent.getBOARDCONSTANT()  <= x &&
+	/**
+	 *
+	 */
+	return piece.getPieceX() * PieceComponent.getBOARDCONSTANT()  <= x &&
 	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x &&
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() <= y &&
 	       piece.getPieceY() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= y;
