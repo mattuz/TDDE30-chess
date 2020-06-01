@@ -31,27 +31,13 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
+	/**
+	 * This is the main checker of our game.
+	 * Checks if conditions for a move is met.
+	 */
 	int x = dragPiece.getPieceX();
 	int y = dragPiece.getPieceY();
-	/*System.out.println("Ett");
-	System.out.println("före: (prev) " + dragPiece.getPreviousLegalMoves());
-	System.out.println("före:  " + dragPiece.getlegalMoves());
-	updateAllLegalMoves();
-	System.out.println("efter /prev: " + dragPiece.getPreviousLegalMoves());
-	System.out.println("efter:  " + dragPiece.getlegalMoves());
-	if (board.isChecked(whiteKing) && board.getState() == "white") {
-	    revertAllLegalMoves();
-	    dragPiece.newX(oldX);
-	    dragPiece.newY(oldY);
-	    board.changeState();
-	    JOptionPane.showMessageDialog(null, "Illegal move.");
-	}
-	System.out.println("två");
-	revertAllLegalMoves();
-	System.out.println("efter /prev: " + dragPiece.getPreviousLegalMoves());
-	System.out.println("efter:  " + dragPiece.getlegalMoves());
 
-*/
 	 if (board.isChecked(dragPiece)) {
 	    dragPiece.newX(oldX);
 	    dragPiece.newY(oldY);
@@ -80,9 +66,7 @@ public class PieceMove extends MouseAdapter
 		JOptionPane.showMessageDialog(null, "The king is checked.");
 	    }
 
-	}
-
-        if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
+	} if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
 	    System.out.println("tre");
             if (!board.interruptChecked(whiteKing, x, y)) {
 		movePiece(x,y);
@@ -111,6 +95,9 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
+	/**
+	 * If a Piece is currently being dragged, Set its new(x,y)-values to the new square.
+	 */
 	if (this.dragPiece != null){
 	    this.dragPiece.newX((mouseEvent.getPoint().x - 7)/PieceComponent.getBOARDCONSTANT());
 	    this.dragPiece.newY((mouseEvent.getPoint().y - WINDOWOFFSET)/PieceComponent.getBOARDCONSTANT());
@@ -118,6 +105,10 @@ public class PieceMove extends MouseAdapter
     }
 
     @Override public void mousePressed(final MouseEvent mouseEvent) {
+	/**
+	 * Choses a Piece by looping through our list of Pieces - checks if it's been pressed.
+	 * Sets this to current dragPiece.
+	 */
 	int x = mouseEvent.getPoint().x - XOFFSET;
 	int y = mouseEvent.getPoint().y - WINDOWOFFSET;
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
@@ -149,7 +140,7 @@ public class PieceMove extends MouseAdapter
 
     private boolean mouseOverPiece(Piece piece, int x, int y) {
 	/**
-	 *
+	 * Checks if chosen Piece is currently being hovered over by mouse.
 	 */
 	return piece.getPieceX() * PieceComponent.getBOARDCONSTANT()  <= x &&
 	       piece.getPieceX() * PieceComponent.getBOARDCONSTANT() + PieceComponent.getBOARDCONSTANT() >= x &&
@@ -158,6 +149,10 @@ public class PieceMove extends MouseAdapter
     }
 
     private void movePiece(int x, int y) {
+	/**
+	 * Moves a Piece on the board array.
+	 * Removes attacked piece from the game if one exists and the move is legal.
+	 */
 	if (board.getSquare()[x][y] != null) {
 	    board.destroyPiece(x, y);
 	}
@@ -170,6 +165,9 @@ public class PieceMove extends MouseAdapter
     }
 
     private void updateAllLegalMoves(){
+	/**
+	 * Updates the legal moves of all Pieces.
+	 */
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 	    piece.setPreviousLegalMoves(piece.getlegalMoves());
@@ -178,6 +176,9 @@ public class PieceMove extends MouseAdapter
     }
 
     private void revertAllLegalMoves() {
+	/**
+	 * Is meant to revert all legal moves. Does not work as intended.
+	 */
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 	    piece.setLegalMoves(piece.getPreviousLegalMoves());
@@ -185,6 +186,10 @@ public class PieceMove extends MouseAdapter
     }
 
     private void upgradePawn(int x, int y) {
+	/**
+	 * Upgrades Pawn to one of the available pawnUpgrades.
+	 * When upgradePawn is available, it shows a JOptionPane where you can chose what to turn the Pawn in to.
+	 */
 	String[] pawnUpgrades = new String[] {"Queen", "Bishop", "Rook", "Knight"};
 	int response = JOptionPane.showOptionDialog(
 		null, "Choose one of the following: ", "Upgrade pawn!",
@@ -195,6 +200,9 @@ public class PieceMove extends MouseAdapter
     }
 
     private void chooseUpgrade(int response, int x, int y) {
+	/**
+	 * Creates the Piece and replaces this with the Pawn which is being upgraded.
+	 */
 	switch (response) {
 	    case 0:
 		board.getSquare()[x][y] =

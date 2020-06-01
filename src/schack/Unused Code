@@ -242,3 +242,26 @@
  	}
  	}
       */
+
+
+
+      ANVÄNDS I PIECEMOVE:
+      	/*System.out.println("Ett");
+      	System.out.println("före: (prev) " + dragPiece.getPreviousLegalMoves());
+      	System.out.println("före:  " + dragPiece.getlegalMoves());
+      	updateAllLegalMoves();
+      	System.out.println("efter /prev: " + dragPiece.getPreviousLegalMoves());
+      	System.out.println("efter:  " + dragPiece.getlegalMoves());
+      	if (board.isChecked(whiteKing) && board.getState() == "white") {
+      	    revertAllLegalMoves();
+      	    dragPiece.newX(oldX);
+      	    dragPiece.newY(oldY);
+      	    board.changeState();
+      	    JOptionPane.showMessageDialog(null, "Illegal move.");
+      	}
+      	System.out.println("två");
+      	revertAllLegalMoves();
+      	System.out.println("efter /prev: " + dragPiece.getPreviousLegalMoves());
+      	System.out.println("efter:  " + dragPiece.getlegalMoves());
+
+      */

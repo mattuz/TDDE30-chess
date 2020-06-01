@@ -15,22 +15,19 @@ public class Board
     public List<Piece> pieceList = new ArrayList<>();
     private Piece checkPiece = null;
 
-
-
     private final static String WHITE_STATE = "white";
     private final static String BLACK_STATE = "black";
 
     private String state = WHITE_STATE;
 
 
-    public Board(final int width, final int height) { //Man ska kunna ändra den om man vill
+    public Board(final int width, final int height) {
 	this.width = width;
 	this.height = height;
 	this.square = new Piece[width][height];
 	this.enumsquare = new PieceType[width][height];
 	for (int y = 0; y < height; y++) {
 	    for (int x = 0; x < width; x++) {
-
 		enumsquare[x][y] = PieceType.EMPTY;
 		placePieces(x,y);
 	    }
@@ -38,6 +35,10 @@ public class Board
     }
 
     public List<Piece> addPieces() {
+	/**
+	 * Adds the Pieces to a list.
+	 * Used to keep track and loop though all available Pieces.
+	 */
 	for (int y = 0; y < height; y++) {
 	    for (int x = 0; x < width; x++) {
 		if (square[x][y] != null) {
@@ -48,16 +49,12 @@ public class Board
 	return pieceList;
     }
 
-    public void playerAssign() { //Eller vill man göra något sånt här?
-	for (int x = 0; x < 8; x++) {
-	    for (int y = 0; y < 2; y++) {
-		getPieceTypeAt(x, y);
-	    }
-	}
-    }
-
     public void placePieces(int x, int y) {
-        if (y == 0) {
+	/**
+	 * Places Pieces on the Board array.
+	 * Uses pieceSwitcher to determine and create the correct Piece.
+	 */
+	if (y == 0) {
             pieceSwitcher(x, y, "black");
 	}
         else if (y == 1) {
@@ -73,8 +70,12 @@ public class Board
 	}
     }
 
-    public URL assignPaths(String color, PieceType type) { //TODO: Denna ska nog läggas separat. Passar ej in i board.
-        URL path;
+    public URL assignPaths(String color, PieceType type) {
+	/**
+	 * Assigns URL-paths for pictures of their specific Piece.
+	 * Checks color and PieceType to match URL with correct Piece.
+	 */
+	URL path;
         switch (type) {
 	    case KING:
 	        if (color == "white") {
@@ -125,7 +126,11 @@ public class Board
     }
 
     public void pieceSwitcher(int x, int y, String color) {
-        switch (x) {
+	/**
+	 * Switches between pieces depending on which should be placed where on the board array.
+	 * Each placement position is fixed and determined by placePieces.
+	 */
+	switch (x) {
 	    case 0:
 	    case 7:
 		square[x][y] = new Rook(x,y,PieceType.ROOK,color, assignPaths(color,PieceType.ROOK), this,
@@ -155,32 +160,47 @@ public class Board
     }
 
     public void addBoardListener(BoardListener bl) {
+	/**
+	 * Adds listeners to the board array.
+	 */
 	listenerlist.add(bl);
     }
 
     public void notifyListeners() {
+	/**
+	 * Used to notify listeners and execute their respective actions.
+	 */
 	for (BoardListener listeners : listenerlist) {
 	    listeners.boardChanged();
 	}
     }
 
     public void removePiece(int x, int y) {
-        square[x][y] = null;
+	/**
+	 * Used to remove a Piece from last position. Does not delete the Piece object.
+	 */
+	square[x][y] = null;
         notifyListeners();
     }
 
     public void destroyPiece(int x, int y) {
+	/**
+	 * Destroys/removes a Piece object.
+	 * This is used when another Piece "takes" the piece on (x,y).
+	 */
 	pieceList.remove(square[x][y]);
 	square[x][y] = null;
 	notifyListeners();
     }
 
-    public void deadPiece(int x, int y) {
-        deadpieces.add(square[x][y]);
-    }
 
     public void changeState() {
-        if (state == WHITE_STATE) {
+	/**
+	 * Changes the current state of board.
+	 * The state is determined by which players turn it is.
+	 * Always starts with white player and changes when a legal move has been made.
+	 */
+	if (state == WHITE_STATE) {
             state = BLACK_STATE;
             Panel.getjLabel().setText(Panel.getPlayer2());
 	} else {
@@ -190,7 +210,11 @@ public class Board
     }
 
 
-    public boolean pawnUpgradePossible(Piece piece, int y) { //TODO: Denna bör inte ligga i PieceMove
+    public boolean pawnUpgradePossible(Piece piece, int y) {
+	/**
+	 * Checks if a Pawn can be upgraded (if it has moved across the entire board).
+	 *
+	 */
 	if (piece.getType() != PieceType.PAWN) {
 	    return false;
 	}
@@ -201,6 +225,13 @@ public class Board
     }
 
     public int castlingPossiblePath(Piece piece){
+	/**
+	 * Checks if the castling move is possible and returns a value depending on
+	 * which paths are possible.
+	 * 3 if castling available both queen side and king side,
+	 * 2 if castling only available king side,
+	 * 1 if castling only avaiable queen side.
+	 */
 	if (piece.getType() == PieceType.KING && piece.firstStep && piece.getColor() == state) {
 	    if (isCastlingLeft(piece) && isCastlingRight(piece)) {
 		System.out.println("Båda!");
@@ -218,6 +249,9 @@ public class Board
     }
 
     private boolean isCastlingLeft(final Piece piece) {
+	/**
+	 * Is castling queenside possible?
+	 */
 	return getPieceTypeAt(0, piece.getPieceY()) == PieceType.ROOK && square[0][piece.getPieceY()].isFirstStep() &&
 	    getPieceTypeAt(3, piece.getPieceY()) == PieceType.EMPTY &&
 	    getPieceTypeAt(2, piece.getPieceY()) == PieceType.EMPTY &&
@@ -225,12 +259,20 @@ public class Board
     }
 
     private boolean isCastlingRight(final Piece piece) {
-        return getPieceTypeAt(7, piece.getPieceY()) == PieceType.ROOK && square[7][piece.getPieceY()].isFirstStep() &&
+	/**
+	 * Is castling kingside possible?
+	 */
+	return getPieceTypeAt(7, piece.getPieceY()) == PieceType.ROOK && square[7][piece.getPieceY()].isFirstStep() &&
 	       getPieceTypeAt(6, piece.getPieceY()) == PieceType.EMPTY &&
 	       getPieceTypeAt(5,piece.getPieceY()) == PieceType.EMPTY;
     }
 
     public boolean isChecked(Piece piece) {
+	/**
+	 * Checks if current piece is checked (used to determine if king is in check).
+	 * Loops through all pieces on the board to check if any of them has a legal move
+	 * that attacks the king.
+	 */
 	Position position = new Position(piece.getPieceX(), piece.getPieceY());
         if (piece.getType() == PieceType.KING) {
 	    for (Piece p: pieceList) {
@@ -243,7 +285,12 @@ public class Board
     }
 
     public boolean interruptChecked(Piece piece, int newX, int newY) {
-        int pX = piece.getPieceX();
+	/**
+	 * Checks if a piece can interrupt the check of the king, and move inbetween.
+	 * Compares the values of the piece's eventual x,y and calculates if this would
+	 * put it in the way of the king's attacker.
+	 */
+	int pX = piece.getPieceX();
 	int pY = piece.getPieceY();
 	for (int x = 0; x < 8; x++) {
 	    for (int y = 0; y < 8; y++) {
@@ -269,6 +316,9 @@ public class Board
     }
 
     public boolean containsPosition(List<Position> list, Position pos){
+	/**
+	 * Checks if a piece has the location in its legal moves.
+	 */
 	Boolean doesContain = false;
 	for (Position elem: list) {
 	    if (elem.getX() == pos.getX() && elem.getY() == pos.getY()) {
