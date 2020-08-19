@@ -1,7 +1,5 @@
 package schack;
 
-import javax.swing.*;
-
 public class BoardTest
 {
     public static void main(String[] args) {

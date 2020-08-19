@@ -6,7 +6,7 @@ import java.util.List;
 public class Pawn extends Piece
 {
 
-    public Pawn(int x, int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
+    public Pawn(int x, int y, final PieceType type, final PieceColor color, final URL path, final Board board, boolean firstStep) {
         super(x, y, type, color, path, board, firstStep);
         updateLegalMoves();
     }
@@ -15,11 +15,11 @@ public class Pawn extends Piece
 
     private List<Position> addLegalMoves(List<Position> list, Position p){
         if (color == board.getState()) {
-            if (color == "white") {
+            if (color == PieceColor.WHITE) {
                 int y = p.getY() - 1;
                 for (int x = 0; x < 8; x++) {
                     if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
-                         board.getPieceAt(x,y).getColor() != "white") ||
+                         board.getPieceAt(x,y).getColor() != PieceColor.WHITE) ||
                         (x == p.getX() && board.getPieceAt(x,y) == null)) {
                         System.out.println(x + ", " + y);
                         if (firstStep && board.getPieceAt(x,y-1) == null) {
@@ -32,7 +32,7 @@ public class Pawn extends Piece
                 int y = p.getY() + 1;
                 for (int x = 0; x < 8; x++) {
                     if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
-                         board.getSquare()[x][y].getColor() != "black") ||
+                         board.getSquare()[x][y].getColor() != PieceColor.BLACK) ||
                         (x == p.getX() && board.getSquare()[x][y] == null)) {
                         System.out.println(x + ", " + y);
                         if (firstStep && board.getPieceAt(x,y+1) == null) {
@@ -57,8 +57,5 @@ public class Pawn extends Piece
         previousLegalMoves = getlegalMoves();
         System.out.println("efter: " + previousLegalMoves);
     }
-
-
-
 
 }

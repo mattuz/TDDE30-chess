@@ -11,12 +11,10 @@ public class PiecePainter
     private static URL picturepath = null;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
-
-    public static BufferedImage scale(BufferedImage src, int w, int h)
     /**
      * Rescales the given image src and gives it the right dimansions.
      */
-    {
+    public static BufferedImage scale(BufferedImage src, int w, int h) {
 	BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 	int y;
 	int originalW = src.getWidth();
@@ -34,10 +32,10 @@ public class PiecePainter
 	return img;
     }
 
+    /**
+     * Returns image corresponding to piece.
+     */
     public static BufferedImage bufferedImageMaker(Piece piece) {
-	/**
-	 * Returns image corresponding to piece.
-	 */
 	BufferedImage myPicture = null;
 	try {
 	    myPicture = ImageIO.read(piece.getPath());

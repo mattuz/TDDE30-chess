@@ -5,9 +5,7 @@ import java.util.List;
 
 public class Knight extends Piece
 {
-   // protected static String color = null;
-
-    public Knight( int x,  int y, final PieceType type, final String color, final URL path, final Board board, boolean firstStep) {
+    public Knight( int x,  int y, final PieceType type, final PieceColor color, final URL path, final Board board, boolean firstStep) {
 	super(x, y, type, color, path, board, firstStep);
 	updateLegalMoves();
     }
