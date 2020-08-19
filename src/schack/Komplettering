@@ -1,0 +1,34 @@
+Jonas:
+ - "fatal errors" i showstopper-listan angående (5 st MutableStaticField)
+ - AssignPaths() heter fel, borde heta typ getpathfor()
+ - pieceSwitcher() dåligt namn. switchPieces()?
+ - PieceMove dåligt namn. (inte en sorts förflyttning)
+ - koden för att få fram URL-vägarna är överflödig. Förslag på lösning: type.toString() + "-" + color + ".png".
+ - Lägg in updatePreviousLegalMoves() i piece då 5/6 pieces använder den
+
+Hugo:
+ - gå igenom varningarna igen och kommentera varför vi inte fixar det vi lämnar kvar
+ - felplacerade java-docs. Ska liga ovanför klasser/metoder
+ - ändra WHITE_STATE och liknande till enum och använd även detta till pjäsernas färger (förslag)
+ - ta bort kod som inte används eller som är utkommenterad
+ - magiska konstanter
+ - bugg: schack funkar ej ;)
+
+ Piotr:
+ - ingen error-handling tex när en bild inte kan laddas. programmet bör stängas av och/eller ge felmeddelande.
+ - Lägg in så att frame är en boardlistener för att den ska uppdatera labels i panelen.
+ - fälten i Panel behöver inte vara static
+ - kombinera gärna setPlayer1 -> setPlayerName(index, name).
+   Om vi pallar, gör att namnen som anges blir parametrar i Panels konstructor.
+ - ändra korta namn som b1, p1, till namn som är lättare att förstå
+ - Piececomponent borde heta boardcomponent
+ - vi kan använda "Java Point" istället för vår egna Position-klass
+ - listenerlist borde heta listeners
+ - changeState() borde heta swapTurns()
+ - private Panel p = new Panel(); ->     private Panel panel = new Panel()
+ - (i frame) String p1 -> playerName
+ - "Board: Panel.getjLabel().setText(Panel.getPlayer2()); It is better to have a method: setTurn(white|black) and deal with the
+    label inside the Panel class. This will also make that the label."
+
+ FRÅGETECKEN (komentarer jag inte riktigt fattar vad han vill/ vad vi ska göra) :
+ - If I just click anywhere on the board and not an a piece I get null pointer exception.
