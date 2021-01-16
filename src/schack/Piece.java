@@ -191,6 +191,8 @@ public abstract class Piece
 
     public abstract void updateLegalMoves();
 
+    public abstract void updatePreviousLegalMoves();
+
     public URL getPath() {
         return path;
     }
@@ -208,7 +210,7 @@ public abstract class Piece
     }
 
     public List<Position> getlegalMoves(){
-        return (ArrayList<Position>) legalMoves;
+        return legalMoves;
     }
 
     public int getPieceX() {

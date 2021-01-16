@@ -16,7 +16,6 @@ public class Knight extends Piece
 		for (int y = 0; y < 8; y++) {
 		    if ((Math.abs(x - p.getX()) == 1 && Math.abs(y - p.getY()) == 2) ||
 			(Math.abs(x - p.getX()) == 2 && Math.abs(y - p.getY()) == 1)) {
-			//System.out.println(x + ", " + y);
 			if (isValidDestination(x,y))
 			list.add(new Position(x, y));
 		    }
@@ -26,7 +25,6 @@ public class Knight extends Piece
 	return list;
     }
     public void updateLegalMoves(){
-       // updatePreviousLegalMoves();
         legalMoves.clear();
         legalMoves = addLegalMoves(legalMoves, new Position(pieceX, pieceY));
     }

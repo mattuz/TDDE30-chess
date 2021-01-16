@@ -27,10 +27,6 @@ public class Panel extends JPanel
 	    }
 	}
 
-	public static JLabel getJLabel(){
-	    return jLabel;
-	}
-
 	public static void setPlayer1(String name) {
 	    player1 = name + "'s turn";
 	}
@@ -39,12 +35,5 @@ public class Panel extends JPanel
 	    player2 = name + "'s turn";
 	}
 
-	/*public static String getPlayer1() {
-	    return player1;
-	}*/ //TODO TA BORT DESSA
-
-	/*public static String getPlayer2() {
-	    return player2;
-	}*/
     }
 

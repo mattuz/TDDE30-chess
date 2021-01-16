@@ -3,13 +3,10 @@ package schack;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
-import java.util.EnumMap;
+
 
 public class PiecePainter
 {
-    //private static URL picturepath = null;
-    private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
     /**
      * Rescales the given image src and gives it the right dimansions.

@@ -21,7 +21,6 @@ public class Pawn extends Piece
                     if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
                          board.getPieceAt(x,y).getColor() != PieceColor.WHITE) ||
                         (x == p.getX() && board.getPieceAt(x,y) == null)) {
-                        //System.out.println(x + ", " + y);
                         if (firstStep && board.getPieceAt(x,y-1) == null) {
                             list.add(new Position(x, y-1));
                         }
@@ -34,7 +33,6 @@ public class Pawn extends Piece
                     if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
                          board.getSquare()[x][y].getColor() != PieceColor.BLACK) ||
                         (x == p.getX() && board.getSquare()[x][y] == null)) {
-                        //System.out.println(x + ", " + y);
                         if (firstStep && board.getPieceAt(x,y+1) == null) {
                             list.add(new Position(x,y+1));
                         }
@@ -47,7 +45,6 @@ public class Pawn extends Piece
         }
 
     public void updateLegalMoves(){
-       // updatePreviousLegalMoves();
         legalMoves.clear();
         addLegalMoves(legalMoves, new Position(pieceX, pieceY));
      }

@@ -8,7 +8,6 @@ import java.util.List;
 public class PieceMover extends MouseAdapter
 {
     private List<Piece> pieces;
-    private BoardComponent graphics;
     private Board board;
     private static final int WINDOWOFFSET = 30;
     private static final int XOFFSET = 7;
@@ -19,13 +18,11 @@ public class PieceMover extends MouseAdapter
     private int dragOffsetX;
     private int dragOffsetY;
     private Piece dragPiece = null;
-    private boolean checkFirstStep;
 
 
 
-    public PieceMover(Board board, final BoardComponent graphics) {
+    public PieceMover(Board board) {
 	this.pieces = board.pieceList;
-	this.graphics = graphics;
 	this.board = board;
 	this.pieces = board.addPieces();
     }
@@ -125,7 +122,6 @@ public class PieceMover extends MouseAdapter
 		this.oldX = (x - this.dragOffsetX) / BoardComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY) / BoardComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
-		checkFirstStep = dragPiece.isFirstStep();
 		dragPiece.updateLegalMoves();
 		System.out.println(dragPiece.getType()); //TODO for-loop här kanske, som kollar om samma colors kung är checkad. Är den det måste dragPiece ändras.
 
@@ -176,8 +172,9 @@ public class PieceMover extends MouseAdapter
 
     /**
      * Is meant to revert all legal moves. Does not work as intended.
+     * Not used
      */
-    private void revertAllLegalMoves() {
+    private void revertAllLegalMoves() { //TODO ta bort denna?
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 	    piece.setLegalMoves(piece.getPreviousLegalMoves());

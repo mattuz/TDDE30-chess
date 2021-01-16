@@ -10,7 +10,6 @@ public class Rook extends Piece
     }
 
     public void updateLegalMoves(){
-        //updatePreviousLegalMoves();
         Position position = new Position(getPieceX(), getPieceY());
         legalMoves.clear();
         legalMoves = addHorisontal(legalMoves, 8, position);

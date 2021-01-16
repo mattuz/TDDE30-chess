@@ -6,8 +6,6 @@ import java.awt.*;
 public class Frame
 {
     private JFrame frame = new JFrame();
-    private Board board;
-    private JTextArea textarea = null;
     private BoardComponent graphics;
     private Panel panel = new Panel();
 
@@ -15,10 +13,10 @@ public class Frame
 
     public Frame(final Board board) {
 	this.graphics = new BoardComponent(board);
-	this.board = board;
-	PieceMover pm = new PieceMover(board, graphics);
+	PieceMover pm = new PieceMover(board);
 	frame.addMouseListener(pm);
 	frame.addMouseMotionListener(pm);
+	board.addBoardListener(graphics);
     }
 
     public BoardComponent getGraphics() { //Används för att lägga till en listener.

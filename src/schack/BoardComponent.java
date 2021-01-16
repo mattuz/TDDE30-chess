@@ -8,9 +8,7 @@ import static java.awt.Color.*;
 public class BoardComponent extends JComponent implements BoardListener
 {
     public static final int BOARDCONSTANT = 80;
-    public static final int CENTERTEXT = 49;
     private Board board;
-    private Piece pieces = null;
 
     public BoardComponent(final Board board) {
 	this.board = board;

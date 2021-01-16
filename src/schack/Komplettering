@@ -1,9 +1,8 @@
 Förslagsvis väntar vi med errors utifall vi kommer skapa nya när vi kompletterar :)
 
 Jonas:
- - "fatal errors" i showstopper-listan angående (5 st MutableStaticField)
+ - "fatal errors" i showstopper-listan angående (5 st MutableStaticField) (Typ "klar")
 
- - Lägg in updatePreviousLegalMoves() i piece då 5/6 pieces använder den
 
 Hugo:
  - gå igenom varningarna igen och kommentera varför vi inte fixar det vi lämnar kvar

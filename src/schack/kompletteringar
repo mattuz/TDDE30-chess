@@ -3,13 +3,16 @@
 
  - "fatal errors" i showstopper-listan angående
     Tog bort picturepathb fält från PiecePainter
-    Tog bort den oanvända importen. 
+    Tog bort den oanvända importen.
 
  - Lägg in updatePreviousLegalMoves() i piece då 5/6 pieces använder den
-
+	La in den i Piece.
 
  - gå igenom varningarna igen och kommentera varför vi inte fixar det vi lämnar kvar
  - ta bort kod som inte används eller som är utkommenterad
+ 	Tagit bort väldigt mycket av koden som inte använts. Vet inte om man ska skriva ner exakt allt som
+ 	tagits bort här, går att se relativt lätt i git.
+
  - magiska konstanter
  - bugg: schack funkar ej ;)
 

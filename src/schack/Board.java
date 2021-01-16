@@ -15,8 +15,8 @@ public class Board
     public List<Piece> pieceList = new ArrayList<>();
     private Piece checkPiece = null;
 
-    private final static PieceColor WHITE_STATE = PieceColor.WHITE;
-    private final static PieceColor BLACK_STATE = PieceColor.BLACK;
+    private final PieceColor WHITE_STATE = PieceColor.WHITE;
+    private final PieceColor BLACK_STATE = PieceColor.BLACK;
 
     private PieceColor state = WHITE_STATE;
 
@@ -154,11 +154,8 @@ public class Board
     public void swapTurns() {
 	if (state == WHITE_STATE) {
             state = BLACK_STATE;
-	    //Panel.getJLabel().setText(Panel.getPlayer2()); //TODO ändra dessa
 	} else {
             state = WHITE_STATE;
-	    //Panel.getJLabel().setText(Panel.getPlayer1());
-	    //setTurn(black)
         }
 	Panel.setTurn(state);
     }

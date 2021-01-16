@@ -11,7 +11,6 @@ public class Queen extends Piece
     }
 
 	public void updateLegalMoves(){
-           // updatePreviousLegalMoves();
 	    Position position = new Position(getPieceX(), getPieceY());
 	    legalMoves.clear();
 	    legalMoves = addDiagonal(legalMoves, 8, position);

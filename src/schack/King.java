@@ -10,7 +10,7 @@ public class King extends Piece
         updateLegalMoves();
     }
 
-    public List<Position> addLegalMoves(List<Position> list, Position p) {
+    public List<Position> addLegalMoves(List<Position> list) {
         switch (board.castlingPossiblePath(this)) {
             case 0:
                 break;
@@ -28,10 +28,9 @@ public class King extends Piece
     }
 
     public void updateLegalMoves(){
-        //updatePreviousLegalMoves();
         Position position = new Position (getPieceX(), getPieceY());
         legalMoves.clear();
-        addLegalMoves(legalMoves, position);
+        addLegalMoves(legalMoves);
         legalMoves = addHorisontal(legalMoves, 1, position);
         legalMoves = addDiagonal(legalMoves, 1, position);
         legalMoves = addVertical(legalMoves, 1, position);
