@@ -16,7 +16,7 @@ public class Frame
     public Frame(final Board board) {
 	this.graphics = new BoardComponent(board);
 	this.board = board;
-	PieceMove pm = new PieceMove(board, graphics);
+	PieceMover pm = new PieceMover(board, graphics);
 	frame.addMouseListener(pm);
 	frame.addMouseMotionListener(pm);
     }

@@ -8,7 +8,7 @@ import java.util.EnumMap;
 
 public class PiecePainter
 {
-    private static URL picturepath = null;
+    //private static URL picturepath = null;
     private EnumMap<PieceType, String> piece = new EnumMap<>(PieceType.class);
 
     /**

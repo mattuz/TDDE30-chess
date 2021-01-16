@@ -2,7 +2,7 @@ Förslagsvis väntar vi med errors utifall vi kommer skapa nya när vi komplette
 
 Jonas:
  - "fatal errors" i showstopper-listan angående (5 st MutableStaticField)
- - PieceMove dåligt namn. (inte en sorts förflyttning)
+
  - Lägg in updatePreviousLegalMoves() i piece då 5/6 pieces använder den
 
 Hugo:

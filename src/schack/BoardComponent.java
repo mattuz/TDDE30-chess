@@ -2,7 +2,6 @@ package schack;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.EnumMap;
 
 import static java.awt.Color.*;
 

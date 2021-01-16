@@ -5,7 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class PieceMove extends MouseAdapter
+public class PieceMover extends MouseAdapter
 {
     private List<Piece> pieces;
     private BoardComponent graphics;
@@ -23,7 +23,7 @@ public class PieceMove extends MouseAdapter
 
 
 
-    public PieceMove(Board board, final BoardComponent graphics) {
+    public PieceMover(Board board, final BoardComponent graphics) {
 	this.pieces = board.pieceList;
 	this.graphics = graphics;
 	this.board = board;
@@ -67,7 +67,6 @@ public class PieceMove extends MouseAdapter
 	    }
 
 	} if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
-	    System.out.println("tre");
             if (!board.interruptChecked(whiteKing, x, y)) {
 		movePiece(x,y);
 	    }
