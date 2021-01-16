@@ -32,63 +32,64 @@ public class PieceMover extends MouseAdapter
      * Checks if conditions for a move is met.
      */
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
-	int x = dragPiece.getPieceX();
-	int y = dragPiece.getPieceY();
+        if (dragPiece != null) {
+	    int x = dragPiece.getPieceX();
+	    int y = dragPiece.getPieceY();
 
-	 if (board.isChecked(dragPiece)) {
-	    dragPiece.newX(oldX);
-	    dragPiece.newY(oldY);
-	    board.swapTurns();
-	    JOptionPane.showMessageDialog(null, "Illegal move of the king.");
+	    if (board.isChecked(dragPiece)) {
+		dragPiece.newX(oldX);
+		dragPiece.newY(oldY);
+		board.swapTurns();
+		JOptionPane.showMessageDialog(null, "Illegal move of the king.");
 
-	}
-	else if (board.getState() == PieceColor.WHITE && board.isChecked(whiteKing) && dragPiece.getType() != PieceType.KING) {
-	    if (board.interruptChecked(whiteKing, x, y)) {
-	        movePiece(x, y);
+	    }
+	    else if (board.getState() == PieceColor.WHITE && board.isChecked(whiteKing) && dragPiece.getType() != PieceType.KING) {
+		if (board.interruptChecked(whiteKing, x, y)) {
+		    movePiece(x, y);
+		} else {
+		    dragPiece.newX(oldX);
+		    dragPiece.newY(oldY);
+		    board.swapTurns();
+		    JOptionPane.showMessageDialog(null, "The king is checked.");
+		}
+
+	    }
+	    else if (board.getState() == PieceColor.BLACK && board.isChecked(blackKing) && dragPiece.getType() != PieceType.KING) {
+		if (board.interruptChecked(blackKing, x, y)) {
+		    movePiece(x, y);
+		} else {
+		    dragPiece.newX(oldX);
+		    dragPiece.newY(oldY);
+		    board.swapTurns();
+		    JOptionPane.showMessageDialog(null, "The king is checked.");
+		}
+
+	    } if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
+		if (!board.interruptChecked(whiteKing, x, y)) {
+		    movePiece(x,y);
+		}
+
+		if (board.isPawnUpgradePossible(dragPiece, y)){
+		    upgradePawn(x, y);
+		}
+		if (dragPiece.getType() == PieceType.KING && x - Board.CASTLING_MOVE_DISTANCE == oldX) {
+		    board.getSquare()[x-1][y] = board.getSquare()[Board.RIGHT_ROOK_START_COL][y];
+		    board.removePiece(Board.RIGHT_ROOK_START_COL, y);
+		}
+		if (dragPiece.getType() == PieceType.KING && x + Board.CASTLING_MOVE_DISTANCE == oldX) {
+		    board.getSquare()[x+1][y] = board.getSquare()[Board.LEFT_ROOK_START_COL][y];
+		    board.removePiece(Board.LEFT_ROOK_START_COL, y);
+		}
+
 	    } else {
 		dragPiece.newX(oldX);
 		dragPiece.newY(oldY);
 		board.swapTurns();
-		JOptionPane.showMessageDialog(null, "The king is checked.");
-	    }
-
-	}
-	else if (board.getState() == PieceColor.BLACK && board.isChecked(blackKing) && dragPiece.getType() != PieceType.KING) {
-	    if (board.interruptChecked(blackKing, x, y)) {
-		movePiece(x, y);
-	    } else {
-		dragPiece.newX(oldX);
-		dragPiece.newY(oldY);
-		board.swapTurns();
-		JOptionPane.showMessageDialog(null, "The king is checked.");
-	    }
-
-	} if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
-            if (!board.interruptChecked(whiteKing, x, y)) {
-		movePiece(x,y);
-	    }
-
-            if (board.isPawnUpgradePossible(dragPiece, y)){
-                upgradePawn(x, y);
-	    }
-            if (dragPiece.getType() == PieceType.KING && x - Board.CASTLING_MOVE_DISTANCE == oldX) {
-		board.getSquare()[x-1][y] = board.getSquare()[Board.RIGHT_ROOK_START_COL][y];
-		board.removePiece(Board.RIGHT_ROOK_START_COL, y);
-	    }
-            if (dragPiece.getType() == PieceType.KING && x + Board.CASTLING_MOVE_DISTANCE == oldX) {
-		board.getSquare()[x+1][y] = board.getSquare()[Board.LEFT_ROOK_START_COL][y];
-		board.removePiece(Board.LEFT_ROOK_START_COL, y);
-	    }
-
-	} else {
-	    dragPiece.newX(oldX);
-	    dragPiece.newY(oldY);
+	    } this.dragPiece = null;
+	    updateAllLegalMoves();
+	    board.notifyListeners();
 	    board.swapTurns();
-	} this.dragPiece = null;
-	updateAllLegalMoves();
-        board.notifyListeners();
-        board.swapTurns();
-    }
+	}}
 
     /**
      * If a Piece is currently being dragged, Set its new(x,y)-values to the new square.
@@ -122,8 +123,9 @@ public class PieceMover extends MouseAdapter
 		this.oldX = (x - this.dragOffsetX) / BoardComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY) / BoardComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
+
 		dragPiece.updateLegalMoves();
-		System.out.println(dragPiece.getType()); //TODO for-loop här kanske, som kollar om samma colors kung är checkad. Är den det måste dragPiece ändras.
+		//System.out.println(dragPiece.getType()); //TODO for-loop här kanske, som kollar om samma colors kung är checkad. Är den det måste dragPiece ändras.
 
 	    }
 	}

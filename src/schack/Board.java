@@ -280,7 +280,7 @@ public class Board
 	//boolean isRookFirstStep = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep(); //TODO den här funkar inte???
 	boolean isBishopPositionFree = getPieceTypeAt(RIGHT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
 	boolean isKnightPositionFree = getPieceTypeAt(RIGHT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
-	boolean test = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
+//	boolean test = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
 
 
 	return isRookAtStartPosition && square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
