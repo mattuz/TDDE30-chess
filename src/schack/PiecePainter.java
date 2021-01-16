@@ -42,6 +42,8 @@ public class PiecePainter
 
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    System.out.println("Error while reading picture.");
+	    return myPicture; //TODO la till return här
 	}
 	return myPicture;
     }

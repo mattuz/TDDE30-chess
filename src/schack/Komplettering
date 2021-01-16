@@ -18,8 +18,6 @@ Hugo:
  - kombinera gärna setPlayer1 -> setPlayerName(index, name).
    Om vi pallar, gör att namnen som anges blir parametrar i Panels konstructor.
  - vi kan använda "Java Point" istället för vår egna Position-klass
- - "Board: Panel.getjLabel().setText(Panel.getPlayer2()); It is better to have a method: setTurn(white|black) and deal with the
-    label inside the Panel class. This will also make that the label."
 
  FRÅGETECKEN (komentarer jag inte riktigt fattar vad han vill/ vad vi ska göra) :
  - If I just click anywhere on the board and not an a piece I get null pointer exception.

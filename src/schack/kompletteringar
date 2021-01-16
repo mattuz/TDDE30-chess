@@ -2,4 +2,37 @@
     Ändrade namn till till PieceMover.
 
  - "fatal errors" i showstopper-listan angående
-    Tog bort picturepathb fält från PiecePainter.
+    Tog bort picturepathb fält från PiecePainter
+    Tog bort den oanvända importen. 
+
+ - Lägg in updatePreviousLegalMoves() i piece då 5/6 pieces använder den
+
+
+ - gå igenom varningarna igen och kommentera varför vi inte fixar det vi lämnar kvar
+ - ta bort kod som inte används eller som är utkommenterad
+ - magiska konstanter
+ - bugg: schack funkar ej ;)
+
+ - ingen error-handling tex när en bild inte kan laddas. programmet bör stängas av och/eller ge felmeddelande.
+	La in return inuti catchen. Får se om detta är rätt.
+
+ - Lägg in så att frame är en boardlistener för att den ska uppdatera labels i panelen.
+
+
+ - fälten i Panel behöver inte vara static (3 kvar)
+
+
+ - kombinera gärna setPlayer1 -> setPlayerName(index, name).
+   Om vi pallar, gör att namnen som anges blir parametrar i Panels konstructor.
+
+
+ - vi kan använda "Java Point" istället för vår egna Position-klass
+
+
+ - "Board: Panel.getjLabel().setText(Panel.getPlayer2()); It is better to have a method: setTurn(white|black) and deal with the
+    label inside the Panel class. This will also make that the label."
+    Ändrade till setTurn (metod i Panel) och hanterar nu label inuti Panel-klassen. Vi tog nu också bort getters för player1
+    och player2 då de inte längre används.
+
+     FRÅGETECKEN (komentarer jag inte riktigt fattar vad han vill/ vad vi ska göra) :
+     - If I just click anywhere on the board and not an a piece I get null pointer exception.

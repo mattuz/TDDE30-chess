@@ -154,11 +154,13 @@ public class Board
     public void swapTurns() {
 	if (state == WHITE_STATE) {
             state = BLACK_STATE;
-            Panel.getjLabel().setText(Panel.getPlayer2()); //TODO ändra dessa
+	    //Panel.getJLabel().setText(Panel.getPlayer2()); //TODO ändra dessa
 	} else {
             state = WHITE_STATE;
-	    Panel.getjLabel().setText(Panel.getPlayer1());
+	    //Panel.getJLabel().setText(Panel.getPlayer1());
+	    //setTurn(black)
         }
+	Panel.setTurn(state);
     }
 
     /**
