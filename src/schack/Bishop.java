@@ -11,7 +11,7 @@ public class Bishop extends Piece
 
 
     public void updateLegalMoves(){
-	int maxDistance = 8;
+	final int maxDistance = 8;
 	legalMoves.clear();
         legalMoves = addDiagonal(legalMoves,maxDistance, new Position(getPieceX(),getPieceY()));
     }

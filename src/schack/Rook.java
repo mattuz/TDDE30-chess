@@ -10,7 +10,7 @@ public class Rook extends Piece
     }
 
     public void updateLegalMoves(){
-        int maxDistance = 8;
+        final int maxDistance = 8;
         Position position = new Position(getPieceX(), getPieceY());
         legalMoves.clear();
         legalMoves = addHorisontal(legalMoves, maxDistance, position);

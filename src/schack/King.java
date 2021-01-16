@@ -11,8 +11,8 @@ public class King extends Piece
     }
 
     public List<Position> addLegalMoves(List<Position> list) {
-        int rightCastlingPosition = 6;
-        int leftCastlingPosition = 2;
+        final int rightCastlingPosition = 6;
+        final int leftCastlingPosition = 2;
         switch (board.castlingPossiblePath(this)) {
             case "none":
                 break;

@@ -71,11 +71,11 @@ public class PieceMover extends MouseAdapter
             if (board.isPawnUpgradePossible(dragPiece, y)){
                 upgradePawn(x, y);
 	    }
-            if (dragPiece.getType() == PieceType.KING && x - 2 == oldX) {
+            if (dragPiece.getType() == PieceType.KING && x - Board.CASTLING_MOVE_DISTANCE == oldX) {
 		board.getSquare()[x-1][y] = board.getSquare()[Board.RIGHT_ROOK_START_COL][y];
 		board.removePiece(Board.RIGHT_ROOK_START_COL, y);
 	    }
-            if (dragPiece.getType() == PieceType.KING && x + 2 == oldX) {
+            if (dragPiece.getType() == PieceType.KING && x + Board.CASTLING_MOVE_DISTANCE == oldX) {
 		board.getSquare()[x+1][y] = board.getSquare()[Board.LEFT_ROOK_START_COL][y];
 		board.removePiece(Board.LEFT_ROOK_START_COL, y);
 	    }

@@ -14,20 +14,67 @@ public class Board
     private List<BoardListener> listeners = new ArrayList<>();
     public List<Piece> pieceList = new ArrayList<>();
     private Piece checkPiece = null;
-    public static final int BLACK_PAWN_STARTING_ROW = 1;
-    public static final int WHITE_PAWN_STARTING_ROW = 6;
-    public static final int BLACK_STARTING_ROW = 0;
-    public static final int WHITE_STARTING_ROW = 7;
-    public static final int LEFT_ROOK_START_COL = 0;
-    public static final int RIGHT_ROOK_START_COL = 7;
-    public static final int LEFT_KNIGHT_START_COL = 1;
-    public static final int RIGHT_KNIGHT_START_COL = 6;
-    public static final int LEFT_BISHOP_START_COL = 2;
-    public static final int RIGHT_BISHOP_START_COL = 5;
-    public static final int QUEEN_START_COL = 3;
-    public static final int KING_START_COL = 4;
 
+    /**
+     * Constant for the black pawns starting row.
+     */
+    public static final int BLACK_PAWN_STARTING_ROW = 1;
+    /**
+     * Constant for the white pawns starting row.
+     */
+    public static final int WHITE_PAWN_STARTING_ROW = 6;
+    /**
+     * Black pieces starting row (excluding pawns).
+     */
+    public static final int BLACK_STARTING_ROW = 0;
+    /**
+     * White pieces starting row (excluding pawns).
+     */
+    public static final int WHITE_STARTING_ROW = 7;
+    /**
+     * Starting position of left rook.
+     */
+    public static final int LEFT_ROOK_START_COL = 0;
+    /**
+     * Starting position of right rook.
+     */
+    public static final int RIGHT_ROOK_START_COL = 7;
+    /**
+     * Starting position of left knight.
+     */
+    public static final int LEFT_KNIGHT_START_COL = 1;
+    /**
+     * Starting position of right knight.
+     */
+    public static final int RIGHT_KNIGHT_START_COL = 6;
+    /**
+     * Starting position of left bishop.
+     */
+    public static final int LEFT_BISHOP_START_COL = 2;
+    /**
+     * Starting position of right bishop.
+     */
+    public static final int RIGHT_BISHOP_START_COL = 5;
+    /**
+     * Starting position of queen
+     */
+    public static final int QUEEN_START_COL = 3;
+    /**
+     * Starting position of king.
+     */
+    public static final int KING_START_COL = 4;
+    /**
+     * The amount of positions in x-axis the king moves while castling.
+     */
+    public static final int CASTLING_MOVE_DISTANCE = 2;
+
+    /**
+     * Represents the state of the game. White's turn.
+     */
     private static final PieceColor WHITE_STATE = PieceColor.WHITE;
+    /**
+     * Represents the state of the game. Black's turn.
+     */
     private static final PieceColor BLACK_STATE = PieceColor.BLACK;
 
     private PieceColor state = WHITE_STATE;
@@ -93,8 +140,6 @@ public class Board
     /**
      * Switches between pieces depending on which should be placed where on the board array.
      * Each placement position is fixed and determined by placePieces.
-     * X is the coordinate on the x-axis of which the piece starts on. Since this is always the same
-     * for a regular chess board we think it's more simple to just use the numbers to represent the positions.
      */
     public void switchPieces(int x, int y, PieceColor color) {
 	switch (x) {
@@ -216,19 +261,30 @@ public class Board
      * Is castling queenside possible?
      */
     private boolean isCastlingLeft(final Piece piece) {
-	return getPieceTypeAt(LEFT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK && square[LEFT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
-	       getPieceTypeAt(QUEEN_START_COL, piece.getPieceY()) == PieceType.EMPTY &&
-	       getPieceTypeAt(LEFT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY &&
-	       getPieceTypeAt(LEFT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isRookAtStartPosition = getPieceTypeAt(LEFT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK;
+	boolean isRookFirstStep = square[LEFT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
+	boolean isQueenPositionFree = getPieceTypeAt(QUEEN_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isBishopPositionFree = getPieceTypeAt(LEFT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isKnightPositionFree = getPieceTypeAt(LEFT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+
+	return isRookAtStartPosition && isRookFirstStep &&
+	       isQueenPositionFree && isBishopPositionFree &&
+	       isKnightPositionFree;
     }
 
     /**
      * Is castling kingside possible?
      */
     private boolean isCastlingRight(final Piece piece) {
-	return getPieceTypeAt(RIGHT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK && square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
-	       getPieceTypeAt(RIGHT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY &&
-	       getPieceTypeAt(RIGHT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isRookAtStartPosition = getPieceTypeAt(RIGHT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK;
+	//boolean isRookFirstStep = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep(); //TODO den här funkar inte???
+	boolean isBishopPositionFree = getPieceTypeAt(RIGHT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isKnightPositionFree = getPieceTypeAt(RIGHT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean test = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
+
+
+	return isRookAtStartPosition && square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
+	       isBishopPositionFree && isKnightPositionFree;
     }
 
     /**
