@@ -11,29 +11,32 @@ public class King extends Piece
     }
 
     public List<Position> addLegalMoves(List<Position> list) {
+        int rightCastlingPosition = 6;
+        int leftCastlingPosition = 2;
         switch (board.castlingPossiblePath(this)) {
-            case 0:
+            case "none":
                 break;
-            case 1:
-                list.add(new Position(2,pieceY));
+            case "left":
+                list.add(new Position(leftCastlingPosition,pieceY));
                 break;
-            case 2:
-                list.add(new Position(6, pieceY));
+            case "right":
+                list.add(new Position(rightCastlingPosition, pieceY));
                 break;
-            case 3:
-                list.add(new Position(2,pieceY));
-                list.add(new Position(6, pieceY));
+            case "both":
+                list.add(new Position(leftCastlingPosition,pieceY));
+                list.add(new Position(rightCastlingPosition, pieceY));
                 break;
         } return list;
     }
 
     public void updateLegalMoves(){
+        int maxDistance = 1;
         Position position = new Position (getPieceX(), getPieceY());
         legalMoves.clear();
         addLegalMoves(legalMoves);
-        legalMoves = addHorisontal(legalMoves, 1, position);
-        legalMoves = addDiagonal(legalMoves, 1, position);
-        legalMoves = addVertical(legalMoves, 1, position);
+        legalMoves = addHorisontal(legalMoves, maxDistance, position);
+        legalMoves = addDiagonal(legalMoves, maxDistance, position);
+        legalMoves = addVertical(legalMoves, maxDistance, position);
         /*if (board.isChecked(this)) {
             legalMoves.remove(board.containsPosition(this.getlegalMoves(), position));
         }*/

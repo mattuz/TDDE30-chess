@@ -14,9 +14,21 @@ public class Board
     private List<BoardListener> listeners = new ArrayList<>();
     public List<Piece> pieceList = new ArrayList<>();
     private Piece checkPiece = null;
+    public static final int BLACK_PAWN_STARTING_ROW = 1;
+    public static final int WHITE_PAWN_STARTING_ROW = 6;
+    public static final int BLACK_STARTING_ROW = 0;
+    public static final int WHITE_STARTING_ROW = 7;
+    public static final int LEFT_ROOK_START_COL = 0;
+    public static final int RIGHT_ROOK_START_COL = 7;
+    public static final int LEFT_KNIGHT_START_COL = 1;
+    public static final int RIGHT_KNIGHT_START_COL = 6;
+    public static final int LEFT_BISHOP_START_COL = 2;
+    public static final int RIGHT_BISHOP_START_COL = 5;
+    public static final int QUEEN_START_COL = 3;
+    public static final int KING_START_COL = 4;
 
-    private final PieceColor WHITE_STATE = PieceColor.WHITE;
-    private final PieceColor BLACK_STATE = PieceColor.BLACK;
+    private static final PieceColor WHITE_STATE = PieceColor.WHITE;
+    private static final PieceColor BLACK_STATE = PieceColor.BLACK;
 
     private PieceColor state = WHITE_STATE;
 
@@ -54,18 +66,18 @@ public class Board
      * Uses pieceSwitcher to determine and create the correct Piece.
      */
     public void placePieces(int x, int y) {
-	if (y == 0) {
+	if (y == BLACK_STARTING_ROW) {
             switchPieces(x, y, PieceColor.BLACK);
 	}
-        else if (y == 1) {
+        else if (y == BLACK_PAWN_STARTING_ROW) {
 	    square[x][y] = new Pawn(x, y, PieceType.PAWN, PieceColor.BLACK, getPathFor(PieceColor.BLACK, PieceType.PAWN),
 				    this, true);
 	}
-        else if (y == 6) {
+        else if (y == WHITE_PAWN_STARTING_ROW) {
 	    square[x][y] = new Pawn(x, y, PieceType.PAWN, PieceColor.WHITE, getPathFor(PieceColor.WHITE, PieceType.PAWN),
 				    this, true);
 	}
-        else if (y == 7) {
+        else if (y == WHITE_STARTING_ROW) {
 	    switchPieces(x, y, PieceColor.WHITE);
 	}
     }
@@ -81,29 +93,31 @@ public class Board
     /**
      * Switches between pieces depending on which should be placed where on the board array.
      * Each placement position is fixed and determined by placePieces.
+     * X is the coordinate on the x-axis of which the piece starts on. Since this is always the same
+     * for a regular chess board we think it's more simple to just use the numbers to represent the positions.
      */
     public void switchPieces(int x, int y, PieceColor color) {
 	switch (x) {
-	    case 0:
-	    case 7:
+	    case LEFT_ROOK_START_COL:
+	    case RIGHT_ROOK_START_COL:
 		square[x][y] = new Rook(x, y, PieceType.ROOK, color, getPathFor(color, PieceType.ROOK), this,
 					true);
 	        break;
-	    case 1:
-	    case 6:
+	    case LEFT_KNIGHT_START_COL:
+	    case RIGHT_KNIGHT_START_COL:
 		square[x][y] = new Knight(x, y, PieceType.KNIGHT, color, getPathFor(color, PieceType.KNIGHT), this,
 					  true);
 	        break;
-	    case 2:
-	    case 5:
+	    case LEFT_BISHOP_START_COL:
+	    case RIGHT_BISHOP_START_COL:
 		square[x][y] = new Bishop(x, y, PieceType.BISHOP, color, getPathFor(color, PieceType.BISHOP), this,
 					  true);
 		break;
-	    case 3:
+	    case QUEEN_START_COL:
 		square[x][y] = new Queen(x, y, PieceType.QUEEN, color, getPathFor(color, PieceType.QUEEN), this,
 					 true);
 		break;
-	    case 4:
+	    case KING_START_COL:
 		square[x][y] = new King(x, y, PieceType.KING, color, getPathFor(color, PieceType.KING), this,
 					true);
 		break;
@@ -164,14 +178,14 @@ public class Board
      * Checks if a Pawn can be upgraded (if it has moved across the entire board).
      *
      */
-    public boolean pawnUpgradePossible(Piece piece, int y) {
+    public boolean isPawnUpgradePossible(Piece piece, int y) {
 	if (piece.getType() != PieceType.PAWN) {
 	    return false;
 	}
-        else if (piece.getColor() == PieceColor.WHITE && y == 0) {
+        else if (piece.getColor() == PieceColor.WHITE && y == BLACK_STARTING_ROW) {
 	    return true;
 	}
-	else return piece.getColor() == PieceColor.BLACK && y == 7;
+	else return piece.getColor() == PieceColor.BLACK && y == WHITE_STARTING_ROW;
     }
 
     /**
@@ -181,40 +195,40 @@ public class Board
      * 2 if castling only available king side,
      * 1 if castling only avaiable queen side.
      */
-    public int castlingPossiblePath(Piece piece){
+    public String castlingPossiblePath(Piece piece){
 	if (piece.getType() == PieceType.KING && piece.firstStep && piece.getColor() == state) {
 	    if (isCastlingLeft(piece) && isCastlingRight(piece)) {
 		System.out.println("Båda!");
-	        return 3;
+	        return "both";
 	    }
 	    else if (isCastlingLeft(piece)) {
 		System.out.println("Vänster!");
-		return 1;
+		return "left";
 	    }
 	    else if (isCastlingRight(piece)) {
 		System.out.println("Höger!");
-	        return 2;
+	        return "right";
 	    }
-	} return 0;
+	} return "none";
     }
 
     /**
      * Is castling queenside possible?
      */
     private boolean isCastlingLeft(final Piece piece) {
-	return getPieceTypeAt(0, piece.getPieceY()) == PieceType.ROOK && square[0][piece.getPieceY()].isFirstStep() &&
-	    getPieceTypeAt(3, piece.getPieceY()) == PieceType.EMPTY &&
-	    getPieceTypeAt(2, piece.getPieceY()) == PieceType.EMPTY &&
-	    getPieceTypeAt(1, piece.getPieceY()) == PieceType.EMPTY;
+	return getPieceTypeAt(LEFT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK && square[LEFT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
+	       getPieceTypeAt(QUEEN_START_COL, piece.getPieceY()) == PieceType.EMPTY &&
+	       getPieceTypeAt(LEFT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY &&
+	       getPieceTypeAt(LEFT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
     }
 
     /**
      * Is castling kingside possible?
      */
     private boolean isCastlingRight(final Piece piece) {
-	return getPieceTypeAt(7, piece.getPieceY()) == PieceType.ROOK && square[7][piece.getPieceY()].isFirstStep() &&
-	       getPieceTypeAt(6, piece.getPieceY()) == PieceType.EMPTY &&
-	       getPieceTypeAt(5,piece.getPieceY()) == PieceType.EMPTY;
+	return getPieceTypeAt(RIGHT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK && square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
+	       getPieceTypeAt(RIGHT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY &&
+	       getPieceTypeAt(RIGHT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
     }
 
     /**
@@ -242,8 +256,8 @@ public class Board
     public boolean interruptChecked(Piece piece, int newX, int newY) {
 	int pX = piece.getPieceX();
 	int pY = piece.getPieceY();
-	for (int x = 0; x < 8; x++) {
-	    for (int y = 0; y < 8; y++) {
+	for (int x = 0; x < width; x++) {
+	    for (int y = 0; y < height; y++) {
 		if (isChecked(piece) && checkPiece.getPieceX() != pX && checkPiece.getPieceY() == pY) {
 		    if (checkPiece.getPieceX() < newX && newX < pX) {
 		        return true;

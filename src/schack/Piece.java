@@ -39,9 +39,10 @@ public abstract class Piece
      * Adds all legal horisontal moves, from and within a maxdistance from p, to list.
      */
     public List<Position> addHorisontal(List<Position> list, int maxDistance, Position p) {
+        int width = board.getWidth();
         int y = p.getY();
         for (int x = p.getX() - maxDistance; x <= p.getX() + maxDistance; x++) {
-            if (x >= 0 && x < 8 && isLegalHorisontal(this, p.getX(), p.getY(), x, y)){
+            if (x >= 0 && x < width && isLegalHorisontal(this, p.getX(), p.getY(), x, y)){
                 list.add(new Position(x, y));
             }
         }
@@ -52,9 +53,10 @@ public abstract class Piece
      * Adds all legal vertical moves, from and within a maxdistance from position, to list.
      */
     public List<Position> addVertical(List<Position> list, int maxDistance, Position position){
+        int height = board.getHeight();
         int x = position.getX();
         for (int y = position.getY() - maxDistance; y <= position.getY() + maxDistance; y++){
-            if (y >= 0 && y < 8 && isLegalVertical(this, position.getX(), position.getY(), x, y)) {
+            if (y >= 0 && y < height && isLegalVertical(this, position.getX(), position.getY(), x, y)) {
                 list.add(new Position(x, y));
             }
         }
@@ -65,9 +67,12 @@ public abstract class Piece
      * Adds all legal diagonal moves, from and within a maxdistance from position, to list.
      */
     public List<Position> addDiagonal(List<Position> list, int maxDistance, Position position){
+        int width = board.getWidth();
+        int height = board.getHeight();
+
         for (int x = position.getX() - maxDistance; x <= position.getX() + maxDistance; x++){
             for (int y = position.getY()-maxDistance; y <= position.getY() + maxDistance; y++){
-                if (x >= 0 && x < 8 && y >= 0 && y < 8 &&
+                if (x >= 0 && x < width && y >= 0 && y < height &&
                     isLegalDiagonal(this, position.getX(), position.getY(), x, y)) {
                     list.add(new Position(x, y));
                 }

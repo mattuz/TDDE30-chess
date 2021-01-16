@@ -17,7 +17,7 @@ public class Pawn extends Piece
         if (color == board.getState()) {
             if (color == PieceColor.WHITE) {
                 int y = p.getY() - 1;
-                for (int x = 0; x < 8; x++) {
+                for (int x = 0; x < board.getWidth(); x++) {
                     if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
                          board.getPieceAt(x,y).getColor() != PieceColor.WHITE) ||
                         (x == p.getX() && board.getPieceAt(x,y) == null)) {
@@ -29,7 +29,7 @@ public class Pawn extends Piece
                 }
             } else {
                 int y = p.getY() + 1;
-                for (int x = 0; x < 8; x++) {
+                for (int x = 0; x < board.getWidth(); x++) {
                     if ((Math.abs(x - p.getX()) == 1 && board.getPieceAt(x,y) != null &&
                          board.getSquare()[x][y].getColor() != PieceColor.BLACK) ||
                         (x == p.getX() && board.getSquare()[x][y] == null)) {

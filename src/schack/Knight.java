@@ -12,8 +12,8 @@ public class Knight extends Piece
 
     public List<Position> addLegalMoves(List<Position> list, Position p) {
 	if (color == board.getState()) {
-	    for (int x = 0; x < 8; x++) {
-		for (int y = 0; y < 8; y++) {
+	    for (int x = 0; x < board.getWidth(); x++) {
+		for (int y = 0; y < board.getHeight(); y++) {
 		    if ((Math.abs(x - p.getX()) == 1 && Math.abs(y - p.getY()) == 2) ||
 			(Math.abs(x - p.getX()) == 2 && Math.abs(y - p.getY()) == 1)) {
 			if (isValidDestination(x,y))

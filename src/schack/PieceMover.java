@@ -68,16 +68,16 @@ public class PieceMover extends MouseAdapter
 		movePiece(x,y);
 	    }
 
-            if (board.pawnUpgradePossible(dragPiece, y)){ //TODO borde denna ligga i Pawn egentligen? Hur skulle det funka?
+            if (board.isPawnUpgradePossible(dragPiece, y)){
                 upgradePawn(x, y);
 	    }
             if (dragPiece.getType() == PieceType.KING && x - 2 == oldX) {
-		board.getSquare()[x-1][y] = board.getSquare()[7][y];
-		board.removePiece(7, y);
+		board.getSquare()[x-1][y] = board.getSquare()[Board.RIGHT_ROOK_START_COL][y];
+		board.removePiece(Board.RIGHT_ROOK_START_COL, y);
 	    }
             if (dragPiece.getType() == PieceType.KING && x + 2 == oldX) {
-		board.getSquare()[x+1][y] = board.getSquare()[0][y];
-		board.removePiece(0, y);
+		board.getSquare()[x+1][y] = board.getSquare()[Board.LEFT_ROOK_START_COL][y];
+		board.removePiece(Board.LEFT_ROOK_START_COL, y);
 	    }
 
 	} else {
@@ -95,7 +95,7 @@ public class PieceMover extends MouseAdapter
      */
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	if (this.dragPiece != null){
-	    this.dragPiece.newX((mouseEvent.getPoint().x - 7) / BoardComponent.getBOARDCONSTANT());
+	    this.dragPiece.newX((mouseEvent.getPoint().x - XOFFSET) / BoardComponent.getBOARDCONSTANT());
 	    this.dragPiece.newY((mouseEvent.getPoint().y - WINDOWOFFSET) / BoardComponent.getBOARDCONSTANT());
 	}
     }
@@ -192,21 +192,23 @@ public class PieceMover extends MouseAdapter
 		JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, pawnUpgrades, pawnUpgrades[0]);
 
 	board.destroyPiece(x, y);
-	chooseUpgrade(response, x, y);
+	chooseUpgrade(pawnUpgrades[response], x, y);
     }
 
     /**
      * Creates the Piece and replaces this with the Pawn which is being upgraded.
+     * These choices are defined by a list of possible Pieces as seen in upgradePawn.
+     * The index of the chosen piece is returned and then used as "response".
      */
-    private void chooseUpgrade(int response, int x, int y) {
-	switch (response) {
-	    case 0:
+    private void chooseUpgrade(String choice, int x, int y) {
+	switch (choice) {
+	    case "Queen":
 		board.getSquare()[x][y] =
 			new Queen(x, y, PieceType.QUEEN, dragPiece.color,
 				  board.getPathFor(dragPiece.color, PieceType.QUEEN), board, false);
 		board.getPieceList().add(board.getSquare()[x][y]);
 		break;
-	    case 1:
+	    case "Bishop":
 		board.getSquare()[x][y] =
 			new Bishop(x, y, PieceType.BISHOP, dragPiece.color,
 				   board.getPathFor(dragPiece.color, PieceType.BISHOP), board, false);
@@ -214,7 +216,7 @@ public class PieceMover extends MouseAdapter
 
 		break;
 
-	    case 2:
+	    case "Rook":
 		board.getSquare()[x][y] =
 			new Rook(x, y, PieceType.ROOK, dragPiece.color,
 				 board.getPathFor(dragPiece.color, PieceType.ROOK), board, false);
@@ -222,7 +224,7 @@ public class PieceMover extends MouseAdapter
 
 		break;
 
-	    case 3:
+	    case "Knight":
 		board.getSquare()[x][y] =
 			new Knight(x, y, PieceType.KNIGHT, dragPiece.color,
 				   board.getPathFor(dragPiece.color, PieceType.KNIGHT), board, false);
