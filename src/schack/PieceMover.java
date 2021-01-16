@@ -37,34 +37,43 @@ public class PieceMover extends MouseAdapter
 	    int y = dragPiece.getPieceY();
 
 	    if (board.isChecked(dragPiece)) {
+		JOptionPane.showMessageDialog(null, "Illegal move of the king.");
 		dragPiece.newX(oldX);
 		dragPiece.newY(oldY);
 		board.swapTurns();
-		JOptionPane.showMessageDialog(null, "Illegal move of the king.");
-
 	    }
 	    else if (board.getState() == PieceColor.WHITE && board.isChecked(whiteKing) && dragPiece.getType() != PieceType.KING) {
 		if (board.interruptChecked(whiteKing, x, y)) {
+		    System.out.println("interruptChecked gör att den flyttas.. (vit)");
 		    movePiece(x, y);
 		} else {
+		    JOptionPane.showMessageDialog(null, "The king is checked.");
+
+		    System.out.println("Ska ha resettats (vit)");
 		    dragPiece.newX(oldX);
 		    dragPiece.newY(oldY);
 		    board.swapTurns();
-		    JOptionPane.showMessageDialog(null, "The king is checked.");
+
 		}
 
 	    }
 	    else if (board.getState() == PieceColor.BLACK && board.isChecked(blackKing) && dragPiece.getType() != PieceType.KING) {
 		if (board.interruptChecked(blackKing, x, y)) {
+		    System.out.println("interruptChecked gör att den flyttas.. (svart)");
+
 		    movePiece(x, y);
 		} else {
+		    JOptionPane.showMessageDialog(null, "The king is checked.");
+
+		    System.out.println("Ska ha resettats (svart)");
+
 		    dragPiece.newX(oldX);
 		    dragPiece.newY(oldY);
 		    board.swapTurns();
-		    JOptionPane.showMessageDialog(null, "The king is checked.");
 		}
 
-	    } if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
+	    }
+	    else if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
 		if (!board.interruptChecked(whiteKing, x, y)) {
 		    movePiece(x,y);
 		}
@@ -89,7 +98,8 @@ public class PieceMover extends MouseAdapter
 	    updateAllLegalMoves();
 	    board.notifyListeners();
 	    board.swapTurns();
-	}}
+	}
+    }
 
     /**
      * If a Piece is currently being dragged, Set its new(x,y)-values to the new square.

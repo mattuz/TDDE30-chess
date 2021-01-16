@@ -297,12 +297,21 @@ public class Board
         if (piece.getType() == PieceType.KING) {
 	    for (Piece p: pieceList) {
 		if (p.color != piece.color && containsPosition(p.getlegalMoves(), position)) {
+		    /*if (p.getType() == PieceType.ROOK || p.getType() == PieceType.QUEEN) {
+		        if (position.getX() > 0 && position.getY() > 0)
+		        //TODO Testade att lösa problemet med att kungen kan gå "bakåt" eller iväg från den pjäsen som har schack.
+		        //TODO gick sådär. Måste kolla typ positionen och vidare efter denna om det är så att det inte är slut på brädet/någon annan pjäs är där
+		    }*/
 		    checkPiece = p;
 		    return true;
 		}
 	    }
 	} return false;
     }
+
+    /*public boolean willGetChecked(Piece piece) {
+
+    }*/
 
     /**
      * Checks if a piece can interrupt the check of the king, and move inbetween.

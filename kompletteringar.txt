@@ -37,16 +37,15 @@
  - kombinera gärna setPlayer1 -> setPlayerName(index, name).
    Om vi pallar, gör att namnen som anges blir parametrar i Panels konstructor.
 
-
  - vi kan använda "Java Point" istället för vår egna Position-klass
-	Vi anser att detta tar för lång tid att implementera då en väldigt stor del av vårt program bygger på Position-klassen
-	(för att lagra pjäsers positioner). Det fungerar bra även om det som sagt kanske inte är optimalt.
+    Vi anser att detta tar för lång tid att implementera då en väldigt stor del av vårt program bygger på Position-klassen
+    (för att lagra pjäsers positioner). Det fungerar bra även om det som sagt kanske inte är optimalt.
 
  - "Board: Panel.getjLabel().setText(Panel.getPlayer2()); It is better to have a method: setTurn(white|black) and deal with the
     label inside the Panel class. This will also make that the label."
     Ändrade till setTurn (metod i Panel) och hanterar nu label inuti Panel-klassen. Vi tog nu också bort getters för player1
     och player2 då de inte längre används.
 
-     - If I just click anywhere on the board and not an a piece I get null pointer exception.
-     	Fixat, lade till en check som såg till att dragPiece inte var null när man skulle utföra ex. Piece.getY() (vilket
-     	då gav nullpointer-error). Nu gör den endast sådana checkar när man "håller i" en pjäs.
+ - If I just click anywhere on the board and not an a piece I get null pointer exception.
+    Fixat, lade till en check som såg till att dragPiece inte var null när man skulle utföra ex. Piece.getY() (vilket
+    då gav nullpointer-error). Nu gör den endast sådana checkar när man "håller i" en pjäs.
