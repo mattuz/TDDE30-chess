@@ -13,13 +13,13 @@ public class Panel extends JPanel
 	//private static String player1 = "White"; //TODO se om dessa kan ändras från static. Om inte får vi kommentera att de ska vara static för att de inte ska ändras när de
 		  		  	     //väl satts..
 	//private static String player2 = "Black"; //TODO ta bort dessa och "tvinga" White/Black som namn.
-	private static final JPanel J_PANEL = new JPanel(); //TODO ändrade dessa till final enligt kodanalysen.
-	private static JLabel jLabel = new JLabel("White goes first", SwingConstants.LEFT);
+	private static final JPanel PANEL = new JPanel(); //TODO ändrade dessa till final enligt kodanalysen.
+	private static final JLabel LABEL = new JLabel("White goes first", SwingConstants.LEFT);
 
 	public Panel() {
-	    J_PANEL.setLayout(new FlowLayout());
-	    J_PANEL.add(jLabel);
-	    add(J_PANEL);
+	    PANEL.setLayout(new FlowLayout());
+	    PANEL.add(LABEL);
+	    add(PANEL);
 	}
 
 		/**
@@ -27,9 +27,9 @@ public class Panel extends JPanel
 		 */
 	public static void setTurn(PieceColor state) {
 	    if (state == PieceColor.BLACK) {
-	        jLabel.setText("Black's turn");
+	        LABEL.setText("Black's turn");
 	    } else {
-		jLabel.setText("White's turn");
+		LABEL.setText("White's turn");
 	    }
 	}
 
