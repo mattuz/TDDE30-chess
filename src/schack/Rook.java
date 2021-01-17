@@ -19,9 +19,4 @@ public class Rook extends Piece
         legalMoves = addHorisontal(legalMoves, maxDistance, position);
         legalMoves = addVertical(legalMoves, maxDistance, position);
     }
-
-    public void updatePreviousLegalMoves(){
-        previousLegalMoves = legalMoves;
-    }
-
 }

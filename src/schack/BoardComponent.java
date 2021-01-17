@@ -11,7 +11,7 @@ import static java.awt.Color.*;
  * to the specific piece.
  */
 public class BoardComponent extends JComponent implements BoardListener {
-	private static final int BOARDCONSTANT = 80;
+	private static final int BOARD_CONSTANT = 80;
 	private Board board;
 
 	public BoardComponent(final Board board) {
@@ -32,8 +32,8 @@ public class BoardComponent extends JComponent implements BoardListener {
 	@Override
 	public Dimension getPreferredSize() {
 		super.getPreferredSize();
-		return new Dimension((board.getWidth()) * BOARDCONSTANT,
-				(board.getHeight()) * BOARDCONSTANT);
+		return new Dimension((board.getWidth()) * BOARD_CONSTANT,
+				     (board.getHeight()) * BOARD_CONSTANT);
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class BoardComponent extends JComponent implements BoardListener {
 
 		for (int x = 0; x < board.getWidth(); x++) {
 			for (int y = 0; y < board.getHeight(); y++) {
-				int positionX = x * BOARDCONSTANT;
-				int positionY = y * BOARDCONSTANT;
+				int positionX = x * BOARD_CONSTANT;
+				int positionY = y * BOARD_CONSTANT;
 
 				if ((x % 2 != 0 && y % 2 == 0) || (x % 2 == 0 && y % 2 != 0)) {
 					g2d.setColor(gray);
@@ -56,22 +56,21 @@ public class BoardComponent extends JComponent implements BoardListener {
 				}
 
 				g2d.fillRect(positionX, positionY,
-						positionY + BOARDCONSTANT,
-						positionX + BOARDCONSTANT);
+					     positionY + BOARD_CONSTANT,
+					     positionX + BOARD_CONSTANT);
 				g2d.setColor(BLACK);
-				g2d.drawRect(positionX, positionY, BOARDCONSTANT,
-						BOARDCONSTANT);
-				if (board.getPieceTypeAt(x, y) != PieceType.EMPTY) {
+				g2d.drawRect(positionX, positionY, BOARD_CONSTANT, BOARD_CONSTANT);
+				if (board.getPieceTypeAt(x, y) != PieceType.EMPTY) { //Vill bara måla om det finns en pjäs där.
 					g2d.drawImage((PiecePainter.scale(PiecePainter.bufferedImageMaker(board.getPieceAt(x, y)
-						      ), BOARDCONSTANT, BOARDCONSTANT)), positionX,
-							positionY, this);
+						      ), BOARD_CONSTANT, BOARD_CONSTANT)), positionX,
+						      positionY, this);
 				}
 			}
 		}
 	}
 
-	public static int getBOARDCONSTANT() {
-		return BOARDCONSTANT;
+	public static int getboardconstant() {
+		return BOARD_CONSTANT;
 	}
 }
 

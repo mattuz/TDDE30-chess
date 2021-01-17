@@ -12,9 +12,9 @@ public class PieceMover extends MouseAdapter
 {
     private List<Piece> pieces;
     private final Board board;
-    private static final int WINDOWOFFSET = 30;
-    private static final int XOFFSET = 7;
-    private int oldX;
+    private static final int WINDOW_OFFSET = 30;
+    private static final int X_OFFSET = 7;
+    private int oldX; //Dessa två har liknande namn av uppenbar anledning. (Precis som alla gånger innan med x/y).
     private int oldY;
     private Piece dragPiece = null;
 
@@ -37,12 +37,16 @@ public class PieceMover extends MouseAdapter
 		JOptionPane.showMessageDialog(null, "Illegal move of the king.");
 		dragPiece.setPieceX(oldX);
 		dragPiece.setPieceY(oldY);
-
 		board.swapTurns();
 
 	    } else if (board.getState() == PieceColor.WHITE && board.isChecked(board.getWhiteKing()) &&
-		       dragPiece.getType() != PieceType.KING) {
-
+		       dragPiece.getType() != PieceType.KING) { //Typcheckarna i denna klass kommer alla ha samma funktion.
+	        						//De används för att dubbelkolla så att inte fel pjäs tittas på
+								//för något som inte kan hända. Vi vet att polymorfism kanske skulle
+								//vara att föredra här, men vi fick inte någon idé om hur vi skulle implementera det
+								//då vi inte har samma, straight-forward-syfte, som i exemplet på kurshemsidan:
+								//"om monster, gör monstergång, om människa gör människogång".
+								//Detta applicerar på samtliga upprepningar av "MaybeTypeCheck".
 		if (board.interruptChecked(board.getWhiteKing(), dragPiece, x, y)) {
 		    movePiece(x, y);
 		} else {
@@ -69,7 +73,10 @@ public class PieceMover extends MouseAdapter
 		if (board.isPawnUpgradePossible(dragPiece, y)) {
 		    upgradePawn(x, y);
 		}
-		if (dragPiece.getType() == PieceType.KING && x - Board.CASTLING_MOVE_DISTANCE == oldX) {
+		if (dragPiece.getType() == PieceType.KING && x - Board.CASTLING_MOVE_DISTANCE == oldX) { //Vi har också liknande expressions
+		    										//här. Men som i tidigare fall har de små skillnader
+		    										//och vi anser inte att det ger särskilt mycket att
+		    										//bryta ut en variabel.
 		    board.getSquare()[x - 1][y] = board.getSquare()[Board.RIGHT_ROOK_START_COL][y];
 		    board.removePiece(Board.RIGHT_ROOK_START_COL, y);
 		}
@@ -85,7 +92,7 @@ public class PieceMover extends MouseAdapter
 	    this.dragPiece = null;
 	    updateAllLegalMoves();
 	    board.notifyListeners();
-	    endGameMessage();
+	    gameOverMessage();
 	    board.swapTurns();
 
 	}
@@ -95,7 +102,7 @@ public class PieceMover extends MouseAdapter
      * Prints the message that either the black or white king has been checked.
      * The game is over if this is displayed.
      */
-    private void endGameMessage() {
+    private void gameOverMessage() {
 	if(board.isChecked(board.getWhiteKing())) {
 	    if (board.isCheckMate(board.getWhiteKing())) {
 		JOptionPane.showMessageDialog(null, "Check mate! White has lost!!");
@@ -112,8 +119,8 @@ public class PieceMover extends MouseAdapter
      */
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	if (this.dragPiece != null) {
-	    this.dragPiece.setPieceX((mouseEvent.getPoint().x - XOFFSET) / BoardComponent.getBOARDCONSTANT());
-	    this.dragPiece.setPieceY((mouseEvent.getPoint().y - WINDOWOFFSET) / BoardComponent.getBOARDCONSTANT());
+	    this.dragPiece.setPieceX((mouseEvent.getPoint().x - X_OFFSET) / BoardComponent.getboardconstant());
+	    this.dragPiece.setPieceY((mouseEvent.getPoint().y - WINDOW_OFFSET) / BoardComponent.getboardconstant());
 	}
     }
 
@@ -122,15 +129,15 @@ public class PieceMover extends MouseAdapter
      * Sets this to current dragPiece.
      */
     @Override public void mousePressed(final MouseEvent mouseEvent) {
-	int x = mouseEvent.getPoint().x - XOFFSET;
-	int y = mouseEvent.getPoint().y - WINDOWOFFSET;
+	int x = mouseEvent.getPoint().x - X_OFFSET;
+	int y = mouseEvent.getPoint().y - WINDOW_OFFSET;
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 	    if (isMouseOverPiece(piece, x, y)) {
-			int dragOffsetX = x - piece.getPieceX() * BoardComponent.getBOARDCONSTANT();
-			int dragOffsetY = y - piece.getPieceY() * BoardComponent.getBOARDCONSTANT();
-			this.oldX = (x - dragOffsetX) / BoardComponent.getBOARDCONSTANT();
-			this.oldY = (y - dragOffsetY) / BoardComponent.getBOARDCONSTANT();
+			int dragOffsetX = x - piece.getPieceX() * BoardComponent.getboardconstant();
+			int dragOffsetY = y - piece.getPieceY() * BoardComponent.getboardconstant();
+			this.oldX = (x - dragOffsetX) / BoardComponent.getboardconstant();
+			this.oldY = (y - dragOffsetY) / BoardComponent.getboardconstant();
 			this.dragPiece = piece;
 			dragPiece.updateLegalMoves();
 		}
@@ -144,11 +151,12 @@ public class PieceMover extends MouseAdapter
     /**
      * Checks if chosen Piece is currently being hovered over by mouse.
      */
-    private boolean isMouseOverPiece(Piece piece, int x, int y) {
-	return piece.getPieceX() * BoardComponent.getBOARDCONSTANT() <= x &&
-	       piece.getPieceX() * BoardComponent.getBOARDCONSTANT() + BoardComponent.getBOARDCONSTANT() >= x &&
-	       piece.getPieceY() * BoardComponent.getBOARDCONSTANT() <= y &&
-	       piece.getPieceY() * BoardComponent.getBOARDCONSTANT() + BoardComponent.getBOARDCONSTANT() >= y;
+    private boolean isMouseOverPiece(Piece piece, int x, int y) { //"RepeatedExpression", samm här, lika men ändå olika. Ser inte
+        							//att det skulle ge oss mycket att bryta ut variabler.
+	return piece.getPieceX() * BoardComponent.getboardconstant() <= x &&
+	       piece.getPieceX() * BoardComponent.getboardconstant() + BoardComponent.getboardconstant() >= x &&
+	       piece.getPieceY() * BoardComponent.getboardconstant() <= y &&
+	       piece.getPieceY() * BoardComponent.getboardconstant() + BoardComponent.getboardconstant() >= y;
     }
 
     /**
@@ -177,15 +185,6 @@ public class PieceMover extends MouseAdapter
 	}
     }
 
-    /**
-     * Is meant to revert all legal moves. Does not work as intended. Not used
-     */
-    private void revertAllLegalMoves() { //TODO ta bort denna?
-	for (int i = this.pieces.size() - 1; i >= 0; i--) {
-	    Piece piece = this.pieces.get(i);
-	    piece.setLegalMoves(piece.getPreviousLegalMoves());
-	}
-    }
 
     /**
      * Upgrades Pawn to one of the available pawnUpgrades. When upgradePawn is available, it shows a JOptionPane where you can
@@ -205,7 +204,9 @@ public class PieceMover extends MouseAdapter
      * Creates the Piece and replaces this with the Pawn which is being upgraded. These choices are defined by a list of
      * possible Pieces as seen in upgradePawn. The index of the chosen piece is returned and then used as "response".
      */
-    private void chooseUpgrade(String choice, int x, int y) {
+    private void chooseUpgrade(String choice, int x, int y) { //Vi tyckte att det blev smidigast att representera switchen med strängar
+        						//eftersom pawnUpgrades (i upgradePawn()) innehåller strängar. Dessa skrivs ut på
+							//valpanelen och man väljer därefter.
 	switch (choice) {
 	    case "Queen":
 		board.getSquare()[x][y] =

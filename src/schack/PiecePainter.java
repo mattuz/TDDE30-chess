@@ -37,7 +37,7 @@ public class PiecePainter
 	public static BufferedImage bufferedImageMaker(Piece piece) {
 		BufferedImage myPicture = null;
 		try {
-			myPicture = ImageIO.read(piece.getPath()); //Todo om tid finns, fixa image handling typ.
+			myPicture = ImageIO.read(piece.getPath()); //Vi försökte fixa denna med getSystemResource() utan framgång tyvärr.
 
 
 		} catch (IOException e) {

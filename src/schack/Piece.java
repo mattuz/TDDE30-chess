@@ -11,15 +11,15 @@ public abstract class Piece
 {
     protected PieceColor color;
     protected final URL path;
-    protected int pieceX;
-    protected int pieceY;
+    protected int pieceX; //Dessa två har liknande namn, svårt att komma undan
+    protected int pieceY; //då vi vill representera både pjäsernas x- och y.
     protected final PieceType type;
     protected final Board board;
     protected List<Position> legalMoves;
     protected boolean firstStep;
     protected List<Position> previousLegalMoves = null;
 
-    protected Piece(int x, int y, PieceType type, PieceColor color, URL path, Board board, Boolean firstStep){
+    protected Piece(int x, int y, PieceType type, PieceColor color, URL path, Board board, boolean firstStep){
         this.color = color;
         this.pieceX = x;
         this.pieceY = y;
@@ -33,7 +33,7 @@ public abstract class Piece
     /**
      * Sets a new x value.
      */
-    public void setPieceX(int x) {
+    public void setPieceX(int x) { //Dessa två är liknande pga pieceX lik pieceY.
         this.pieceX = x;
     }
     /**
@@ -44,37 +44,37 @@ public abstract class Piece
     }
 
     /**
-     * Adds all legal horisontal moves, from and within a maxdistance from p, to list.
+     * Adds all legal horisontal moves, from and within a maxdistance from p, to legalMoves.
      */
-    public List<Position> addHorisontal(List<Position> list, int maxDistance, Position p) {
+    public List<Position> addHorisontal(List<Position> legalMoves, int maxDistance, Position p) {
         int width = board.getWidth();
         int y = p.getY();
         for (int x = p.getX() - maxDistance; x <= p.getX() + maxDistance; x++) {
             if (x >= 0 && x < width && isLegalHorisontal(this, p.getX(), p.getY(), x, y)){
-                list.add(new Position(x, y));
+                legalMoves.add(new Position(x, y));
             }
         }
-        return list;
+        return legalMoves;
     }
 
     /**
-     * Adds all legal vertical moves, from and within a maxdistance from position, to list.
+     * Adds all legal vertical moves, from and within a maxdistance from position, to legalMoves.
      */
-    public List<Position> addVertical(List<Position> list, int maxDistance, Position position){
+    public List<Position> addVertical(List<Position> legalMoves, int maxDistance, Position position){
         int height = board.getHeight();
         int x = position.getX();
         for (int y = position.getY() - maxDistance; y <= position.getY() + maxDistance; y++){
             if (y >= 0 && y < height && isLegalVertical(this, position.getX(), position.getY(), x, y)) {
-                list.add(new Position(x, y));
+                legalMoves.add(new Position(x, y));
             }
         }
-        return list;
+        return legalMoves;
     }
 
     /**
-     * Adds all legal diagonal moves, from and within a maxdistance from position, to list.
+     * Adds all legal diagonal moves, from and within a maxdistance from position, to legalMoves.
      */
-    public List<Position> addDiagonal(List<Position> list, int maxDistance, Position position){
+    public List<Position> addDiagonal(List<Position> legalMoves, int maxDistance, Position position){
         int width = board.getWidth();
         int height = board.getHeight();
 
@@ -82,11 +82,11 @@ public abstract class Piece
             for (int y = position.getY()-maxDistance; y <= position.getY() + maxDistance; y++){
                 if (x >= 0 && x < width && y >= 0 && y < height &&
                     isLegalDiagonal(this, position.getX(), position.getY(), x, y)) {
-                    list.add(new Position(x, y));
+                    legalMoves.add(new Position(x, y));
                 }
             }
         }
-        return list;
+        return legalMoves;
     }
 
     /**
@@ -98,9 +98,10 @@ public abstract class Piece
 
             boolean freePath = true;
 
-            if (currentX < x && y == currentY) {
+            if (currentX < x && y == currentY) { //Är "similar" för att de kollar x resp. y. Men det är ju olika axlar,
+                                                //så inte särskilt lika egentligen.
                 for (int i = x - 1; i > currentX; i--) {
-                    if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) {
+                    if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) { //Vill bara kolla om det går att flytta om det är en spelpjäs.
                         if (board.getPieceTypeAt(i, y) == PieceType.KING && board.getPieceAt(i, y).color != board.getState()) {
                             break;
                         }
@@ -111,7 +112,7 @@ public abstract class Piece
             }
             if (currentX > x && y == currentY) {
                 for (int i = x + 1; i < currentX; i++) {
-                    if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) {
+                    if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) { //Samma som ovan
                         if (board.getPieceTypeAt(i, y) == PieceType.KING && board.getPieceAt(i, y).color != board.getState()) {
                             break;
                         }
@@ -135,7 +136,7 @@ public abstract class Piece
             boolean freePath = true;
 
             if (currentY > y && x == currentX) {
-                for (int i = y + 1; i < currentY; i++) {
+                for (int i = y + 1; i < currentY; i++) { //Samma som i tidigare funktionen (errormässigt).
                     if (board.getPieceTypeAt(x, i) != PieceType.EMPTY) {
                         if (board.getPieceTypeAt(x, i) == PieceType.KING && board.getPieceAt(x, i).color != board.getState()) {
                             break;
@@ -164,15 +165,21 @@ public abstract class Piece
 
     /**
      * Checks if a move from (currentx, currenty) to (x,y) is a legal diagonal move for piece.
+     * Each if statement checks a different diagonal and therefore has different conditions that
+     * has to be met by x and y. So the expressions are naturally very similar, but can't
+     * really be broken out in to variables.
      */
-    public boolean isLegalDiagonal(Piece piece, int currentX, int currentY, int x, int y) {
+    public boolean isLegalDiagonal(Piece piece, int currentX, int currentY, int x, int y) { //Försökte lösa komplexiteten
+                                                                                //genom att bryta ut i mindre funktioner. Detta
+                                                                                //gick inte så vi får behålla det som det är.
         if ((Math.abs(currentX - x) - Math.abs(currentY - y) == 0) &&
             isValidDestination(x,y) && piece.color == board.getState()) {
             boolean freePath = true;
             if (currentX < x && currentY < y) {
                 for (int i = currentX+1; i < x; i++) {
                     if (board.getPieceTypeAt(i, currentY + i-currentX ) != PieceType.EMPTY) {
-                        if (board.getPieceTypeAt(i, currentY + i-currentX) == PieceType.KING && board.getPieceAt(i, currentY + i-currentX).color != board.getState()) {
+                        if (board.getPieceTypeAt(i, currentY + i-currentX) == PieceType.KING &&
+                            board.getPieceAt(i, currentY + i-currentX).color != board.getState()) {
                             break;
                         }
                         freePath = false;
@@ -183,7 +190,8 @@ public abstract class Piece
             if (currentX > x && currentY < y) {
                 for (int i = currentX-1; i > x; i--) {
                     if (board.getPieceTypeAt(i, currentY + currentX-i ) != PieceType.EMPTY) {
-                        if (board.getPieceTypeAt(i, currentY + currentX-i) == PieceType.KING && board.getPieceAt(i, currentY + currentX-i).color != board.getState()) {
+                        if (board.getPieceTypeAt(i, currentY + currentX-i) == PieceType.KING &&
+                            board.getPieceAt(i, currentY + currentX-i).color != board.getState()) {
                             break;
                         }
                         freePath = false;
@@ -194,7 +202,8 @@ public abstract class Piece
             if (currentX < x && currentY > y) {
                 for (int i = currentX+1; i < x; i++) {
                     if (board.getPieceTypeAt(i, currentY - i+currentX ) != PieceType.EMPTY) {
-                        if (board.getPieceTypeAt(i, currentY - i+currentX) == PieceType.KING && board.getPieceAt(i, currentY - i+currentX).color != board.getState()) {
+                        if (board.getPieceTypeAt(i, currentY - i+currentX) == PieceType.KING &&
+                            board.getPieceAt(i, currentY - i+currentX).color != board.getState()) {
                             break;
                         }
                         freePath = false;
@@ -205,7 +214,8 @@ public abstract class Piece
             if (currentX > x && currentY > y) {
                 for (int i = currentX-1; i > x; i--) {
                     if (board.getPieceTypeAt(i, currentY - currentX+i ) != PieceType.EMPTY) {
-                        if (board.getPieceTypeAt(i, currentY - currentX+i) == PieceType.KING && board.getPieceAt(i, currentY - currentX+i).color != board.getState()) {
+                        if (board.getPieceTypeAt(i, currentY - currentX+i) == PieceType.KING &&
+                            board.getPieceAt(i, currentY - currentX+i).color != board.getState()) {
                             break;
                         }
                         freePath = false;
@@ -217,55 +227,6 @@ public abstract class Piece
             return false;
         }
     }
-
- /*               if (currentX < x) {
-    freePath = diagonalLeft(piece, currentX, currentY, x, y); //TODO se om vi kan fixa detta (komplexitet)
-}
-            else if (currentX > x) {
-    freePath = diagonalRight(piece, currentX, currentY, x, y);
-} return freePath;
-} else {
-        return false;
-        }
-        }
-
-public boolean diagonalRight(Piece piece, int currentX, int currentY, int x, int y) {
-        if (currentY < y) {
-        for (int i = currentX+1; i < x; i++) {
-        if (board.getPieceTypeAt(i, currentY + i-currentX ) != PieceType.EMPTY) {
-        return board.getPieceTypeAt(i, currentY + i - currentX) == PieceType.KING &&
-        board.getPieceAt(i, currentY + i - currentX).color != board.getState();
-        }
-        }
-        } else if (currentY > y) {
-        for (int i = currentX+1; i < x; i++) {
-        if (board.getPieceTypeAt(i, currentY - i+currentX ) != PieceType.EMPTY) {
-        return board.getPieceTypeAt(i, currentY - i + currentX) == PieceType.KING &&
-        board.getPieceAt(i, currentY - i + currentX).color != board.getState();
-        }
-        }
-        }
-        return true;
-        }
-
-public boolean diagonalLeft(Piece piece, int currentX, int currentY, int x, int y) {
-        if (currentY < y) {
-        for (int i = currentX-1; i > x; i--) {
-        if (board.getPieceTypeAt(i, currentY + currentX-i ) != PieceType.EMPTY) {
-        return board.getPieceTypeAt(i, currentY + currentX - i) == PieceType.KING &&
-        board.getPieceAt(i, currentY + currentX - i).color != board.getState();
-        }
-        }
-        }
-        else if (currentY > y) {
-        for (int i = currentX-1; i > x; i--) {
-        if (board.getPieceTypeAt(i, currentY - currentX+i ) != PieceType.EMPTY) {
-        return board.getPieceTypeAt(i, currentY - currentX + i) == PieceType.KING &&
-        board.getPieceAt(i, currentY - currentX + i).color != board.getState();
-        }
-        }
-        } return true;
-        }*/
 
     /**
      * Returns true if the position (newX, newY) is ether empty or has a piece with a different color on it.
@@ -279,8 +240,6 @@ public boolean diagonalLeft(Piece piece, int currentX, int currentY, int x, int 
      * Updates the lists of the pieces' legal moves
      */
     public abstract void updateLegalMoves();
-
-    public abstract void updatePreviousLegalMoves();
 
     public URL getPath() {
         return path;

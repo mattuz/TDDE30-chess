@@ -10,11 +10,12 @@ import java.awt.*;
 public class Panel extends JPanel
     {
 
-	private String player1 = "White"; //TODO se om dessa kan ändras från static. Om inte får vi kommentera att de ska vara static för att de inte ska ändras när de
-		  		  	     //väl satts..
-	private String player2 = "Black"; //TODO ta bort dessa och "tvinga" White/Black som namn.
-	private JPanel panel = new JPanel(); //TODO ändrade dessa till final enligt kodanalysen.
-	private JLabel label = new JLabel("White goes first", SwingConstants.LEFT);
+	private String player1 = ""; //Dessa har ändrats så att de inte längre är static.
+	private String player2 = ""; //Kodanalysen klagar på att namnen är lika, men vi känner att det inte är nödvändigt att
+				     // ändra till något annat då det är pedagogiskt nog som det är med player1 och player2.
+					//De används för övrigt inte mer än här och i frame (när man ska bestämma namnen).
+	private JPanel panel = new JPanel();
+	private JLabel label = new JLabel("White starts.", SwingConstants.LEFT);
 
 	public Panel() {
 	    panel.setLayout(new FlowLayout());
@@ -26,19 +27,19 @@ public class Panel extends JPanel
 		 * Updates the label that shows who's turn it is.
 		 */
 	public void setTurn(PieceColor color) {
-	    if (color == PieceColor.BLACK) {
-	        label.setText(player2);
+	    if (color != PieceColor.BLACK) {
+	        label.setText(player2 + "'s turn");
 	    } else {
-		label.setText(player1);
+		label.setText(player1 + "'s turn");
 	    }
 	}
 
 	public void setPlayer1(String name) {
-	    player1 = name + "'s turn";
+	    player1 = name;
 	}
 
 	public void setPlayer2(String name) {
-	    player2 = name + "'s turn";
+	    player2 = name;
 	}
 
     }

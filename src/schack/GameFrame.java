@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Class that represents the frame that displays the board.
  */
-public class Frame implements BoardListener
+public class GameFrame implements BoardListener
 {
     private JFrame frame = new JFrame();
     private BoardComponent graphics;
@@ -14,7 +14,7 @@ public class Frame implements BoardListener
     private Board board;
 
 
-    public Frame(final Board board) {
+    public GameFrame(final Board board) {
         this.board = board;
 	this.graphics = new BoardComponent(board);
 	PieceMover pm = new PieceMover(board);
@@ -23,7 +23,10 @@ public class Frame implements BoardListener
 	panel = new Panel();
     }
 
-    public BoardComponent getGraphics() { //Används för att lägga till en listener.
+    /**
+     * Used to add the graphics component as a board listener.
+     */
+    public BoardComponent getGraphics() {
         return graphics;
     }
 

@@ -9,12 +9,12 @@ public class BoardMain
 {
     public static void main(String[] args) {
 	Board board = new Board(8, 8);
-	Frame frame = new Frame(board);
-	board.addBoardListener(frame.getGraphics());
-	board.addBoardListener(frame);
-	frame.show();
+	GameFrame gameFrame = new GameFrame(board);
+	board.addBoardListener(gameFrame.getGraphics());
+	board.addBoardListener(gameFrame);
+	gameFrame.show();
 
-	frame.getGraphics().repaint();
+	gameFrame.getGraphics().repaint();
     }
 
 }

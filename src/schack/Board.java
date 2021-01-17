@@ -11,18 +11,21 @@ import java.util.List;
  */
 public class Board
 {
-    private  int width;
-    private  int height;
+    private  int width; //Klagar på "Many fields" i kodanalysen. Vi ser ingen väg runt detta
+    private  int height; //då vi anser att samtliga fält är nödvändiga.
     private Piece[][] square;
     private PieceType[][] enumsquare;
-    private List<Piece> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
+    private List<Piece> deadPieces = new ArrayList<>();
     private List<BoardListener> listeners = new ArrayList<>();
     private List<Piece> pieces = new ArrayList<>();
     private Piece checkPiece = null;
-    private Piece blackKing = null;
-    private Piece whiteKing = null;
-    private boolean gameOver = false;
+    private Piece blackKing = null; //"RelatedFieldNames" med nedan. Kommer inte undan detta
+    private Piece whiteKing = null; //då vi vill kunna representera både den vita och svarta kungen.
+    private PieceColor state = WHITE_STATE;
 
+    //Nedan har liknande namn för att de behöver beskriva sin position.
+    //Går inte att inte ha liknande namn, och vi ser inte hur det skulle ge något
+    //att kombinera dem till ett namn (som det står i kodanalysen).
     /**
      * Constant for the black pawns starting row.
      */
@@ -79,13 +82,15 @@ public class Board
     /**
      * Represents the state of the game. White's turn.
      */
-    private static final PieceColor WHITE_STATE = PieceColor.WHITE;
+    private static final PieceColor WHITE_STATE = PieceColor.WHITE; //Kommer inte undan att denna och nedan har liknande
+    								    //namn. Vi vill ha det så att vi har ett white och ett
+    								    //black state.
     /**
      * Represents the state of the game. Black's turn.
      */
     private static final PieceColor BLACK_STATE = PieceColor.BLACK;
 
-    private PieceColor state = WHITE_STATE;
+
 
 
     public Board(final int width, final int height) {
@@ -124,7 +129,8 @@ public class Board
 	if (y == BLACK_STARTING_ROW) {
             switchPieces(x, y, PieceColor.BLACK);
 	}
-        else if (y == BLACK_PAWN_STARTING_ROW) {
+        else if (y == BLACK_PAWN_STARTING_ROW) { //Liknande grenar nedan, blir likt då det är bönder som ska placeras
+            					 // på svart respektive vit sida.
 	    square[x][y] = new Pawn(x, y, PieceType.PAWN, PieceColor.BLACK, getPathFor(PieceColor.BLACK, PieceType.PAWN),
 				    this, true);
 	}
@@ -229,7 +235,6 @@ public class Board
 	} else {
             state = WHITE_STATE;
         }
-	//Panel.setTurn(state);
     }
 
     /**
@@ -237,7 +242,7 @@ public class Board
      *
      */
     public boolean isPawnUpgradePossible(Piece piece, int y) {
-	if (piece.getType() != PieceType.PAWN) {
+	if (piece.getType() != PieceType.PAWN) { //Måste vara en pawn för att det ska gå. Därför vi har denna check.
 	    return false;
 	}
         else if (piece.getColor() == PieceColor.WHITE && y == BLACK_STARTING_ROW) {
@@ -247,14 +252,13 @@ public class Board
     }
 
     /**
-     * Checks if the castling move is possible and returns a value depending on
-     * which paths are possible.
-     * 3 if castling available both queen side and king side,
-     * 2 if castling only available king side,
-     * 1 if castling only avaiable queen side.
+     * Checks if the castling move is possible and returns an accurate
+     * string depending on which paths are possible.
+     *
      */
     public String castlingPossiblePath(Piece piece){
-	if (piece.getType() == PieceType.KING && piece.firstStep && piece.getColor() == state) {
+	if (piece.getType() == PieceType.KING && piece.firstStep && piece.getColor() == state) { //Måste vara en kung, annars
+	    										//får man inte göra castling.
 	    if (isCastlingLeft(piece) && isCastlingRight(piece)) {
 		System.out.println("Båda!");
 	        return "both";
@@ -273,7 +277,8 @@ public class Board
     /**
      * Is castling queenside possible?
      */
-    private boolean isCastlingLeft(final Piece piece) {
+    private boolean isCastlingLeft(final Piece piece) { //Vi bröt upp så att vi kollar castling åt det ena eller det andra hållet.
+        						//Därför har de lika namn, vilket vi då inte ändrat på.
 	boolean isRookAtStartPosition = getPieceTypeAt(LEFT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK;
 	boolean isRookFirstStep = square[LEFT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
 	boolean isQueenPositionFree = getPieceTypeAt(QUEEN_START_COL, piece.getPieceY()) == PieceType.EMPTY;
@@ -349,24 +354,29 @@ public class Board
      * Compares the values of the piece's eventual x,y and calculates if this would
      * put it in the way of the king's attacker.
      */
-    public boolean interruptChecked(Piece king, Piece interruptPiece, int newX, int newY) {
+    public boolean interruptChecked(Piece king, Piece interruptPiece, int newX, int newY) { //Försökte bryta ut för att minska
+        									//komplexitet. Lyckades inte..
 	int kingX = king.getPieceX();
 	int kingY = king.getPieceY();
+	boolean horizontalCondition = isChecked(king) && checkPiece.getPieceX() != kingX && checkPiece.getPieceY() == kingY;
+	boolean verticalCondition = isChecked(king) && checkPiece.getPieceX() == kingX && checkPiece.getPieceY() != kingY;
+	boolean diagonalCondition = isChecked(king) &&  Math.abs(kingX - checkPiece.getPieceX()) -
+							Math.abs(kingY - checkPiece.getPieceY()) == 0
+				    		    && Math.abs(newX - kingX) - Math.abs(newY - kingY) == 0;
+
 	Position interruptPosition = new Position(newX, newY);
 	if (interruptPiece.legalMoves.contains(interruptPosition)) {
 	    for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
-		    if (isChecked(king) && checkPiece.getPieceX() != kingX && checkPiece.getPieceY() == kingY) {
+		    if (horizontalCondition) {
 			if (checkPiece.getPieceX() <= newX && newX < kingX && newY == kingY) {
 			    return true;
 			} else return checkPiece.getPieceX() >= newX && newX > kingX && newY == kingY;
-		    } else if (isChecked(king) && checkPiece.getPieceX() == kingX && checkPiece.getPieceY() != kingY) {
+		    } else if (verticalCondition) {
 			if (checkPiece.getPieceY() <= newY && newY < kingY && newX == kingX) {
 			    return true;
 			} else return checkPiece.getPieceY() >= newY && newY > kingY && newX == kingX;
-		    } else if (isChecked(king) &&
-			       Math.abs(kingX - checkPiece.getPieceX()) - Math.abs(kingY - checkPiece.getPieceY()) == 0 &&
-			       Math.abs(newX - kingX) - Math.abs(newY - kingY) == 0) {
+		    } else if (diagonalCondition) {
 			return Math.abs(newX - kingX) < Math.abs(checkPiece.getPieceX() - kingX) &&
 			       Math.abs(newY - kingY) < Math.abs(checkPiece.getPieceY() - kingY);
 		    }
@@ -375,6 +385,7 @@ public class Board
 	}
 	return false;
     }
+
 
     public boolean isCheckMate(Piece king){
         boolean checkMateInterrupt = true;
@@ -392,16 +403,15 @@ public class Board
 		}
 	    }
 	}
-	gameOver = checkMateInterrupt && checkMateKing;
 	return checkMateInterrupt && checkMateKing;
     }
 
     /**
      * Checks if a piece has the location in its legal moves.
      */
-    public boolean containsPosition(List<Position> list, Position pos){
+    public boolean containsPosition(List<Position> positions, Position pos){
 	Boolean doesContain = false;
-	for (Position elem: list) {
+	for (Position elem: positions) {
 	    if (elem.getX() == pos.getX() && elem.getY() == pos.getY()) {
 		doesContain = true;
 		break;
@@ -426,9 +436,6 @@ public class Board
 	return height;
     }
 
-    public List<Piece> getDeadpieces() {
-	return deadpieces;
-    }
 
     public PieceType getPieceTypeAt(int x, int y) {
 	if (square[x][y] != null) {
@@ -445,7 +452,7 @@ public class Board
 	return pieces;
     }
 
-    public Piece getWhiteKing() {
+    public Piece getWhiteKing() { //Liknande namn pga samma som står i deklarationen ovan.
 	return whiteKing;
     }
 

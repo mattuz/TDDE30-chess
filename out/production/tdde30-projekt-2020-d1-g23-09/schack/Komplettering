@@ -10,7 +10,7 @@ Hugo:
  - bugg: schack funkar ej ;)
 
  Piotr:
- - Lägg in så att frame är en boardlistener för att den ska uppdatera labels i panelen.
+ - Lägg in så att gameFrame är en boardlistener för att den ska uppdatera labels i panelen.
  - fälten i Panel behöver inte vara static (3 kvar)
  - kombinera gärna setPlayer1 -> setPlayerName(index, name).
    Om vi pallar, gör att namnen som anges blir parametrar i Panels konstructor.

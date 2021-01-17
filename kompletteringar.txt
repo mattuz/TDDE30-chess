@@ -4,38 +4,45 @@
  - "fatal errors" i showstopper-listan angående
     Tog bort picturepath-fältet från PiecePainter
     Tog bort den oanvända importen i PiecePainter.
+    Ändrade så att Frame istället är en listener till board. På det sättet kunde vi ändra panel från att "tvingas"
+    vara i ett static context.
 
  - Lägg in updatePreviousLegalMoves() i piece då 5/6 pieces använder den
-	Lagts in i Piece.
+	Vi tog bort detta helt då det inte längre används.
 
  - gå igenom varningarna igen och kommentera varför vi inte fixar det vi lämnar kvar
- 	Fixat vissa, kommenterat på resten (inte klart)
+ 	Fixat vissa, kommenterat på majoriteten. Anledningen till varför vi inte kommenterat alla kommer nedan.
+ 	Vi hade ganska många "MaybeTypeCheck"-errormeddelanden. Vi anser att vår kod inte använder dessa
+ 	typcheckar som i exemplena på kurshemsidan (#typkontroll), där man använder en specifik typ av egenskap beroende på
+ 	vilken typ det är. Därför har vi inte "löst" de problemen som är kvar.
+ 	En del kommentarer refererar till liknande delar av andra metoder också.
 
  - ta bort kod som inte används eller som är utkommenterad
- 	Tagit bort väldigt mycket av koden som inte använts. Vet inte om man ska skriva ner exakt allt som
- 	tagits bort här, går att se relativt lätt i git. Både metoder och fält som inte användes är borttagna.
+ 	All oanvänd kod har tagits bort.
 
  - magiska konstanter
  	Skrivit namn på konstanter som används istället för att ha olika random numbers. Detta är gjort
  	över i stort sett hela koden så svårt att skriva ner exakt alla här. Bytt ut t.ex switchar till
  	att förklara vad det är som ändras..
 
- - bugg: schack funkar ej ;)
- 	;);)
+ - bugg: schack funkar ej
+ 	Det funkar nu, tillsammans med schack-matt. Vi gjorde lite ändringar i isChecked och isInterrupted (board).
+ 	Detta följt av isCheckMate (board) gör att det nu funkar som det ska.
 
  - ingen error-handling tex när en bild inte kan laddas. programmet bör stängas av och/eller ge felmeddelande.
 	Error handling är inlagt i bufferedImageMaker(). Ett errormeddelande skickas om bilden inte kan läsas in av någon anledning.
 
- - Lägg in så att frame är en boardlistener för att den ska uppdatera labels i panelen.
+ - Lägg in så att gameFrame är en boardlistener för att den ska uppdatera labels i panelen.
+ 	Denna funktion hette Frame förut, vi bytte namn då den inte skulle vara för lik javas egna JFrame.
  	Detta ska lösa problemet vi har med att Panel för tillfället "måste" vara static.
- 	Försökte fixa detta men fick det inte att fungera.
+ 	Den implementerar nu BoardListener.
 
 
- - fälten i Panel behöver inte vara static (3 kvar)
-	(Hör till ovan).
+ - fälten i Panel behöver inte vara static
+	(Hör till ovan och är gjord).
 
  - kombinera gärna setPlayer1 -> setPlayerName(index, name).
-   Om vi pallar, gör att namnen som anges blir parametrar i Panels konstructor.
+   Vi ansåg inte att detta var supernödvändigt, så de heter fortfarande samma som innan.
 
  - vi kan använda "Java Point" istället för vår egna Position-klass
     Vi anser att detta tar för lång tid att implementera då en väldigt stor del av vårt program bygger på Position-klassen

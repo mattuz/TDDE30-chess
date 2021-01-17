@@ -18,7 +18,9 @@ public class Pawn extends Piece
     /**
      * Adds the moves that are legal for the Pawn.
      */
-    private List<Position> addLegalMoves(List<Position> list, Position p){
+    private List<Position> addLegalMoves(List<Position> legalMoves, Position p){ //I denna funktion har vi också liknande expressions,
+                                                                        //men det är för att bonden går olika beroende på vilken färg den har.
+                                                                        //Därför har vi valt att ha kvar det som det är.
         if (color == board.getState()) {
             if (color == PieceColor.WHITE) {
                 int y = p.getY() - 1;
@@ -27,9 +29,9 @@ public class Pawn extends Piece
                          board.getPieceAt(x,y).getColor() != PieceColor.WHITE) ||
                         (x == p.getX() && board.getPieceAt(x,y) == null)) {
                         if (firstStep && board.getPieceAt(x,y-1) == null) {
-                            list.add(new Position(x, y-1));
+                            legalMoves.add(new Position(x, y-1));
                         }
-                        list.add(new Position(x, y));
+                        legalMoves.add(new Position(x, y));
                     }
                 }
             } else {
@@ -39,23 +41,19 @@ public class Pawn extends Piece
                          board.getSquare()[x][y].getColor() != PieceColor.BLACK) ||
                         (x == p.getX() && board.getSquare()[x][y] == null)) {
                         if (firstStep && board.getPieceAt(x,y+1) == null) {
-                            list.add(new Position(x,y+1));
+                            legalMoves.add(new Position(x,y+1));
                         }
-                        list.add(new Position(x, y));
+                        legalMoves.add(new Position(x, y));
                     }
                 }
             }
             }
-        return list;
+        return legalMoves;
         }
 
     public void updateLegalMoves(){
         legalMoves.clear();
         addLegalMoves(legalMoves, new Position(pieceX, pieceY));
      }
-
-    public void updatePreviousLegalMoves(){
-        previousLegalMoves = getLegalMoves();
-    }
 
 }

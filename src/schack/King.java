@@ -17,23 +17,26 @@ public class King extends Piece
     /**
      * Adds the moves (castling) that are specific for the king.
      */
-    public List<Position> addLegalMoves(List<Position> list) {
+    public List<Position> addLegalMoves(List<Position> legalMoves) {
         final int rightCastlingPosition = 6;
         final int leftCastlingPosition = 2;
-        switch (board.castlingPossiblePath(this)) {
+        Position leftCastling = new Position(leftCastlingPosition, pieceY);
+        Position rightCastling = new Position(rightCastlingPosition, pieceY);
+        switch (board.castlingPossiblePath(this)) { //Vi tyckte inte att enums var nödvändigt för detta då det är en så pass
+                                                        //simpel switch. Vi tycker att det är pedagogiskt nog med strängar.
             case "none":
                 break;
             case "left":
-                list.add(new Position(leftCastlingPosition,pieceY));
+                legalMoves.add(leftCastling);
                 break;
             case "right":
-                list.add(new Position(rightCastlingPosition, pieceY));
+                legalMoves.add(rightCastling);
                 break;
             case "both":
-                list.add(new Position(leftCastlingPosition,pieceY));
-                list.add(new Position(rightCastlingPosition, pieceY));
+                legalMoves.add(leftCastling);
+                legalMoves.add(rightCastling);
                 break;
-        } return list;
+        } return legalMoves;
     }
 
     public void updateLegalMoves(){
@@ -46,9 +49,6 @@ public class King extends Piece
         legalMoves = addVertical(legalMoves, maxDistance, position);
     }
 
-    public void updatePreviousLegalMoves(){
-        previousLegalMoves = legalMoves;
-    }
 
 }
 
