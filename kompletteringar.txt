@@ -24,7 +24,7 @@
  	;);)
 
  - ingen error-handling tex när en bild inte kan laddas. programmet bör stängas av och/eller ge felmeddelande.
-	La in return inuti catchen. Får se om detta är rätt.
+	Error handling är inlagt i bufferedImageMaker(). Ett errormeddelande skickas om bilden inte kan läsas in av någon anledning.
 
  - Lägg in så att frame är en boardlistener för att den ska uppdatera labels i panelen.
  	Detta ska lösa problemet vi har med att Panel för tillfället "måste" vara static.

@@ -1,7 +1,9 @@
 package schack;
 
 import java.net.URL;
-
+/**
+ * Class managing the Queen piece.
+ */
 public class Queen extends Piece
 {
 
@@ -12,11 +14,11 @@ public class Queen extends Piece
 
 	public void updateLegalMoves(){
         final int maxDistance = 8;
-	Position position = new Position(getPieceX(), getPieceY());
-	legalMoves.clear();
-	legalMoves = addDiagonal(legalMoves, maxDistance, position);
-	legalMoves = addHorisontal(legalMoves, maxDistance, position);
-	legalMoves = addVertical(legalMoves, maxDistance, position);
+		Position position = new Position(getPieceX(), getPieceY());
+		legalMoves.clear();
+		legalMoves = addDiagonal(legalMoves, maxDistance, position);
+		legalMoves = addHorisontal(legalMoves, maxDistance, position);
+		legalMoves = addVertical(legalMoves, maxDistance, position);
 	}
 
     public void updatePreviousLegalMoves(){

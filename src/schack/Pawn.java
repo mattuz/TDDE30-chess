@@ -2,7 +2,9 @@ package schack;
 
 import java.net.URL;
 import java.util.List;
-
+/**
+ * Class managing the Pawn piece.
+ */
 public class Pawn extends Piece
 {
 
@@ -11,8 +13,9 @@ public class Pawn extends Piece
         updateLegalMoves();
     }
 
-
-
+    /**
+     * Adds the moves that are legal for the Pawn.
+     */
     private List<Position> addLegalMoves(List<Position> list, Position p){
         if (color == board.getState()) {
             if (color == PieceColor.WHITE) {
@@ -50,9 +53,7 @@ public class Pawn extends Piece
      }
 
     public void updatePreviousLegalMoves(){
-        System.out.println("innan: " + previousLegalMoves);
         previousLegalMoves = getlegalMoves();
-        System.out.println("efter: " + previousLegalMoves);
     }
 
 }

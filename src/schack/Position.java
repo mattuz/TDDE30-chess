@@ -1,13 +1,16 @@
 package schack;
 
+/**
+ * Class used to keep track of the pieces positions on the board.
+ */
 public class Position
 {
     private int x;
     private int y;
 
     public Position(final int x, final int y) {
-	this.x = x;
-	this.y = y;
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
@@ -17,14 +20,5 @@ public class Position
     public int getY() {
 	return y;
     }
-
-    /*public void setX(final int x) {
-	this.x = x;
-    }
-						//TODO används inte
-    public void setY(final int y) {
-	this.y = y;
-    }*/
-
 
 }

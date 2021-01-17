@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing and managing the chessboard.
+ */
 public class Board
 {
     private  int width;
@@ -295,23 +298,45 @@ public class Board
     public boolean isChecked(Piece piece) {
 	Position position = new Position(piece.getPieceX(), piece.getPieceY());
         if (piece.getType() == PieceType.KING) {
-	    for (Piece p: pieceList) {
-		if (p.color != piece.color && containsPosition(p.getlegalMoves(), position)) {
-		    checkPiece = p;
-		    if (checkPiece.getType() == PieceType.PAWN && checkPiece.getPieceX() == piece.getPieceX()) {
-		        return false;
-		    } else {
-			return true;
-
-		    }
-		}
-	    }
-	} return false;
+	    	for (Piece p: pieceList) {
+	    		if(p.getType() == PieceType.PAWN && p.getColor() != piece.getColor()){
+	    			if(isCheckedByPawn(p, piece)){
+	    				return true;
+					}
+				}
+	    		else if(p.color != piece.color && containsPosition(p.getlegalMoves(), position)) {
+	    			checkPiece = p;
+	    			if (checkPiece.getType() == PieceType.PAWN && checkPiece.getPieceX() == piece.getPieceX()) {
+	    				return false;
+	    			} else {
+		    			return true;
+		    		}
+				}
+	    	}
+		} return false;
     }
 
-    /*public boolean willGetChecked(Piece piece) {
+	/**
+	 * Checks if the king will be checked by a pawn(piece).
+	 */
+    private boolean isCheckedByPawn(Piece piece, Piece king) {
+		if (king.getColor() == PieceColor.WHITE) {
+			if (piece.getPieceY() == king.getPieceY() - 1 &&
+					Math.abs(piece.getPieceX() - king.getPieceX()) == 1) {
+				checkPiece = piece;
+				return true;
+			}
+		} else if (king.getColor() == PieceColor.BLACK) {
+			if (piece.getPieceY() == king.getPieceY() + 1 &&
+					Math.abs(piece.getPieceX() - king.getPieceX()) == 1) {
+				checkPiece = piece;
+				return true;
+			}
+		}
+		return false;
+	}
 
-    }*/
+
 
     /**
      * Checks if a piece can interrupt the check of the king, and move inbetween.

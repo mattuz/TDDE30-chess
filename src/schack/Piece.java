@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract superclass to all the Piece classes (King, Knight, Queen, Bishop, Pawn, Rook).
+ */
 public abstract class Piece
 {
     protected PieceColor color;
@@ -27,10 +30,15 @@ public abstract class Piece
         this.board = board;
     }
 
+    /**
+     * Sets a new x value.
+     */
     public void newX(int x) {
         this.pieceX = x;
     }
-
+    /**
+     * Sets a new y value.
+     */
     public void newY(int y) {
         this.pieceY = y;
     }
@@ -267,6 +275,9 @@ public boolean diagonalLeft(Piece piece, int currentX, int currentY, int x, int 
                 board.getPieceAt(newX, newY).color != board.getState());
     }
 
+    /**
+     * Updates the lists of the pieces' legal moves
+     */
     public abstract void updateLegalMoves();
 
     public abstract void updatePreviousLegalMoves();

@@ -2,7 +2,9 @@ package schack;
 
 import java.net.URL;
 import java.util.List;
-
+/**
+ * Class managing the King piece.
+ */
 public class King extends Piece
 {
     public King( int x,  int y, final PieceType type, final PieceColor color, final URL path, final Board board, boolean firstStep) {
@@ -10,6 +12,9 @@ public class King extends Piece
         updateLegalMoves();
     }
 
+    /**
+     * Adds the moves (castling) that are specific for the king.
+     */
     public List<Position> addLegalMoves(List<Position> list) {
         final int rightCastlingPosition = 6;
         final int leftCastlingPosition = 2;
@@ -37,9 +42,6 @@ public class King extends Piece
         legalMoves = addHorisontal(legalMoves, maxDistance, position);
         legalMoves = addDiagonal(legalMoves, maxDistance, position);
         legalMoves = addVertical(legalMoves, maxDistance, position);
-        /*if (board.isChecked(this)) {
-            legalMoves.remove(board.containsPosition(this.getlegalMoves(), position));
-        }*/
     }
 
     public void updatePreviousLegalMoves(){
