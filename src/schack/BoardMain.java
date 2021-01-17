@@ -8,9 +8,10 @@ package schack;
 public class BoardMain
 {
     public static void main(String[] args) {
-
-	Frame frame = new Frame(new Board(8, 8));
-
+	Board board = new Board(8, 8);
+	Frame frame = new Frame(board);
+	board.addBoardListener(frame.getGraphics());
+	board.addBoardListener(frame);
 	frame.show();
 
 	frame.getGraphics().repaint();

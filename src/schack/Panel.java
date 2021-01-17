@@ -10,36 +10,36 @@ import java.awt.*;
 public class Panel extends JPanel
     {
 
-	//private static String player1 = "White"; //TODO se om dessa kan ändras från static. Om inte får vi kommentera att de ska vara static för att de inte ska ändras när de
+	private String player1 = "White"; //TODO se om dessa kan ändras från static. Om inte får vi kommentera att de ska vara static för att de inte ska ändras när de
 		  		  	     //väl satts..
-	//private static String player2 = "Black"; //TODO ta bort dessa och "tvinga" White/Black som namn.
-	private static final JPanel PANEL = new JPanel(); //TODO ändrade dessa till final enligt kodanalysen.
-	private static final JLabel LABEL = new JLabel("White goes first", SwingConstants.LEFT);
+	private String player2 = "Black"; //TODO ta bort dessa och "tvinga" White/Black som namn.
+	private JPanel panel = new JPanel(); //TODO ändrade dessa till final enligt kodanalysen.
+	private JLabel label = new JLabel("White goes first", SwingConstants.LEFT);
 
 	public Panel() {
-	    PANEL.setLayout(new FlowLayout());
-	    PANEL.add(LABEL);
-	    add(PANEL);
+	    panel.setLayout(new FlowLayout());
+	    panel.add(label);
+	    add(panel);
 	}
 
 		/**
 		 * Updates the label that shows who's turn it is.
 		 */
-	public static void setTurn(PieceColor state) {
-	    if (state == PieceColor.BLACK) {
-	        LABEL.setText("Black's turn");
+	public void setTurn(PieceColor color) {
+	    if (color == PieceColor.BLACK) {
+	        label.setText(player2);
 	    } else {
-		LABEL.setText("White's turn");
+		label.setText(player1);
 	    }
 	}
 
-	/*public static void setPlayer1(String name) {
+	public void setPlayer1(String name) {
 	    player1 = name + "'s turn";
 	}
 
-	public static void setPlayer2(String name) {
+	public void setPlayer2(String name) {
 	    player2 = name + "'s turn";
-	}*/
+	}
 
     }
 

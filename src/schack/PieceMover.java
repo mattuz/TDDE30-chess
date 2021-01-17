@@ -126,13 +126,6 @@ public class PieceMover extends MouseAdapter
 	int y = mouseEvent.getPoint().y - WINDOWOFFSET;
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
-	    if (piece.getColor() == board.getState() && piece.getType() == PieceType.KING) {
-	        if (board.getState() == PieceColor.WHITE) {
-	        	//whiteKing = piece;
-		} else {
-	           // blackKing = piece;
-	        }
-	    }
 	    if (isMouseOverPiece(piece, x, y)) {
 			int dragOffsetX = x - piece.getPieceX() * BoardComponent.getBOARDCONSTANT();
 			int dragOffsetY = y - piece.getPieceY() * BoardComponent.getBOARDCONSTANT();

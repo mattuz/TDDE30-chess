@@ -229,7 +229,7 @@ public class Board
 	} else {
             state = WHITE_STATE;
         }
-	Panel.setTurn(state);
+	//Panel.setTurn(state);
     }
 
     /**
