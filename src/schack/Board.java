@@ -19,6 +19,9 @@ public class Board
     private List<BoardListener> listeners = new ArrayList<>();
     private List<Piece> pieces = new ArrayList<>();
     private Piece checkPiece = null;
+    private Piece blackKing = null;
+    private Piece whiteKing = null;
+    private boolean gameOver = false;
 
     /**
      * Constant for the black pawns starting row.
@@ -170,6 +173,11 @@ public class Board
 	    case KING_START_COL:
 		square[x][y] = new King(x, y, PieceType.KING, color, getPathFor(color, PieceType.KING), this,
 					true);
+		if (color == PieceColor.BLACK) {
+		    blackKing = square[x][y];
+		} else if (color == PieceColor.WHITE) {
+		    whiteKing = square[x][y];
+		}
 		break;
 	    default:
 	        break;
@@ -282,13 +290,13 @@ public class Board
      */
     private boolean isCastlingRight(final Piece piece) {
 	boolean isRookAtStartPosition = getPieceTypeAt(RIGHT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK;
-	//boolean isRookFirstStep = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep(); //TODO den här funkar inte???
 	boolean isBishopPositionFree = getPieceTypeAt(RIGHT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
 	boolean isKnightPositionFree = getPieceTypeAt(RIGHT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
 
 
-	return isRookAtStartPosition && square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
-	       isBishopPositionFree && isKnightPositionFree;
+	return isRookAtStartPosition &&
+	       square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() //Försökte göra som ovan med denna, men av någon anledning gick det inte.
+	       && isBishopPositionFree && isKnightPositionFree;		     // Så det fick bli såhär.
     }
 
     /**
@@ -298,45 +306,42 @@ public class Board
      */
     public boolean isChecked(Piece piece) {
 	Position position = new Position(piece.getPieceX(), piece.getPieceY());
-        if (piece.getType() == PieceType.KING) {
-	    	for (Piece p: pieces) {
-	    		if(p.getType() == PieceType.PAWN && p.getColor() != piece.getColor()){
-	    			if(isCheckedByPawn(p, piece)){
-	    				return true;
-					}
-				}
-	    		else if(p.color != piece.color && containsPosition(p.getLegalMoves(), position)) {
-	    			checkPiece = p;
-	    			if (checkPiece.getType() == PieceType.PAWN && checkPiece.getPieceX() == piece.getPieceX()) {
-	    				return false;
-	    			} else {
-		    			return true;
-		    		}
-				}
-	    	}
-		} return false;
+	if (piece.getType() == PieceType.KING) {
+	    for (Piece p : pieces) {
+		if (p.getType() == PieceType.PAWN && p.getColor() != piece.getColor()) {
+		    if (isCheckedByPawn(p, piece)) {
+			return true;
+		    }
+		} else if (p.color != piece.color && containsPosition(p.getLegalMoves(), position)) {
+		    checkPiece = p;
+		    if (checkPiece.getType() == PieceType.PAWN && checkPiece.getPieceX() == piece.getPieceX()) {
+			return false;
+		    } else {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
     }
 
 	/**
 	 * Checks if the king will be checked by a pawn(piece).
 	 */
-    private boolean isCheckedByPawn(Piece piece, Piece king) {
-		if (king.getColor() == PieceColor.WHITE) {
-			if (piece.getPieceY() == king.getPieceY() - 1 &&
-					Math.abs(piece.getPieceX() - king.getPieceX()) == 1) {
-				checkPiece = piece;
-				return true;
-			}
-		} else if (king.getColor() == PieceColor.BLACK) {
-			if (piece.getPieceY() == king.getPieceY() + 1 &&
-					Math.abs(piece.getPieceX() - king.getPieceX()) == 1) {
-				checkPiece = piece;
-				return true;
-			}
+	private boolean isCheckedByPawn(Piece piece, Piece king) {
+	    if (king.getColor() == PieceColor.WHITE) {
+		if (piece.getPieceY() == king.getPieceY() - 1 && Math.abs(piece.getPieceX() - king.getPieceX()) == 1) {
+		    checkPiece = piece;
+		    return true;
 		}
-		return false;
+	    } else if (king.getColor() == PieceColor.BLACK) {
+		if (piece.getPieceY() == king.getPieceY() + 1 && Math.abs(piece.getPieceX() - king.getPieceX()) == 1) {
+		    checkPiece = piece;
+		    return true;
+		}
+	    }
+	    return false;
 	}
-
 
 
     /**
@@ -344,30 +349,51 @@ public class Board
      * Compares the values of the piece's eventual x,y and calculates if this would
      * put it in the way of the king's attacker.
      */
-    public boolean interruptChecked(Piece king, int newX, int newY) {
+    public boolean interruptChecked(Piece king, Piece interruptPiece, int newX, int newY) {
 	int kingX = king.getPieceX();
 	int kingY = king.getPieceY();
-	for (int x = 0; x < width; x++) {
-	    for (int y = 0; y < height; y++) {
-		if (isChecked(king) && checkPiece.getPieceX() != kingX && checkPiece.getPieceY() == kingY) {
-		    if (checkPiece.getPieceX() <= newX && newX < kingX && newY == kingY) {
-		        return true;
+	Position interruptPosition = new Position(newX, newY);
+	if (interruptPiece.legalMoves.contains(interruptPosition)) {
+	    for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+		    if (isChecked(king) && checkPiece.getPieceX() != kingX && checkPiece.getPieceY() == kingY) {
+			if (checkPiece.getPieceX() <= newX && newX < kingX && newY == kingY) {
+			    return true;
+			} else return checkPiece.getPieceX() >= newX && newX > kingX && newY == kingY;
+		    } else if (isChecked(king) && checkPiece.getPieceX() == kingX && checkPiece.getPieceY() != kingY) {
+			if (checkPiece.getPieceY() <= newY && newY < kingY && newX == kingX) {
+			    return true;
+			} else return checkPiece.getPieceY() >= newY && newY > kingY && newX == kingX;
+		    } else if (isChecked(king) &&
+			       Math.abs(kingX - checkPiece.getPieceX()) - Math.abs(kingY - checkPiece.getPieceY()) == 0 &&
+			       Math.abs(newX - kingX) - Math.abs(newY - kingY) == 0) {
+			return Math.abs(newX - kingX) < Math.abs(checkPiece.getPieceX() - kingX) &&
+			       Math.abs(newY - kingY) < Math.abs(checkPiece.getPieceY() - kingY);
 		    }
-		    else return checkPiece.getPieceX() >= newX && newX > kingX && newY == kingY;
-		}
-		else if (isChecked(king) && checkPiece.getPieceX() == kingX && checkPiece.getPieceY() != kingY) {
-		    if (checkPiece.getPieceY() <= newY && newY < kingY && newX == kingX) {
-			return true;
-		    }
-		    else return checkPiece.getPieceY() >= newY && newY > kingY && newX == kingX;
-		}
-		else if (isChecked(king) && Math.abs(kingX - checkPiece.getPieceX()) - Math.abs(kingY - checkPiece.getPieceY()) == 0
-		&& Math.abs(newX - kingX) - Math.abs(newY - kingY) == 0) {
-		    return Math.abs(newX - kingX) < Math.abs(checkPiece.getPieceX() - kingX) &&
-			   Math.abs(newY - kingY) < Math.abs(checkPiece.getPieceY() - kingY);
 		}
 	    }
-	} return false;
+	}
+	return false;
+    }
+
+    public boolean isCheckMate(Piece king){
+        boolean checkMateInterrupt = true;
+        boolean checkMateKing = false;
+	if (king.legalMoves.isEmpty()) {
+	    checkMateKing = true;
+	}
+	for (Piece interruptPiece : pieces) {
+	    if (interruptPiece.color == king.color) {
+		for (int i = 0; i < interruptPiece.legalMoves.size(); i++) {
+		    if (interruptChecked(king, interruptPiece, interruptPiece.getLegalMoves().get(i).getX(),
+				     interruptPiece.getLegalMoves().get(i).getY())) {
+		        checkMateInterrupt = false;
+		    }
+		}
+	    }
+	}
+	gameOver = checkMateInterrupt && checkMateKing;
+	return checkMateInterrupt && checkMateKing;
     }
 
     /**
@@ -419,4 +445,11 @@ public class Board
 	return pieces;
     }
 
+    public Piece getWhiteKing() {
+	return whiteKing;
+    }
+
+    public Piece getBlackKing() {
+	return blackKing;
+    }
 }
