@@ -93,6 +93,9 @@ public abstract class Piece
             if (currentX < x && y == currentY) {
                 for (int i = x - 1; i > currentX; i--) {
                     if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, y) == PieceType.KING && board.getPieceAt(i, y).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -101,6 +104,9 @@ public abstract class Piece
             if (currentX > x && y == currentY) {
                 for (int i = x + 1; i < currentX; i++) {
                     if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, y) == PieceType.KING && board.getPieceAt(i, y).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -123,6 +129,9 @@ public abstract class Piece
             if (currentY > y && x == currentX) {
                 for (int i = y + 1; i < currentY; i++) {
                     if (board.getPieceTypeAt(x, i) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(x, i) == PieceType.KING && board.getPieceAt(x, i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -131,6 +140,9 @@ public abstract class Piece
             if (currentY < y && x == currentX) {
                 for (int i = y - 1; i > currentY; i--) {
                     if (board.getPieceTypeAt(x, i) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(x, i) == PieceType.KING && board.getPieceAt(x, i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -152,6 +164,9 @@ public abstract class Piece
             if (currentX < x && currentY < y) {
                 for (int i = currentX+1; i < x; i++) {
                     if (board.getPieceTypeAt(i, currentY + i-currentX ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY + i-currentX) == PieceType.KING && board.getPieceAt(i, currentY + i-currentX).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -160,6 +175,9 @@ public abstract class Piece
             if (currentX > x && currentY < y) {
                 for (int i = currentX-1; i > x; i--) {
                     if (board.getPieceTypeAt(i, currentY + currentX-i ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY + currentX-i) == PieceType.KING && board.getPieceAt(i, currentY + currentX-i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -168,6 +186,9 @@ public abstract class Piece
             if (currentX < x && currentY > y) {
                 for (int i = currentX+1; i < x; i++) {
                     if (board.getPieceTypeAt(i, currentY - i+currentX ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY - i+currentX) == PieceType.KING && board.getPieceAt(i, currentY - i+currentX).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -176,6 +197,9 @@ public abstract class Piece
             if (currentX > x && currentY > y) {
                 for (int i = currentX-1; i > x; i--) {
                     if (board.getPieceTypeAt(i, currentY - currentX+i ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY - currentX+i) == PieceType.KING && board.getPieceAt(i, currentY - currentX+i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -185,6 +209,55 @@ public abstract class Piece
             return false;
         }
     }
+
+ /*               if (currentX < x) {
+    freePath = diagonalLeft(piece, currentX, currentY, x, y); //TODO se om vi kan fixa detta (komplexitet)
+}
+            else if (currentX > x) {
+    freePath = diagonalRight(piece, currentX, currentY, x, y);
+} return freePath;
+} else {
+        return false;
+        }
+        }
+
+public boolean diagonalRight(Piece piece, int currentX, int currentY, int x, int y) {
+        if (currentY < y) {
+        for (int i = currentX+1; i < x; i++) {
+        if (board.getPieceTypeAt(i, currentY + i-currentX ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY + i - currentX) == PieceType.KING &&
+        board.getPieceAt(i, currentY + i - currentX).color != board.getState();
+        }
+        }
+        } else if (currentY > y) {
+        for (int i = currentX+1; i < x; i++) {
+        if (board.getPieceTypeAt(i, currentY - i+currentX ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY - i + currentX) == PieceType.KING &&
+        board.getPieceAt(i, currentY - i + currentX).color != board.getState();
+        }
+        }
+        }
+        return true;
+        }
+
+public boolean diagonalLeft(Piece piece, int currentX, int currentY, int x, int y) {
+        if (currentY < y) {
+        for (int i = currentX-1; i > x; i--) {
+        if (board.getPieceTypeAt(i, currentY + currentX-i ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY + currentX - i) == PieceType.KING &&
+        board.getPieceAt(i, currentY + currentX - i).color != board.getState();
+        }
+        }
+        }
+        else if (currentY > y) {
+        for (int i = currentX-1; i > x; i--) {
+        if (board.getPieceTypeAt(i, currentY - currentX+i ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY - currentX + i) == PieceType.KING &&
+        board.getPieceAt(i, currentY - currentX + i).color != board.getState();
+        }
+        }
+        } return true;
+        }*/
 
     /**
      * Returns true if the position (newX, newY) is ether empty or has a piece with a different color on it.

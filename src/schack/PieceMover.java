@@ -97,6 +97,9 @@ public class PieceMover extends MouseAdapter
 	    } this.dragPiece = null;
 	    updateAllLegalMoves();
 	    board.notifyListeners();
+	    if(board.isChecked(whiteKing)){
+		System.out.println("vit kung checkad!!");
+	    }
 	    board.swapTurns();
 	}
     }
