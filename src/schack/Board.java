@@ -318,27 +318,27 @@ public class Board
      * Compares the values of the piece's eventual x,y and calculates if this would
      * put it in the way of the king's attacker.
      */
-    public boolean interruptChecked(Piece piece, int newX, int newY) {
-	int pX = piece.getPieceX();
-	int pY = piece.getPieceY();
+    public boolean interruptChecked(Piece king, int newX, int newY) {
+	int kingX = king.getPieceX();
+	int kingY = king.getPieceY();
 	for (int x = 0; x < width; x++) {
 	    for (int y = 0; y < height; y++) {
-		if (isChecked(piece) && checkPiece.getPieceX() != pX && checkPiece.getPieceY() == pY) {
-		    if (checkPiece.getPieceX() < newX && newX < pX) {
+		if (isChecked(king) && checkPiece.getPieceX() != kingX && checkPiece.getPieceY() == kingY) {
+		    if (checkPiece.getPieceX() <= newX && newX < kingX && newY == kingY) {
 		        return true;
 		    }
-		    else return checkPiece.getPieceX() > newX && newX > pX;
+		    else return checkPiece.getPieceX() >= newX && newX > kingX && newY == kingY;
 		}
-		else if (isChecked(piece) && checkPiece.getPieceX() == pX && checkPiece.getPieceY() != pY) {
-		    if (checkPiece.getPieceY() < newY && newY < pY) {
+		else if (isChecked(king) && checkPiece.getPieceX() == kingX && checkPiece.getPieceY() != kingY) {
+		    if (checkPiece.getPieceY() <= newY && newY < kingY && newX == kingX) {
 			return true;
 		    }
-		    else return checkPiece.getPieceY() > newY && newY > pY;
+		    else return checkPiece.getPieceY() >= newY && newY > kingY && newX == kingX;
 		}
-		else if (isChecked(piece) && Math.abs(pX - checkPiece.getPieceX()) - Math.abs(pY - checkPiece.getPieceY()) == 0
-		&& Math.abs(newX - pX) - Math.abs(newY - pY) == 0) {
-		    return Math.abs(newX - pX) < Math.abs(checkPiece.getPieceX() - pX) &&
-			   Math.abs(newY - pY) < Math.abs(checkPiece.getPieceY() - pY);
+		else if (isChecked(king) && Math.abs(kingX - checkPiece.getPieceX()) - Math.abs(kingY - checkPiece.getPieceY()) == 0
+		&& Math.abs(newX - kingX) - Math.abs(newY - kingY) == 0) {
+		    return Math.abs(newX - kingX) < Math.abs(checkPiece.getPieceX() - kingX) &&
+			   Math.abs(newY - kingY) < Math.abs(checkPiece.getPieceY() - kingY);
 		}
 	    }
 	} return false;
