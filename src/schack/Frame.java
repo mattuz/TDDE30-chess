@@ -3,6 +3,9 @@ package schack;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class that represents the frame that displays the board.
+ */
 public class Frame
 {
     private JFrame frame = new JFrame();
@@ -10,33 +13,31 @@ public class Frame
     private Panel panel = new Panel();
 
 
-
     public Frame(final Board board) {
-	this.graphics = new BoardComponent(board);
-	PieceMover pm = new PieceMover(board);
-	frame.addMouseListener(pm);
-	frame.addMouseMotionListener(pm);
-	board.addBoardListener(graphics);
+	    this.graphics = new BoardComponent(board);
+	    PieceMover pm = new PieceMover(board);
+	    frame.addMouseListener(pm);
+	    frame.addMouseMotionListener(pm);
+	    board.addBoardListener(graphics);
     }
 
     public BoardComponent getGraphics() { //Används för att lägga till en listener.
         return graphics;
     }
 
+    /**
+     * Makes the frame with the board visible.
+     */
     public void show() {
         frame.setLayout(new BorderLayout());
         frame.add(graphics, BorderLayout.CENTER);
         frame.add(panel, BorderLayout.PAGE_END);
-	String player1Name = JOptionPane.showInputDialog("White player: ");
-	Panel.setPlayer1(player1Name);
-	String player2Name = JOptionPane.showInputDialog("Black player: ");
-	Panel.setPlayer2(player2Name);
-	frame.pack();
+	    String player1Name = JOptionPane.showInputDialog("White player: ");
+	    Panel.setPlayer1(player1Name);
+	    String player2Name = JOptionPane.showInputDialog("Black player: ");
+	    Panel.setPlayer2(player2Name);
+	    frame.pack();
         frame.setVisible(true);
-
     }
-
-
-
 
 }

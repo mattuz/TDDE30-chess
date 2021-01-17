@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing and managing the chessboard.
+ */
 public class Board
 {
     private  int width;
@@ -313,6 +316,9 @@ public class Board
 		} return false;
     }
 
+	/**
+	 * Checks if the king will be checked by a pawn(piece).
+	 */
     private boolean isCheckedByPawn(Piece piece, Piece king) {
 		if (king.getColor() == PieceColor.WHITE) {
 			if (piece.getPieceY() == king.getPieceY() - 1 &&
@@ -320,14 +326,11 @@ public class Board
 				checkPiece = piece;
 				return true;
 			}
-
-			//kolla om pawn är en mindre y och en mindre eller mer x
 		} else if (king.getColor() == PieceColor.BLACK) {
 			if (piece.getPieceY() == king.getPieceY() + 1 &&
 					Math.abs(piece.getPieceX() - king.getPieceX()) == 1) {
 				checkPiece = piece;
 				return true;
-				//kolla om pawn är en mer y och en mer eller mindre x
 			}
 		}
 		return false;

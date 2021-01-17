@@ -1,7 +1,9 @@
 package schack;
 
 import java.net.URL;
-
+/**
+ * Class managing the Rook piece.
+ */
 public class Rook extends Piece
 {
     public Rook( int x,  int y, final PieceType type, final PieceColor color, final URL path, final Board board, boolean firstStep) {

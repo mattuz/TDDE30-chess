@@ -7,19 +7,10 @@ Jonas:
 Hugo:
  - gå igenom varningarna igen och kommentera varför vi inte fixar det vi lämnar kvar
  - ta bort kod som inte används eller som är utkommenterad
- - magiska konstanter
  - bugg: schack funkar ej ;)
 
  Piotr:
- - ingen error-handling tex när en bild inte kan laddas. programmet bör stängas av och/eller ge felmeddelande.
  - Lägg in så att frame är en boardlistener för att den ska uppdatera labels i panelen.
  - fälten i Panel behöver inte vara static (3 kvar)
  - kombinera gärna setPlayer1 -> setPlayerName(index, name).
    Om vi pallar, gör att namnen som anges blir parametrar i Panels konstructor.
- - vi kan använda "Java Point" istället för vår egna Position-klass
-
- FRÅGETECKEN (komentarer jag inte riktigt fattar vad han vill/ vad vi ska göra) :
- - If I just click anywhere on the board and not an a piece I get null pointer exception.
-
-
-j

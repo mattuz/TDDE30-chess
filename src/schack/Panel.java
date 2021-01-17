@@ -3,10 +3,12 @@ package schack;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class that represents the panels in the frame.
+ */
 public class Panel extends JPanel
     {
-	//private static final String WHITE_LABEL = "White's turn"; //TODO Används inte?
-	//private static final String BLACK_LABEL = "Black's turn";
+
 	private static String player1 = ""; //TODO se om dessa kan ändras från static. Om inte får vi kommentera att de ska vara static för att de inte ska ändras när de
 		  		  	     //väl satts..
 	private static String player2 = ""; //TODO ta bort dessa och "tvinga" White/Black som namn.
@@ -19,6 +21,9 @@ public class Panel extends JPanel
 	    add(J_PANEL);
 	}
 
+		/**
+		 * Updates the label that shows who's turn it is.
+		 */
 	public static void setTurn(PieceColor state) {
 	    if (state == PieceColor.BLACK) {
 	        jLabel.setText(player2);

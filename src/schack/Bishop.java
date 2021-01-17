@@ -2,6 +2,9 @@ package schack;
 
 import java.net.URL;
 
+/**
+ * Class managing the Bishop piece.
+ */
 public class Bishop extends Piece
 {
     public Bishop(int x, int y, final PieceType type, final PieceColor color, final URL path, final Board board, boolean firstStep) {
