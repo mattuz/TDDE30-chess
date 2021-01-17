@@ -1,3 +1,7 @@
+Vi har "hög komplexitet" på några funktioner. Detta kan lösas genom att bryta ut olika delar till hjälpfunktioner,
+vilket vi försökte göra. Problemet var att programmet slutade fungera då och vi lyckades itne lösa det med hjälpfunktioner
+hur mycket vi än försökte. Vi får hoppas att detta är okej ändå.
+
 - PieceMove dåligt namn. (inte en sorts förflyttning)
     Ändrade namn till PieceMover.
 
