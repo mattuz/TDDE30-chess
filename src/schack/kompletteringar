@@ -1,5 +1,0 @@
-- PieceMove dåligt namn. (inte en sorts förflyttning)
-    Ändrade namn till till PieceMover.
-
- - "fatal errors" i showstopper-listan angående
-    Tog bort picturepathb fält från PiecePainter.

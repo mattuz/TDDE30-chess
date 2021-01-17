@@ -39,9 +39,10 @@ public abstract class Piece
      * Adds all legal horisontal moves, from and within a maxdistance from p, to list.
      */
     public List<Position> addHorisontal(List<Position> list, int maxDistance, Position p) {
+        int width = board.getWidth();
         int y = p.getY();
         for (int x = p.getX() - maxDistance; x <= p.getX() + maxDistance; x++) {
-            if (x >= 0 && x < 8 && isLegalHorisontal(this, p.getX(), p.getY(), x, y)){
+            if (x >= 0 && x < width && isLegalHorisontal(this, p.getX(), p.getY(), x, y)){
                 list.add(new Position(x, y));
             }
         }
@@ -52,9 +53,10 @@ public abstract class Piece
      * Adds all legal vertical moves, from and within a maxdistance from position, to list.
      */
     public List<Position> addVertical(List<Position> list, int maxDistance, Position position){
+        int height = board.getHeight();
         int x = position.getX();
         for (int y = position.getY() - maxDistance; y <= position.getY() + maxDistance; y++){
-            if (y >= 0 && y < 8 && isLegalVertical(this, position.getX(), position.getY(), x, y)) {
+            if (y >= 0 && y < height && isLegalVertical(this, position.getX(), position.getY(), x, y)) {
                 list.add(new Position(x, y));
             }
         }
@@ -65,9 +67,12 @@ public abstract class Piece
      * Adds all legal diagonal moves, from and within a maxdistance from position, to list.
      */
     public List<Position> addDiagonal(List<Position> list, int maxDistance, Position position){
+        int width = board.getWidth();
+        int height = board.getHeight();
+
         for (int x = position.getX() - maxDistance; x <= position.getX() + maxDistance; x++){
             for (int y = position.getY()-maxDistance; y <= position.getY() + maxDistance; y++){
-                if (x >= 0 && x < 8 && y >= 0 && y < 8 &&
+                if (x >= 0 && x < width && y >= 0 && y < height &&
                     isLegalDiagonal(this, position.getX(), position.getY(), x, y)) {
                     list.add(new Position(x, y));
                 }
@@ -88,6 +93,9 @@ public abstract class Piece
             if (currentX < x && y == currentY) {
                 for (int i = x - 1; i > currentX; i--) {
                     if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, y) == PieceType.KING && board.getPieceAt(i, y).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -96,6 +104,9 @@ public abstract class Piece
             if (currentX > x && y == currentY) {
                 for (int i = x + 1; i < currentX; i++) {
                     if (board.getPieceTypeAt(i, y) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, y) == PieceType.KING && board.getPieceAt(i, y).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -118,6 +129,9 @@ public abstract class Piece
             if (currentY > y && x == currentX) {
                 for (int i = y + 1; i < currentY; i++) {
                     if (board.getPieceTypeAt(x, i) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(x, i) == PieceType.KING && board.getPieceAt(x, i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -126,6 +140,9 @@ public abstract class Piece
             if (currentY < y && x == currentX) {
                 for (int i = y - 1; i > currentY; i--) {
                     if (board.getPieceTypeAt(x, i) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(x, i) == PieceType.KING && board.getPieceAt(x, i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -147,6 +164,9 @@ public abstract class Piece
             if (currentX < x && currentY < y) {
                 for (int i = currentX+1; i < x; i++) {
                     if (board.getPieceTypeAt(i, currentY + i-currentX ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY + i-currentX) == PieceType.KING && board.getPieceAt(i, currentY + i-currentX).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -155,6 +175,9 @@ public abstract class Piece
             if (currentX > x && currentY < y) {
                 for (int i = currentX-1; i > x; i--) {
                     if (board.getPieceTypeAt(i, currentY + currentX-i ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY + currentX-i) == PieceType.KING && board.getPieceAt(i, currentY + currentX-i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -163,6 +186,9 @@ public abstract class Piece
             if (currentX < x && currentY > y) {
                 for (int i = currentX+1; i < x; i++) {
                     if (board.getPieceTypeAt(i, currentY - i+currentX ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY - i+currentX) == PieceType.KING && board.getPieceAt(i, currentY - i+currentX).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -171,6 +197,9 @@ public abstract class Piece
             if (currentX > x && currentY > y) {
                 for (int i = currentX-1; i > x; i--) {
                     if (board.getPieceTypeAt(i, currentY - currentX+i ) != PieceType.EMPTY) {
+                        if (board.getPieceTypeAt(i, currentY - currentX+i) == PieceType.KING && board.getPieceAt(i, currentY - currentX+i).color != board.getState()) {
+                            break;
+                        }
                         freePath = false;
                         break;
                     }
@@ -181,6 +210,55 @@ public abstract class Piece
         }
     }
 
+ /*               if (currentX < x) {
+    freePath = diagonalLeft(piece, currentX, currentY, x, y); //TODO se om vi kan fixa detta (komplexitet)
+}
+            else if (currentX > x) {
+    freePath = diagonalRight(piece, currentX, currentY, x, y);
+} return freePath;
+} else {
+        return false;
+        }
+        }
+
+public boolean diagonalRight(Piece piece, int currentX, int currentY, int x, int y) {
+        if (currentY < y) {
+        for (int i = currentX+1; i < x; i++) {
+        if (board.getPieceTypeAt(i, currentY + i-currentX ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY + i - currentX) == PieceType.KING &&
+        board.getPieceAt(i, currentY + i - currentX).color != board.getState();
+        }
+        }
+        } else if (currentY > y) {
+        for (int i = currentX+1; i < x; i++) {
+        if (board.getPieceTypeAt(i, currentY - i+currentX ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY - i + currentX) == PieceType.KING &&
+        board.getPieceAt(i, currentY - i + currentX).color != board.getState();
+        }
+        }
+        }
+        return true;
+        }
+
+public boolean diagonalLeft(Piece piece, int currentX, int currentY, int x, int y) {
+        if (currentY < y) {
+        for (int i = currentX-1; i > x; i--) {
+        if (board.getPieceTypeAt(i, currentY + currentX-i ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY + currentX - i) == PieceType.KING &&
+        board.getPieceAt(i, currentY + currentX - i).color != board.getState();
+        }
+        }
+        }
+        else if (currentY > y) {
+        for (int i = currentX-1; i > x; i--) {
+        if (board.getPieceTypeAt(i, currentY - currentX+i ) != PieceType.EMPTY) {
+        return board.getPieceTypeAt(i, currentY - currentX + i) == PieceType.KING &&
+        board.getPieceAt(i, currentY - currentX + i).color != board.getState();
+        }
+        }
+        } return true;
+        }*/
+
     /**
      * Returns true if the position (newX, newY) is ether empty or has a piece with a different color on it.
      */
@@ -190,6 +268,8 @@ public abstract class Piece
     }
 
     public abstract void updateLegalMoves();
+
+    public abstract void updatePreviousLegalMoves();
 
     public URL getPath() {
         return path;
@@ -208,7 +288,7 @@ public abstract class Piece
     }
 
     public List<Position> getlegalMoves(){
-        return (ArrayList<Position>) legalMoves;
+        return legalMoves;
     }
 
     public int getPieceX() {

@@ -12,11 +12,12 @@ public class Knight extends Piece
 
     public List<Position> addLegalMoves(List<Position> list, Position p) {
 	if (color == board.getState()) {
-	    for (int x = 0; x < 8; x++) {
-		for (int y = 0; y < 8; y++) {
-		    if ((Math.abs(x - p.getX()) == 1 && Math.abs(y - p.getY()) == 2) ||
-			(Math.abs(x - p.getX()) == 2 && Math.abs(y - p.getY()) == 1)) {
-			//System.out.println(x + ", " + y);
+	    final int minDistance = 1; //Den måste gå minst 1 steg i x- eller y-led
+	    final int maxDistance = 2; //Måste gå max 2 steg i x- eller y-led
+	    for (int x = 0; x < board.getWidth(); x++) {
+		for (int y = 0; y < board.getHeight(); y++) {
+		    if ((Math.abs(x - p.getX()) == minDistance && Math.abs(y - p.getY()) == maxDistance) ||
+			(Math.abs(x - p.getX()) == maxDistance && Math.abs(y - p.getY()) == minDistance)) {
 			if (isValidDestination(x,y))
 			list.add(new Position(x, y));
 		    }
@@ -26,7 +27,6 @@ public class Knight extends Piece
 	return list;
     }
     public void updateLegalMoves(){
-       // updatePreviousLegalMoves();
         legalMoves.clear();
         legalMoves = addLegalMoves(legalMoves, new Position(pieceX, pieceY));
     }

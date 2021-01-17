@@ -8,7 +8,6 @@ import java.util.List;
 public class PieceMover extends MouseAdapter
 {
     private List<Piece> pieces;
-    private BoardComponent graphics;
     private Board board;
     private static final int WINDOWOFFSET = 30;
     private static final int XOFFSET = 7;
@@ -19,13 +18,11 @@ public class PieceMover extends MouseAdapter
     private int dragOffsetX;
     private int dragOffsetY;
     private Piece dragPiece = null;
-    private boolean checkFirstStep;
 
 
 
-    public PieceMover(Board board, final BoardComponent graphics) {
+    public PieceMover(Board board) {
 	this.pieces = board.pieceList;
-	this.graphics = graphics;
 	this.board = board;
 	this.pieces = board.addPieces();
     }
@@ -35,62 +32,76 @@ public class PieceMover extends MouseAdapter
      * Checks if conditions for a move is met.
      */
     @Override public void mouseReleased(final MouseEvent mouseEvent) {
-	int x = dragPiece.getPieceX();
-	int y = dragPiece.getPieceY();
+        if (dragPiece != null) {
+	    int x = dragPiece.getPieceX();
+	    int y = dragPiece.getPieceY();
 
-	 if (board.isChecked(dragPiece)) {
-	    dragPiece.newX(oldX);
-	    dragPiece.newY(oldY);
-	    board.swapTurns();
-	    JOptionPane.showMessageDialog(null, "Illegal move of the king.");
+	    if (board.isChecked(dragPiece)) {
+		JOptionPane.showMessageDialog(null, "Illegal move of the king.");
+		dragPiece.newX(oldX);
+		dragPiece.newY(oldY);
+		board.swapTurns();
+	    }
+	    else if (board.getState() == PieceColor.WHITE && board.isChecked(whiteKing) && dragPiece.getType() != PieceType.KING) {
+		if (board.interruptChecked(whiteKing, x, y)) {
+		    System.out.println("interruptChecked gör att den flyttas.. (vit)");
+		    movePiece(x, y);
+		} else {
+		    JOptionPane.showMessageDialog(null, "The king is checked.");
 
-	}
-	else if (board.getState() == PieceColor.WHITE && board.isChecked(whiteKing) && dragPiece.getType() != PieceType.KING) {
-	    if (board.interruptChecked(whiteKing, x, y)) {
-	        movePiece(x, y);
+		    System.out.println("Ska ha resettats (vit)");
+		    dragPiece.newX(oldX);
+		    dragPiece.newY(oldY);
+		    board.swapTurns();
+
+		}
+
+	    }
+	    else if (board.getState() == PieceColor.BLACK && board.isChecked(blackKing) && dragPiece.getType() != PieceType.KING) {
+		if (board.interruptChecked(blackKing, x, y)) {
+		    System.out.println("interruptChecked gör att den flyttas.. (svart)");
+
+		    movePiece(x, y);
+		} else {
+		    JOptionPane.showMessageDialog(null, "The king is checked.");
+
+		    System.out.println("Ska ha resettats (svart)");
+
+		    dragPiece.newX(oldX);
+		    dragPiece.newY(oldY);
+		    board.swapTurns();
+		}
+
+	    }
+	    else if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
+		if (!board.interruptChecked(whiteKing, x, y)) {
+		    movePiece(x,y);
+		}
+
+		if (board.isPawnUpgradePossible(dragPiece, y)){
+		    upgradePawn(x, y);
+		}
+		if (dragPiece.getType() == PieceType.KING && x - Board.CASTLING_MOVE_DISTANCE == oldX) {
+		    board.getSquare()[x-1][y] = board.getSquare()[Board.RIGHT_ROOK_START_COL][y];
+		    board.removePiece(Board.RIGHT_ROOK_START_COL, y);
+		}
+		if (dragPiece.getType() == PieceType.KING && x + Board.CASTLING_MOVE_DISTANCE == oldX) {
+		    board.getSquare()[x+1][y] = board.getSquare()[Board.LEFT_ROOK_START_COL][y];
+		    board.removePiece(Board.LEFT_ROOK_START_COL, y);
+		}
+
 	    } else {
 		dragPiece.newX(oldX);
 		dragPiece.newY(oldY);
 		board.swapTurns();
-		JOptionPane.showMessageDialog(null, "The king is checked.");
+	    } this.dragPiece = null;
+	    updateAllLegalMoves();
+	    board.notifyListeners();
+	    if(board.isChecked(whiteKing)){
+		System.out.println("vit kung checkad!!");
 	    }
-
-	}
-	else if (board.getState() == PieceColor.BLACK && board.isChecked(blackKing) && dragPiece.getType() != PieceType.KING) {
-	    if (board.interruptChecked(blackKing, x, y)) {
-		movePiece(x, y);
-	    } else {
-		dragPiece.newX(oldX);
-		dragPiece.newY(oldY);
-		board.swapTurns();
-		JOptionPane.showMessageDialog(null, "The king is checked.");
-	    }
-
-	} if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
-            if (!board.interruptChecked(whiteKing, x, y)) {
-		movePiece(x,y);
-	    }
-
-            if (board.pawnUpgradePossible(dragPiece, y)){ //TODO borde denna ligga i Pawn egentligen? Hur skulle det funka?
-                upgradePawn(x, y);
-	    }
-            if (dragPiece.getType() == PieceType.KING && x - 2 == oldX) {
-		board.getSquare()[x-1][y] = board.getSquare()[7][y];
-		board.removePiece(7, y);
-	    }
-            if (dragPiece.getType() == PieceType.KING && x + 2 == oldX) {
-		board.getSquare()[x+1][y] = board.getSquare()[0][y];
-		board.removePiece(0, y);
-	    }
-
-	} else {
-	    dragPiece.newX(oldX);
-	    dragPiece.newY(oldY);
 	    board.swapTurns();
-	} this.dragPiece = null;
-	updateAllLegalMoves();
-        board.notifyListeners();
-        board.swapTurns();
+	}
     }
 
     /**
@@ -98,7 +109,7 @@ public class PieceMover extends MouseAdapter
      */
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 	if (this.dragPiece != null){
-	    this.dragPiece.newX((mouseEvent.getPoint().x - 7) / BoardComponent.getBOARDCONSTANT());
+	    this.dragPiece.newX((mouseEvent.getPoint().x - XOFFSET) / BoardComponent.getBOARDCONSTANT());
 	    this.dragPiece.newY((mouseEvent.getPoint().y - WINDOWOFFSET) / BoardComponent.getBOARDCONSTANT());
 	}
     }
@@ -125,9 +136,9 @@ public class PieceMover extends MouseAdapter
 		this.oldX = (x - this.dragOffsetX) / BoardComponent.getBOARDCONSTANT();
 		this.oldY = (y - this.dragOffsetY) / BoardComponent.getBOARDCONSTANT();
 		this.dragPiece = piece;
-		checkFirstStep = dragPiece.isFirstStep();
+
 		dragPiece.updateLegalMoves();
-		System.out.println(dragPiece.getType()); //TODO for-loop här kanske, som kollar om samma colors kung är checkad. Är den det måste dragPiece ändras.
+		//System.out.println(dragPiece.getType()); //TODO for-loop här kanske, som kollar om samma colors kung är checkad. Är den det måste dragPiece ändras.
 
 	    }
 	}
@@ -176,8 +187,9 @@ public class PieceMover extends MouseAdapter
 
     /**
      * Is meant to revert all legal moves. Does not work as intended.
+     * Not used
      */
-    private void revertAllLegalMoves() {
+    private void revertAllLegalMoves() { //TODO ta bort denna?
 	for (int i = this.pieces.size()-1; i >= 0; i--) {
 	    Piece piece = this.pieces.get(i);
 	    piece.setLegalMoves(piece.getPreviousLegalMoves());
@@ -195,21 +207,23 @@ public class PieceMover extends MouseAdapter
 		JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, pawnUpgrades, pawnUpgrades[0]);
 
 	board.destroyPiece(x, y);
-	chooseUpgrade(response, x, y);
+	chooseUpgrade(pawnUpgrades[response], x, y);
     }
 
     /**
      * Creates the Piece and replaces this with the Pawn which is being upgraded.
+     * These choices are defined by a list of possible Pieces as seen in upgradePawn.
+     * The index of the chosen piece is returned and then used as "response".
      */
-    private void chooseUpgrade(int response, int x, int y) {
-	switch (response) {
-	    case 0:
+    private void chooseUpgrade(String choice, int x, int y) {
+	switch (choice) {
+	    case "Queen":
 		board.getSquare()[x][y] =
 			new Queen(x, y, PieceType.QUEEN, dragPiece.color,
 				  board.getPathFor(dragPiece.color, PieceType.QUEEN), board, false);
 		board.getPieceList().add(board.getSquare()[x][y]);
 		break;
-	    case 1:
+	    case "Bishop":
 		board.getSquare()[x][y] =
 			new Bishop(x, y, PieceType.BISHOP, dragPiece.color,
 				   board.getPathFor(dragPiece.color, PieceType.BISHOP), board, false);
@@ -217,7 +231,7 @@ public class PieceMover extends MouseAdapter
 
 		break;
 
-	    case 2:
+	    case "Rook":
 		board.getSquare()[x][y] =
 			new Rook(x, y, PieceType.ROOK, dragPiece.color,
 				 board.getPathFor(dragPiece.color, PieceType.ROOK), board, false);
@@ -225,7 +239,7 @@ public class PieceMover extends MouseAdapter
 
 		break;
 
-	    case 3:
+	    case "Knight":
 		board.getSquare()[x][y] =
 			new Knight(x, y, PieceType.KNIGHT, dragPiece.color,
 				   board.getPathFor(dragPiece.color, PieceType.KNIGHT), board, false);

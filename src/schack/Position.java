@@ -18,13 +18,13 @@ public class Position
 	return y;
     }
 
-    public void setX(final int x) {
+    /*public void setX(final int x) {
 	this.x = x;
     }
-
+						//TODO används inte
     public void setY(final int y) {
 	this.y = y;
-    }
+    }*/
 
 
 }

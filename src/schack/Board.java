@@ -15,8 +15,67 @@ public class Board
     public List<Piece> pieceList = new ArrayList<>();
     private Piece checkPiece = null;
 
-    private final static PieceColor WHITE_STATE = PieceColor.WHITE;
-    private final static PieceColor BLACK_STATE = PieceColor.BLACK;
+    /**
+     * Constant for the black pawns starting row.
+     */
+    public static final int BLACK_PAWN_STARTING_ROW = 1;
+    /**
+     * Constant for the white pawns starting row.
+     */
+    public static final int WHITE_PAWN_STARTING_ROW = 6;
+    /**
+     * Black pieces starting row (excluding pawns).
+     */
+    public static final int BLACK_STARTING_ROW = 0;
+    /**
+     * White pieces starting row (excluding pawns).
+     */
+    public static final int WHITE_STARTING_ROW = 7;
+    /**
+     * Starting position of left rook.
+     */
+    public static final int LEFT_ROOK_START_COL = 0;
+    /**
+     * Starting position of right rook.
+     */
+    public static final int RIGHT_ROOK_START_COL = 7;
+    /**
+     * Starting position of left knight.
+     */
+    public static final int LEFT_KNIGHT_START_COL = 1;
+    /**
+     * Starting position of right knight.
+     */
+    public static final int RIGHT_KNIGHT_START_COL = 6;
+    /**
+     * Starting position of left bishop.
+     */
+    public static final int LEFT_BISHOP_START_COL = 2;
+    /**
+     * Starting position of right bishop.
+     */
+    public static final int RIGHT_BISHOP_START_COL = 5;
+    /**
+     * Starting position of queen
+     */
+    public static final int QUEEN_START_COL = 3;
+    /**
+     * Starting position of king.
+     */
+    public static final int KING_START_COL = 4;
+    /**
+     * The amount of positions in x-axis the king moves while castling.
+     */
+    public static final int CASTLING_MOVE_DISTANCE = 2;
+
+    /**
+     * Represents the state of the game. White's turn.
+     */
+    private static final PieceColor WHITE_STATE = PieceColor.WHITE;
+    /**
+     * Represents the state of the game. Black's turn.
+     */
+    private static final PieceColor BLACK_STATE = PieceColor.BLACK;
 
     private PieceColor state = WHITE_STATE;
 
@@ -54,18 +113,18 @@ public class Board
      * Uses pieceSwitcher to determine and create the correct Piece.
      */
     public void placePieces(int x, int y) {
-	if (y == 0) {
+	if (y == BLACK_STARTING_ROW) {
             switchPieces(x, y, PieceColor.BLACK);
 	}
-        else if (y == 1) {
+        else if (y == BLACK_PAWN_STARTING_ROW) {
 	    square[x][y] = new Pawn(x, y, PieceType.PAWN, PieceColor.BLACK, getPathFor(PieceColor.BLACK, PieceType.PAWN),
 				    this, true);
 	}
-        else if (y == 6) {
+        else if (y == WHITE_PAWN_STARTING_ROW) {
 	    square[x][y] = new Pawn(x, y, PieceType.PAWN, PieceColor.WHITE, getPathFor(PieceColor.WHITE, PieceType.PAWN),
 				    this, true);
 	}
-        else if (y == 7) {
+        else if (y == WHITE_STARTING_ROW) {
 	    switchPieces(x, y, PieceColor.WHITE);
 	}
     }
@@ -84,26 +143,26 @@ public class Board
      */
     public void switchPieces(int x, int y, PieceColor color) {
 	switch (x) {
-	    case 0:
-	    case 7:
+	    case LEFT_ROOK_START_COL:
+	    case RIGHT_ROOK_START_COL:
 		square[x][y] = new Rook(x, y, PieceType.ROOK, color, getPathFor(color, PieceType.ROOK), this,
 					true);
 	        break;
-	    case 1:
-	    case 6:
+	    case LEFT_KNIGHT_START_COL:
+	    case RIGHT_KNIGHT_START_COL:
 		square[x][y] = new Knight(x, y, PieceType.KNIGHT, color, getPathFor(color, PieceType.KNIGHT), this,
 					  true);
 	        break;
-	    case 2:
-	    case 5:
+	    case LEFT_BISHOP_START_COL:
+	    case RIGHT_BISHOP_START_COL:
 		square[x][y] = new Bishop(x, y, PieceType.BISHOP, color, getPathFor(color, PieceType.BISHOP), this,
 					  true);
 		break;
-	    case 3:
+	    case QUEEN_START_COL:
 		square[x][y] = new Queen(x, y, PieceType.QUEEN, color, getPathFor(color, PieceType.QUEEN), this,
 					 true);
 		break;
-	    case 4:
+	    case KING_START_COL:
 		square[x][y] = new King(x, y, PieceType.KING, color, getPathFor(color, PieceType.KING), this,
 					true);
 		break;
@@ -154,25 +213,24 @@ public class Board
     public void swapTurns() {
 	if (state == WHITE_STATE) {
             state = BLACK_STATE;
-            Panel.getjLabel().setText(Panel.getPlayer2()); //TODO ändra dessa
 	} else {
             state = WHITE_STATE;
-	    Panel.getjLabel().setText(Panel.getPlayer1());
         }
+	Panel.setTurn(state);
     }
 
     /**
      * Checks if a Pawn can be upgraded (if it has moved across the entire board).
      *
      */
-    public boolean pawnUpgradePossible(Piece piece, int y) {
+    public boolean isPawnUpgradePossible(Piece piece, int y) {
 	if (piece.getType() != PieceType.PAWN) {
 	    return false;
 	}
-        else if (piece.getColor() == PieceColor.WHITE && y == 0) {
+        else if (piece.getColor() == PieceColor.WHITE && y == BLACK_STARTING_ROW) {
 	    return true;
 	}
-	else return piece.getColor() == PieceColor.BLACK && y == 7;
+	else return piece.getColor() == PieceColor.BLACK && y == WHITE_STARTING_ROW;
     }
 
     /**
@@ -182,40 +240,51 @@ public class Board
      * 2 if castling only available king side,
      * 1 if castling only avaiable queen side.
      */
-    public int castlingPossiblePath(Piece piece){
+    public String castlingPossiblePath(Piece piece){
 	if (piece.getType() == PieceType.KING && piece.firstStep && piece.getColor() == state) {
 	    if (isCastlingLeft(piece) && isCastlingRight(piece)) {
 		System.out.println("Båda!");
-	        return 3;
+	        return "both";
 	    }
 	    else if (isCastlingLeft(piece)) {
 		System.out.println("Vänster!");
-		return 1;
+		return "left";
 	    }
 	    else if (isCastlingRight(piece)) {
 		System.out.println("Höger!");
-	        return 2;
+	        return "right";
 	    }
-	} return 0;
+	} return "none";
     }
 
     /**
      * Is castling queenside possible?
      */
     private boolean isCastlingLeft(final Piece piece) {
-	return getPieceTypeAt(0, piece.getPieceY()) == PieceType.ROOK && square[0][piece.getPieceY()].isFirstStep() &&
-	    getPieceTypeAt(3, piece.getPieceY()) == PieceType.EMPTY &&
-	    getPieceTypeAt(2, piece.getPieceY()) == PieceType.EMPTY &&
-	    getPieceTypeAt(1, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isRookAtStartPosition = getPieceTypeAt(LEFT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK;
+	boolean isRookFirstStep = square[LEFT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
+	boolean isQueenPositionFree = getPieceTypeAt(QUEEN_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isBishopPositionFree = getPieceTypeAt(LEFT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isKnightPositionFree = getPieceTypeAt(LEFT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+
+	return isRookAtStartPosition && isRookFirstStep &&
+	       isQueenPositionFree && isBishopPositionFree &&
+	       isKnightPositionFree;
     }
 
     /**
      * Is castling kingside possible?
      */
     private boolean isCastlingRight(final Piece piece) {
-	return getPieceTypeAt(7, piece.getPieceY()) == PieceType.ROOK && square[7][piece.getPieceY()].isFirstStep() &&
-	       getPieceTypeAt(6, piece.getPieceY()) == PieceType.EMPTY &&
-	       getPieceTypeAt(5,piece.getPieceY()) == PieceType.EMPTY;
+	boolean isRookAtStartPosition = getPieceTypeAt(RIGHT_ROOK_START_COL, piece.getPieceY()) == PieceType.ROOK;
+	//boolean isRookFirstStep = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep(); //TODO den här funkar inte???
+	boolean isBishopPositionFree = getPieceTypeAt(RIGHT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+	boolean isKnightPositionFree = getPieceTypeAt(RIGHT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
+//	boolean test = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
+
+
+	return isRookAtStartPosition && square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&
+	       isBishopPositionFree && isKnightPositionFree;
     }
 
     /**
@@ -229,38 +298,47 @@ public class Board
 	    for (Piece p: pieceList) {
 		if (p.color != piece.color && containsPosition(p.getlegalMoves(), position)) {
 		    checkPiece = p;
-		    return true;
+		    if (checkPiece.getType() == PieceType.PAWN && checkPiece.getPieceX() == piece.getPieceX()) {
+		        return false;
+		    } else {
+			return true;
+
+		    }
 		}
 	    }
 	} return false;
     }
+
+    /*public boolean willGetChecked(Piece piece) {
+
+    }*/
 
     /**
      * Checks if a piece can interrupt the check of the king, and move inbetween.
      * Compares the values of the piece's eventual x,y and calculates if this would
      * put it in the way of the king's attacker.
      */
-    public boolean interruptChecked(Piece piece, int newX, int newY) {
-	int pX = piece.getPieceX();
-	int pY = piece.getPieceY();
-	for (int x = 0; x < 8; x++) {
-	    for (int y = 0; y < 8; y++) {
-		if (isChecked(piece) && checkPiece.getPieceX() != pX && checkPiece.getPieceY() == pY) {
-		    if (checkPiece.getPieceX() < newX && newX < pX) {
+    public boolean interruptChecked(Piece king, int newX, int newY) {
+	int kingX = king.getPieceX();
+	int kingY = king.getPieceY();
+	for (int x = 0; x < width; x++) {
+	    for (int y = 0; y < height; y++) {
+		if (isChecked(king) && checkPiece.getPieceX() != kingX && checkPiece.getPieceY() == kingY) {
+		    if (checkPiece.getPieceX() <= newX && newX < kingX && newY == kingY) {
 		        return true;
 		    }
-		    else return checkPiece.getPieceX() > newX && newX > pX;
+		    else return checkPiece.getPieceX() >= newX && newX > kingX && newY == kingY;
 		}
-		else if (isChecked(piece) && checkPiece.getPieceX() == pX && checkPiece.getPieceY() != pY) {
-		    if (checkPiece.getPieceY() < newY && newY < pY) {
+		else if (isChecked(king) && checkPiece.getPieceX() == kingX && checkPiece.getPieceY() != kingY) {
+		    if (checkPiece.getPieceY() <= newY && newY < kingY && newX == kingX) {
 			return true;
 		    }
-		    else return checkPiece.getPieceY() > newY && newY > pY;
+		    else return checkPiece.getPieceY() >= newY && newY > kingY && newX == kingX;
 		}
-		else if (isChecked(piece) && Math.abs(pX - checkPiece.getPieceX()) - Math.abs(pY - checkPiece.getPieceY()) == 0
-		&& Math.abs(newX - pX) - Math.abs(newY - pY) == 0) {
-		    return Math.abs(newX - pX) < Math.abs(checkPiece.getPieceX() - pX) &&
-			   Math.abs(newY - pY) < Math.abs(checkPiece.getPieceY() - pY);
+		else if (isChecked(king) && Math.abs(kingX - checkPiece.getPieceX()) - Math.abs(kingY - checkPiece.getPieceY()) == 0
+		&& Math.abs(newX - kingX) - Math.abs(newY - kingY) == 0) {
+		    return Math.abs(newX - kingX) < Math.abs(checkPiece.getPieceX() - kingX) &&
+			   Math.abs(newY - kingY) < Math.abs(checkPiece.getPieceY() - kingY);
 		}
 	    }
 	} return false;
