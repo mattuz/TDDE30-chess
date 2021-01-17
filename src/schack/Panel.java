@@ -10,9 +10,9 @@ import java.awt.*;
 public class Panel extends JPanel
     {
 
-	private static String player1 = ""; //TODO se om dessa kan ändras från static. Om inte får vi kommentera att de ska vara static för att de inte ska ändras när de
+	//private static String player1 = "White"; //TODO se om dessa kan ändras från static. Om inte får vi kommentera att de ska vara static för att de inte ska ändras när de
 		  		  	     //väl satts..
-	private static String player2 = ""; //TODO ta bort dessa och "tvinga" White/Black som namn.
+	//private static String player2 = "Black"; //TODO ta bort dessa och "tvinga" White/Black som namn.
 	private static final JPanel J_PANEL = new JPanel(); //TODO ändrade dessa till final enligt kodanalysen.
 	private static JLabel jLabel = new JLabel("White goes first", SwingConstants.LEFT);
 
@@ -27,19 +27,19 @@ public class Panel extends JPanel
 		 */
 	public static void setTurn(PieceColor state) {
 	    if (state == PieceColor.BLACK) {
-	        jLabel.setText(player2);
+	        jLabel.setText("Black's turn");
 	    } else {
-		jLabel.setText(player1);
+		jLabel.setText("White's turn");
 	    }
 	}
 
-	public static void setPlayer1(String name) {
+	/*public static void setPlayer1(String name) {
 	    player1 = name + "'s turn";
 	}
 
 	public static void setPlayer2(String name) {
 	    player2 = name + "'s turn";
-	}
+	}*/
 
     }
 

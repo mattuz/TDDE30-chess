@@ -32,10 +32,10 @@ public class Frame
         frame.setLayout(new BorderLayout());
         frame.add(graphics, BorderLayout.CENTER);
         frame.add(panel, BorderLayout.PAGE_END);
-	    String player1Name = JOptionPane.showInputDialog("White player: ");
+	    /*String player1Name = JOptionPane.showInputDialog("White player: ");
 	    Panel.setPlayer1(player1Name);
 	    String player2Name = JOptionPane.showInputDialog("Black player: ");
-	    Panel.setPlayer2(player2Name);
+	    Panel.setPlayer2(player2Name);*/
 	    frame.pack();
         frame.setVisible(true);
     }
