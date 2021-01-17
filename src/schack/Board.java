@@ -17,7 +17,7 @@ public class Board
     private PieceType[][] enumsquare;
     private List<Piece> deadpieces = new ArrayList<>(); //Vet inte varför den är markerad. Verkar fungera som det ska.
     private List<BoardListener> listeners = new ArrayList<>();
-    public List<Piece> pieceList = new ArrayList<>();
+    private List<Piece> pieces = new ArrayList<>();
     private Piece checkPiece = null;
 
     /**
@@ -106,11 +106,11 @@ public class Board
 	for (int y = 0; y < height; y++) {
 	    for (int x = 0; x < width; x++) {
 		if (square[x][y] != null) {
-		    pieceList.add(square[x][y]);
+		    pieces.add(square[x][y]);
 		}
 	    }
 	}
-	return pieceList;
+	return pieces;
     }
 
     /**
@@ -205,7 +205,7 @@ public class Board
      * This is used when another Piece "takes" the piece on (x,y).
      */
     public void destroyPiece(int x, int y) {
-	pieceList.remove(square[x][y]);
+	pieces.remove(square[x][y]);
 	square[x][y] = null;
 	notifyListeners();
     }
@@ -299,13 +299,13 @@ public class Board
     public boolean isChecked(Piece piece) {
 	Position position = new Position(piece.getPieceX(), piece.getPieceY());
         if (piece.getType() == PieceType.KING) {
-	    	for (Piece p: pieceList) {
+	    	for (Piece p: pieces) {
 	    		if(p.getType() == PieceType.PAWN && p.getColor() != piece.getColor()){
 	    			if(isCheckedByPawn(p, piece)){
 	    				return true;
 					}
 				}
-	    		else if(p.color != piece.color && containsPosition(p.getlegalMoves(), position)) {
+	    		else if(p.color != piece.color && containsPosition(p.getLegalMoves(), position)) {
 	    			checkPiece = p;
 	    			if (checkPiece.getType() == PieceType.PAWN && checkPiece.getPieceX() == piece.getPieceX()) {
 	    				return false;
@@ -415,8 +415,8 @@ public class Board
 	return square[x][y];
     }
 
-    public List<Piece> getPieceList() {
-	return pieceList;
+    public List<Piece> getPieces() {
+	return pieces;
     }
 
 }

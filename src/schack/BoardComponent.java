@@ -11,7 +11,7 @@ import static java.awt.Color.*;
  * to the specific piece.
  */
 public class BoardComponent extends JComponent implements BoardListener {
-	public static final int BOARDCONSTANT = 80;
+	private static final int BOARDCONSTANT = 80;
 	private Board board;
 
 	public BoardComponent(final Board board) {

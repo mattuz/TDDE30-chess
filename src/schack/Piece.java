@@ -33,13 +33,13 @@ public abstract class Piece
     /**
      * Sets a new x value.
      */
-    public void newX(int x) {
+    public void setPieceX(int x) {
         this.pieceX = x;
     }
     /**
      * Sets a new y value.
      */
-    public void newY(int y) {
+    public void setPieceY(int y) {
         this.pieceY = y;
     }
 
@@ -298,7 +298,7 @@ public boolean diagonalLeft(Piece piece, int currentX, int currentY, int x, int 
         return previousLegalMoves;
     }
 
-    public List<Position> getlegalMoves(){
+    public List<Position> getLegalMoves(){
         return legalMoves;
     }
 

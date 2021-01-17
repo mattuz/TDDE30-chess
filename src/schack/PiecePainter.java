@@ -37,12 +37,13 @@ public class PiecePainter
 	public static BufferedImage bufferedImageMaker(Piece piece) {
 		BufferedImage myPicture = null;
 		try {
-			myPicture = ImageIO.read(piece.getPath());
+			myPicture = ImageIO.read(piece.getPath()); //Todo om tid finns, fixa image handling typ.
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Error while reading picture.");
-			return myPicture; //TODO la till return här
+			return myPicture;
 		}
 		return myPicture;
 	}

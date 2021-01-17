@@ -23,7 +23,7 @@ public class PieceMover extends MouseAdapter
 
 
     public PieceMover(Board board) {
-	this.pieces = board.pieceList;
+	this.pieces = board.getPieces();
 	this.board = board;
 	this.pieces = board.addPieces();
     }
@@ -39,8 +39,8 @@ public class PieceMover extends MouseAdapter
 
 	    	if (board.isChecked(dragPiece)) {
 	    		JOptionPane.showMessageDialog(null, "Illegal move of the king.");
-	    		dragPiece.newX(oldX);
-	    		dragPiece.newY(oldY);
+	    		dragPiece.setPieceX(oldX);
+	    		dragPiece.setPieceY(oldY);
 	    		board.swapTurns();
 	    	}
 	    	else if (board.getState() == PieceColor.WHITE && board.isChecked(whiteKing) && dragPiece.getType() != PieceType.KING) {
@@ -48,8 +48,8 @@ public class PieceMover extends MouseAdapter
 	    			movePiece(x, y);
 	    		} else {
 					JOptionPane.showMessageDialog(null, "The king is checked.");
-					dragPiece.newX(oldX);
-					dragPiece.newY(oldY);
+					dragPiece.setPieceX(oldX);
+					dragPiece.setPieceY(oldY);
 					board.swapTurns();
 	    		}
 	    	}
@@ -58,12 +58,12 @@ public class PieceMover extends MouseAdapter
 					movePiece(x, y);
 				} else {
 					JOptionPane.showMessageDialog(null, "The king is checked.");
-					dragPiece.newX(oldX);
-					dragPiece.newY(oldY);
+					dragPiece.setPieceX(oldX);
+					dragPiece.setPieceY(oldY);
 					board.swapTurns();
 				}
 			}
-			else if (board.containsPosition(dragPiece.getlegalMoves(), new Position(x, y))){
+			else if (board.containsPosition(dragPiece.getLegalMoves(), new Position(x, y))){
 				if (!board.interruptChecked(whiteKing, x, y)) {
 					movePiece(x,y);
 				}
@@ -79,8 +79,8 @@ public class PieceMover extends MouseAdapter
 					board.removePiece(Board.LEFT_ROOK_START_COL, y);
 				}
 			} else {
-				dragPiece.newX(oldX);
-				dragPiece.newY(oldY);
+				dragPiece.setPieceX(oldX);
+				dragPiece.setPieceY(oldY);
 				board.swapTurns();
 			}
 			this.dragPiece = null;
@@ -95,8 +95,8 @@ public class PieceMover extends MouseAdapter
      */
     @Override public void mouseDragged(final MouseEvent mouseEvent) {
 		if (this.dragPiece != null){
-			this.dragPiece.newX((mouseEvent.getPoint().x - XOFFSET) / BoardComponent.getBOARDCONSTANT());
-			this.dragPiece.newY((mouseEvent.getPoint().y - WINDOWOFFSET) / BoardComponent.getBOARDCONSTANT());
+			this.dragPiece.setPieceX((mouseEvent.getPoint().x - XOFFSET) / BoardComponent.getBOARDCONSTANT());
+			this.dragPiece.setPieceY((mouseEvent.getPoint().y - WINDOWOFFSET) / BoardComponent.getBOARDCONSTANT());
 		}
     }
 
@@ -116,7 +116,7 @@ public class PieceMover extends MouseAdapter
 	            blackKing = piece;
 	        }
 	    }
-	    if (mouseOverPiece(piece, x, y)) {
+	    if (isMouseOverPiece(piece, x, y)) {
 			int dragOffsetX = x - piece.getPieceX() * BoardComponent.getBOARDCONSTANT();
 			int dragOffsetY = y - piece.getPieceY() * BoardComponent.getBOARDCONSTANT();
 			this.oldX = (x - dragOffsetX) / BoardComponent.getBOARDCONSTANT();
@@ -134,7 +134,7 @@ public class PieceMover extends MouseAdapter
     /**
      * Checks if chosen Piece is currently being hovered over by mouse.
      */
-    private boolean mouseOverPiece(Piece piece, int x, int y) {
+    private boolean isMouseOverPiece(Piece piece, int x, int y) {
 		return piece.getPieceX() * BoardComponent.getBOARDCONSTANT() <= x &&
 			   piece.getPieceX() * BoardComponent.getBOARDCONSTANT() + BoardComponent.getBOARDCONSTANT() >= x &&
 			   piece.getPieceY() * BoardComponent.getBOARDCONSTANT() <= y &&
@@ -163,7 +163,7 @@ public class PieceMover extends MouseAdapter
 	private void updateAllLegalMoves() {
 		for (int i = this.pieces.size() - 1; i >= 0; i--) {
 			Piece piece = this.pieces.get(i);
-			piece.setPreviousLegalMoves(piece.getlegalMoves());
+			piece.setPreviousLegalMoves(piece.getLegalMoves());
 			piece.updateLegalMoves();
 		}
 	}
@@ -204,13 +204,13 @@ public class PieceMover extends MouseAdapter
 				board.getSquare()[x][y] =
 						new Queen(x, y, PieceType.QUEEN, dragPiece.color,
 								board.getPathFor(dragPiece.color, PieceType.QUEEN), board, false);
-				board.getPieceList().add(board.getSquare()[x][y]);
+				board.getPieces().add(board.getSquare()[x][y]);
 				break;
 			case "Bishop":
 				board.getSquare()[x][y] =
 						new Bishop(x, y, PieceType.BISHOP, dragPiece.color,
 								board.getPathFor(dragPiece.color, PieceType.BISHOP), board, false);
-				board.getPieceList().add(board.getSquare()[x][y]);
+				board.getPieces().add(board.getSquare()[x][y]);
 
 				break;
 
@@ -218,7 +218,7 @@ public class PieceMover extends MouseAdapter
 				board.getSquare()[x][y] =
 						new Rook(x, y, PieceType.ROOK, dragPiece.color,
 								board.getPathFor(dragPiece.color, PieceType.ROOK), board, false);
-				board.getPieceList().add(board.getSquare()[x][y]);
+				board.getPieces().add(board.getSquare()[x][y]);
 
 				break;
 
@@ -226,7 +226,7 @@ public class PieceMover extends MouseAdapter
 				board.getSquare()[x][y] =
 						new Knight(x, y, PieceType.KNIGHT, dragPiece.color,
 								board.getPathFor(dragPiece.color, PieceType.KNIGHT), board, false);
-				board.getPieceList().add(board.getSquare()[x][y]);
+				board.getPieces().add(board.getSquare()[x][y]);
 
 				break;
 			default:

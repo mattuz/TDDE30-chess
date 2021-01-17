@@ -55,7 +55,7 @@ public class Pawn extends Piece
      }
 
     public void updatePreviousLegalMoves(){
-        previousLegalMoves = getlegalMoves();
+        previousLegalMoves = getLegalMoves();
     }
 
 }
