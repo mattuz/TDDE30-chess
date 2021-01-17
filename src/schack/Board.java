@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing and managing the chessboard.
+ * Class representing the chessboard and managing its components.
+ * Places pieces on board so that they can be drawn out. Keeps track of pieces positioning and
+ * allows for, for example, deletion of pieces that are taken.
  */
 public class Board
 {
@@ -283,7 +285,6 @@ public class Board
 	//boolean isRookFirstStep = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep(); //TODO den här funkar inte???
 	boolean isBishopPositionFree = getPieceTypeAt(RIGHT_BISHOP_START_COL, piece.getPieceY()) == PieceType.EMPTY;
 	boolean isKnightPositionFree = getPieceTypeAt(RIGHT_KNIGHT_START_COL, piece.getPieceY()) == PieceType.EMPTY;
-//	boolean test = square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep();
 
 
 	return isRookAtStartPosition && square[RIGHT_ROOK_START_COL][piece.getPieceY()].isFirstStep() &&

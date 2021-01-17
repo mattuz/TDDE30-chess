@@ -3,7 +3,8 @@ package schack;
 import java.net.URL;
 import java.util.List;
 /**
- * Class managing the Knight piece.
+ * Class managing the Knight piece. Allows for creation of knight pieces and the managing of their movement.
+ * Knights have a very specific movement pattern, which is described here.
  */
 public class Knight extends Piece
 {

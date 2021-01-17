@@ -2,7 +2,8 @@ package schack;
 
 import java.net.URL;
 /**
- * Class managing the Queen piece.
+ * Class managing the Queen piece. Allows for creation of the queen piece and manages its movment.
+ * This piece has a simple movement pattern (vertical/horizontal/diagonal) which is described here.
  */
 public class Queen extends Piece
 {

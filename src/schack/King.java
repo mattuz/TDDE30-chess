@@ -3,7 +3,9 @@ package schack;
 import java.net.URL;
 import java.util.List;
 /**
- * Class managing the King piece.
+ * Class managing the King piece. Allows for creaton of kings and their movement handling.
+ * King has a specific legal move which corresponds to the castling-move. This is also
+ * represented here.
  */
 public class King extends Piece
 {

@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Class that represents the panels in the frame.
+ * Class that represents the panels in the frame. This changes depending on which player's
+ * turn it is (state in board).
  */
 public class Panel extends JPanel
     {

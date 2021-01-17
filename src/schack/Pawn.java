@@ -3,7 +3,9 @@ package schack;
 import java.net.URL;
 import java.util.List;
 /**
- * Class managing the Pawn piece.
+ * Class managing the Pawn piece. Allows for creation of pawns and manages their movement.
+ * Pawns has a specific set of legal moves, and it changes depending on if a piece can
+ * be taken or not. This is managed here.
  */
 public class Pawn extends Piece
 {

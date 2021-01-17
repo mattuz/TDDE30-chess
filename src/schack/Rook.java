@@ -2,7 +2,8 @@ package schack;
 
 import java.net.URL;
 /**
- * Class managing the Rook piece.
+ * Class managing the Rook piece. Allows for creation of the rook piece and manages its movement.
+ * The rook has a simple movement pattern (vertical/horizontal), which is described here.
  */
 public class Rook extends Piece
 {

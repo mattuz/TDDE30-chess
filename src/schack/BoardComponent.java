@@ -6,7 +6,9 @@ import java.awt.*;
 import static java.awt.Color.*;
 
 /**
- * Graphical component for the board.
+ * Graphical component for the board. Used to draw the board and show the different
+ * colored squares. Also draws the pieces by scaling the picture belonging
+ * to the specific piece.
  */
 public class BoardComponent extends JComponent implements BoardListener {
 	public static final int BOARDCONSTANT = 80;
@@ -25,7 +27,7 @@ public class BoardComponent extends JComponent implements BoardListener {
 	}
 
 	/**
-	 *	Generates the appropriate dimensions of the board in the frame.
+	 *Generates the appropriate dimensions of the board in the frame.
 	 */
 	@Override
 	public Dimension getPreferredSize() {
@@ -60,7 +62,8 @@ public class BoardComponent extends JComponent implements BoardListener {
 				g2d.drawRect(positionX, positionY, BOARDCONSTANT,
 						BOARDCONSTANT);
 				if (board.getPieceTypeAt(x, y) != PieceType.EMPTY) {
-					g2d.drawImage((PiecePainter.scale(PiecePainter.bufferedImageMaker(board.getPieceAt(x, y)), BOARDCONSTANT, BOARDCONSTANT)), positionX,
+					g2d.drawImage((PiecePainter.scale(PiecePainter.bufferedImageMaker(board.getPieceAt(x, y)
+						      ), BOARDCONSTANT, BOARDCONSTANT)), positionX,
 							positionY, this);
 				}
 			}

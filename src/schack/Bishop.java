@@ -3,7 +3,8 @@ package schack;
 import java.net.URL;
 
 /**
- * Class managing the Bishop piece.
+ * Class managing the Bishop piece. Allows for creaton of bishops and their movement handling.
+ * Bishops has a simple movement pattern (diagonal), which is described here.
  */
 public class Bishop extends Piece
 {
